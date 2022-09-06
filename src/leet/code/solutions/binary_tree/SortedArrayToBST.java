@@ -36,7 +36,6 @@ public class SortedArrayToBST {
         }
 
         return constructBSTRecursive(nums, 0, nums.length - 1);
-
     }
 
 

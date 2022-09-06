@@ -30,7 +30,5 @@ public class IsSameTree {
             return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
         }
         return false;
-
-
     }
 }

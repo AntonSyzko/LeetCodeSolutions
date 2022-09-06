@@ -87,7 +87,7 @@ public class DeepestLEaveSum {
 
         while (!stack.isEmpty()) {
 
-            Pair< TreeNode<Integer>, Integer> currentPairFromTopOfStack = stack.pop();//exctract from STACK
+            Pair<TreeNode<Integer>, Integer> currentPairFromTopOfStack = stack.pop();//exctract from STACK
             root = currentPairFromTopOfStack.getKey();//override current root we are dealing with
             currentLevelDepth = currentPairFromTopOfStack.getValue();
 

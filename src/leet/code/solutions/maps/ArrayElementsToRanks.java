@@ -26,7 +26,7 @@ public class ArrayElementsToRanks {
 
     //O(n.log(n))
     private static void transformArrayToRanks(int[] nums) {
-        Map<Integer, Integer> sortedNumsMap = new TreeMap<>();
+        Map<Integer, Integer> sortedNumsMap = new TreeMap<>();//tree mpa - sorted !!!
 
         // store (element, index) pair in `TreeMap`
         for (int i = 0; i < nums.length; i++) {

@@ -67,7 +67,7 @@ public class BST_ToGreaterSumTree {
        // System.out.println("calculating for " + currentNode.val);
 
 
-        calculateSum(currentNode.right);//DFS to the RIGHT bottom ( stck will contain vals AND future method calls
+        calculateSum(currentNode.right);//DFS to the RIGHT bottom (stack will contain vals AND future method calls
         aggregatingSum += currentNode.val;
        // System.out.println("aggregating " + aggregatingSum);
         currentNode.val = aggregatingSum;//reset current NODE val

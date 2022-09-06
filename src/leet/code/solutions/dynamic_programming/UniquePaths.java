@@ -58,11 +58,11 @@ public class UniquePaths {
 
     private static int uniquePathDP_Helper(int row, int col, int[][] pathsDParray) {
         //recursion base
-        if (row < 0 || col < 0) { // left or below grid no value ( 0 )
+        if (row < 0 || col < 0) { // left or below grid no path ( 0 )
             return 0;
         }
         //recursion base
-        if (row == 1 && col == 1) {//filled cell  ( at the very target)
+        if (row == 1 && col == 1) {//filled cell  ( has path, at the very target)
             return 1;
         }
 
@@ -73,7 +73,7 @@ public class UniquePaths {
         //DP recursion, will fill DP array as  it goes
         pathsDParray[row][col] = uniquePathDP_Helper(row - 1, col, pathsDParray) + uniquePathDP_Helper(row, col - 1, pathsDParray);
 
-        return pathsDParray[row][col];//dynamicly calculated res
+        return pathsDParray[row][col];//dynamicaly calculated res
     }
 
     //DP

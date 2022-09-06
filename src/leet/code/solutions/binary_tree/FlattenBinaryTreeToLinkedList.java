@@ -35,7 +35,7 @@ public class FlattenBinaryTreeToLinkedList {
     private static void flatten(TreeNode<Integer> root) {
         if(root == null) return;
 
-        Stack <TreeNode<Integer>> stack = new Stack<>();//try Deque array deque todo
+        Stack<TreeNode<Integer>> stack = new Stack<>();//try Deque array deque todo
         stack.push(root);
 
         while (!stack.isEmpty()) {

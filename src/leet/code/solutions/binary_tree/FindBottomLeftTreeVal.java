@@ -78,8 +78,6 @@ public class FindBottomLeftTreeVal {
              lastLeft = current.val;//update to last on top - which is always LEFTmost
 
         }
-
         return lastLeft;
-
     }
 }

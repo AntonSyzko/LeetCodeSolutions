@@ -57,6 +57,4 @@ public class SumRootToLeavesPath {
         //non - leaf
         return sumRootToLeafHelper(tree.left, partialPathSum) + sumRootToLeafHelper(tree.right, partialPathSum);
     }
-
-
 }

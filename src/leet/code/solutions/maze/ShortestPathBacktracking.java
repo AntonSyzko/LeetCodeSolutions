@@ -31,9 +31,8 @@ public class ShortestPathBacktracking {
 
     // Find the shortest possible route in a matrix `matrix` from source cell (fromRow, fromCol)
     // to destination cell (rowTarget, colTarget).
-    // `min_dist` stores the length of the longest path from source to a destination
-    // found so far, and `dist` maintains the length of the path from a source cell
-    // to the current cell (fromRow, fromCol).
+    // `min_dist` stores the length of the longest path from source to a destination found so far
+    //  `dist` maintains the length of the path from a source cell to the current cell (fromRow, fromCol).
     public static int findShortestPath(int[][] matrix, boolean[][] visited,
                                        int fromRow, int fromCol, int rowTarget, int colTarget, int min_dist, int dist) {
         // if the destination is found, update `min_dist`
@@ -41,7 +40,7 @@ public class ShortestPathBacktracking {
             return Integer.min(dist, min_dist);
         }
 
-        // set (fromRow, fromCol) cell as visited BACKTRACKING array
+        // set (fromRow, fromCol) cell as visited in BACKTRACKING array
         visited[fromRow][fromCol] = true;
 
         // go to the bottom cell
@@ -75,10 +74,10 @@ public class ShortestPathBacktracking {
     }
 
     // Wrapper over findShortestPath() function
-    public static int findShortestPathLength(int[][] mat, int i, int j, int x, int y)
+    public static int findShortestPathLength(int[][] mat, int fromRow, int fromCOl, int targetRow, int targetCol)
     {
         // base case: invalid input
-        if (mat == null || mat.length == 0 || mat[i][j] == 0 || mat[x][y] == 0) {
+        if (mat == null || mat.length == 0 || mat[fromRow][fromCOl] == 0 || mat[targetRow][targetCol] == 0) {
             return -1;
         }
 
@@ -91,7 +90,7 @@ public class ShortestPathBacktracking {
         // construct an `M × N` matrix to keep track of visited cells
         boolean[][] visited = new boolean[M][N];
 
-        min_dist = findShortestPath(mat, visited, i, j, x, y, Integer.MAX_VALUE, 0);
+        min_dist = findShortestPath(mat, visited, fromRow, fromCOl, targetRow, targetCol, Integer.MAX_VALUE, 0);
         if (min_dist != Integer.MAX_VALUE) {
             return min_dist;
         }

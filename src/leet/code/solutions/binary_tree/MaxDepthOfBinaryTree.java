@@ -40,7 +40,7 @@ public class MaxDepthOfBinaryTree {
     // O(n) runtime
     // bottom up recursion - we reach bottom NULL and then aggregate ALL
     public static int maxDepth(TreeNode root) {
-        if (root == null) { //bottom max in tree branch will hit null and exit recursion
+        if(root == null) { //bottom max in tree branch will hit null and exit recursion
             return 0;
         }
 

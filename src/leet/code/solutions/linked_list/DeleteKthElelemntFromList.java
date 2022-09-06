@@ -23,7 +23,7 @@ public class DeleteKthElelemntFromList {
             firstIterator = firstIterator.next;//advance first to stop at index
         }
 
-        ListNode<Integer> secondIterator = dummyHead;
+        ListNode<Integer> secondIterator = dummyHead;//from start
 
         while (firstIterator != null) {//move both till first stops
             firstIterator = firstIterator.next;//this will hit end
@@ -33,6 +33,5 @@ public class DeleteKthElelemntFromList {
         secondIterator.next = secondIterator.next.next;
 
         return dummyHead.next;
-
     }
 }

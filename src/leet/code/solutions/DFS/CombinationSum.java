@@ -49,6 +49,4 @@ public class CombinationSum {
             currentCombination.remove(currentCombination.size()-1);
         }
     }
-
-
 }

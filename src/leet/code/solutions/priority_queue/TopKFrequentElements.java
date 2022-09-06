@@ -40,16 +40,16 @@ public class TopKFrequentElements {
             mapOfOccurences.put(num, mapOfOccurences.getOrDefault(num, 0) + 1);
         }
 
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(mapOfOccurences::get));
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(Comparator.comparingInt(mapOfOccurences::get));
 
         for (Map.Entry<Integer, Integer> entry : mapOfOccurences.entrySet()) {
-            priorityQueue.add(entry.getKey());
-            if (priorityQueue.size() > k) {
-                priorityQueue.poll();
+            minHeap.add(entry.getKey());
+            if (minHeap.size() > k) {
+                minHeap.poll();
             }
         }
 
-        return priorityQueue.stream().mapToInt(i -> i).toArray();
+        return minHeap.stream().mapToInt(i -> i).toArray();
     }
 
     private static int[] topKRare(int[] nums, int k) {
@@ -60,15 +60,15 @@ public class TopKFrequentElements {
             map.put(each, map.getOrDefault(each, 0) + 1);
         }
 
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((first, second) -> map.get(second) - map.get(first));
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((first, second) -> map.get(second) - map.get(first));
 
         for (Map.Entry<Integer, Integer> each : map.entrySet()) {
-            priorityQueue.add(each.getKey());
-            if (priorityQueue.size() > k) {
-                priorityQueue.poll();
+            maxHeap.add(each.getKey());
+            if (maxHeap.size() > k) {
+                maxHeap.poll();
             }
         }
-        return priorityQueue.stream().mapToInt(i -> i).toArray();
+        return maxHeap.stream().mapToInt(i -> i).toArray();
 
     }
 
