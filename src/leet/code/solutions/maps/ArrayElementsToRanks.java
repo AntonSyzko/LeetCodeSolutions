@@ -80,8 +80,6 @@ public class ArrayElementsToRanks {
 
     }
 
-
-
         // A Pair class
     static class Pair<U, V> {
         public final U first;       // first field of a pair

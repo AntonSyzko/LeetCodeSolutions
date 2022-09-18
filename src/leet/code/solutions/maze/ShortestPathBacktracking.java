@@ -22,11 +22,11 @@ To find the maze’s shortest path, search for all possible paths in the maze fr
  */
 public class ShortestPathBacktracking {
 
-    // Check if it is possible to go to (x, y) from the current position. The
+    // Check if it is possible to go to (row, col) from the current position. The
     // function returns false if the cell is invalid, has value 0, or already visited
-    private static boolean isSafe(int[][] mat, boolean[][] visited, int x, int y) {
-        return (x >= 0 && x < mat.length && y >= 0 && y < mat[0].length) &&
-            mat[x][y] == 1 && !visited[x][y];
+    private static boolean isSafe(int[][] mat, boolean[][] visited, int row, int col) {
+        return (row >= 0 && row < mat.length && col >= 0 && col < mat[0].length) &&
+            mat[row][col] == 1 && !visited[row][col];
     }
 
     // Find the shortest possible route in a matrix `matrix` from source cell (fromRow, fromCol)
@@ -34,7 +34,9 @@ public class ShortestPathBacktracking {
     // `min_dist` stores the length of the longest path from source to a destination found so far
     //  `dist` maintains the length of the path from a source cell to the current cell (fromRow, fromCol).
     public static int findShortestPath(int[][] matrix, boolean[][] visited,
-                                       int fromRow, int fromCol, int rowTarget, int colTarget, int min_dist, int dist) {
+                                       int fromRow, int fromCol,
+                                       int rowTarget, int colTarget,
+                                       int min_dist, int dist) {
         // if the destination is found, update `min_dist`
         if (fromRow == rowTarget && fromCol == colTarget) {
             return Integer.min(dist, min_dist);
@@ -46,7 +48,7 @@ public class ShortestPathBacktracking {
         // go to the bottom cell
         if (isSafe(matrix, visited, fromRow + 1, fromCol)) {
             min_dist = findShortestPath(matrix, visited, fromRow + 1, fromCol, rowTarget, colTarget,
-                min_dist, dist + 1);
+                min_dist, dist + 1);//dist + 1 => one step was taken to next cell
         }
 
         // go to the right cell

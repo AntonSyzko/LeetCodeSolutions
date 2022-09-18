@@ -40,26 +40,27 @@ public class MergeTwoSortedLists {
     }
 
         public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode dummy = new ListNode(-1);
+        ListNode dummy = new ListNode(-1);//to store aggregated result list
         ListNode head = dummy;//pointer to retrun
 
         while (list1 != null && list2 != null) { //while both have smth to compare BOTH AND && !!! ( remainders will be appended after )
 
             if(list1.val < list2.val){
-                dummy.next = list1; //set node
-                list1 = list1.next;//processed - done current - move to next
+                dummy.next = list1; //set res node
+                list1 = list1.next;//processed - done current - move to next in list1
             } else {
-                dummy.next = list2;//set node
-                list2 = list2.next;//processed - done current - move to next
+                dummy.next = list2;//set res node
+                list2 = list2.next;//processed - done current - move to next in list2
             }
 
-            dummy = dummy.next;//processed - done current - move to next
+            dummy = dummy.next;//processed res - done current res - move to next
         }
 
+        //LEFTOVERS
         if ( list1 != null){ //left over in LIST 1 ?
-            dummy.next = list1; //just append
+            dummy.next = list1; //just append the entire leftover
         } else { // otherwise left over in LIST 2 ?
-             dummy.next = list2;//just append
+             dummy.next = list2;//just append the entire leftover
         }
 
         return head.next;//return pointer  to dummy
