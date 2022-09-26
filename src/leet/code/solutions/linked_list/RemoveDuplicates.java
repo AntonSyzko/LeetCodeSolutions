@@ -21,9 +21,7 @@ public class RemoveDuplicates {
             iterator.next = nextDistinct;//skip all duples - nextDistinct is now next unique
 
             iterator = nextDistinct;//move iterator - but from next distinct, which is now LAST UNIQUE
-
         }
-
         return list;
     }
 }

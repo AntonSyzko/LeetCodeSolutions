@@ -30,7 +30,5 @@ public class ReverseLinkedListPartially {
             sublistHead.next = temp;
         }
         return dummyHead.next;
-
-
     }
 }

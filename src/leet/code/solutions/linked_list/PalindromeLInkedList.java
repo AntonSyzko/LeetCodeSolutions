@@ -26,10 +26,7 @@ public class PalindromeLInkedList {
         ListNode node = new ListNode(1, new ListNode(2, new ListNode(2, new ListNode(1))));
         boolean res = isPalindrome(node);
         System.out.println(res);
-
     }
-
-
 
     public static boolean isPalindrome(ListNode<Integer> head) {
         List<Integer> list = new ArrayList<>();
@@ -50,11 +47,8 @@ public class PalindromeLInkedList {
             start++;//move on
             end--;
         }
-
         return true;//got here - OK
     }
-
-
 
     public static boolean isPalindromeListIterator(ListNode<Integer> head) {
         List<Integer> list = new ArrayList<>();
@@ -79,7 +73,6 @@ public class PalindromeLInkedList {
 
 
     public static boolean isPalindromeArray(ListNode<Integer> head) {
-
         List<Integer> list = new ArrayList<>();
 
         while (head != null) {
@@ -102,6 +95,4 @@ public class PalindromeLInkedList {
 
         return true;
     }
-
-
 }

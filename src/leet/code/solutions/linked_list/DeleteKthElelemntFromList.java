@@ -20,10 +20,10 @@ public class DeleteKthElelemntFromList {
         ListNode<Integer> firstIterator = dummyHead.next;
 
         while (indexToRemove-- > 0) {
-            firstIterator = firstIterator.next;//advance first to stop at index
+            firstIterator = firstIterator.next;//advance first to stop at index we need to remove
         }
 
-        ListNode<Integer> secondIterator = dummyHead;//from start
+        ListNode<Integer> secondIterator = dummyHead;//second iter starts from start
 
         while (firstIterator != null) {//move both till first stops
             firstIterator = firstIterator.next;//this will hit end

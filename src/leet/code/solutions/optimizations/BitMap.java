@@ -9,14 +9,14 @@ booleans stored as 1(true) and false(0) in byte array within short data type [10
 public class BitMap {
 
     static final short IS_MALE = 0, //these are steps to shift << inside short byte array [1010110] etc ...
-        IS_EXISTENT_USER = 1,
-        IS_KNOWN_CUSTOMER = 2,
-        IS_BANNED_USER = 3,
-        IS_PREMIUM_USER = 4,
-        IS_CACHED_USER = 5,
-        IS_FOREIGN_CLIENT = 6,
-        IS_EXTERNAL_USER = 7,
-        IS_MASTER_CARD = 8;
+                        IS_EXISTENT_USER = 1,
+                         IS_KNOWN_CUSTOMER = 2,
+                          IS_BANNED_USER = 3,
+                          IS_PREMIUM_USER = 4,
+                          IS_CACHED_USER = 5,
+                          IS_FOREIGN_CLIENT = 6,
+                           IS_EXTERNAL_USER = 7,
+                           IS_MASTER_CARD = 8;
 
     public static void main(String[] args) {
       // converting all booleans  to short using mask so short is [010110] of 1s and0s representing boolean true/false
@@ -56,7 +56,7 @@ public class BitMap {
         /*
         The transformation from boolean to short consists of the 3 next steps:
 
-        1.Convert boolean to 1 (true) and 0 (false).
+        1.Convert boolean to 1 (true) and 0 (false).see above
         2.Move that value to the left by N steps using the left shift operator (<<).
         3.Merge all values by using OR (|) operator.
          */
@@ -72,7 +72,7 @@ public class BitMap {
 
         1.Move results value to right >> by N steps (depending on flag order).
         2.Make a comparison in order to "cut" the right number.(&1)
-        3.Compare this number with 1, and if it's 1, => flags value is true
+        3.Compare this number with 1, and if it's 1, => flags value is true, not 1 -> zero is false
      */
     public static boolean convertToBoolean(short value, short flagPosition){
         return (value >> flagPosition & 1) == 1;

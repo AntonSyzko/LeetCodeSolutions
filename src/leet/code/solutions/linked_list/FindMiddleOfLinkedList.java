@@ -31,7 +31,7 @@ public class FindMiddleOfLinkedList {
 
         //to avoid NPE we have to check fast != null and THEN ONLY fast.next != null
         while (fast != null && fast.next != null) { // while FAST ONLY has the room to iterate to NEXT
-            fast = fast.next.next;//swich to it's next next till it reaches the end
+            fast = fast.next.next;//swich to it's next next till it reaches the end - fast moves twice faster
             slow = slow.next;//swith to it's next
         }
 

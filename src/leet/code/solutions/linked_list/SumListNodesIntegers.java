@@ -41,7 +41,6 @@ public class SumListNodesIntegers {
            resultIter.next = new ListNode<>(tenthCarry, null);
        }
 
-       return dmmyHead.next;//res is after dummy head 
-
+       return dmmyHead.next;//res is after dummy head
     }
 }

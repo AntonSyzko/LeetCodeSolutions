@@ -11,7 +11,7 @@ public class PalindromeList {
             return true;
         }
 
-        //used  just to het mid point
+        //used  just to hit mid point
         ListNode<Integer> slowPointer = list;
         ListNode<Integer> fastPointer = list;
 
@@ -21,9 +21,8 @@ public class PalindromeList {
             slowPointer = slowPointer.next;
         }
 
-        //NOTE ! cannot reuse fist pointer - it over by the timecwe found mid point ( second half )
+        //NOTE ! cannot reuse fist pointer - it is finished over by the time we found mid point ( second half )
         //second half now  points to the middle of the list ( ODD number cannot be palindrome )
-
 
         // Compare the first half and the reversed second half lists.
         ListNode<Integer> firstHalfIter = list;//start from HEAD
