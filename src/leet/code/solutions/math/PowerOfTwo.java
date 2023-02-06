@@ -89,4 +89,18 @@ public class PowerOfTwo {
 
     }
 
+//recursively to power
+    public static double power(double x, int toPowerOf) {
+        if (x == 0 && toPowerOf <= 0) {
+            throw new ArithmeticException("Невозможно возвести 0 в степень меньше 1");
+        }
+
+        if (x == 1 || x == 0) return x;
+
+        if (toPowerOf > 1) return x * power(x, --toPowerOf);
+
+        if (toPowerOf < 1) return 1 / x * power(x, ++toPowerOf);//negative num to power
+
+        return x;
+    }
 }

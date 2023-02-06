@@ -1,9 +1,6 @@
 package leet.code.solutions.arrays;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.function.Function;
 
 /*
@@ -29,13 +26,13 @@ Follow-up: Could you solve the problem in linear time and in O(1) space?
 public class MajorityElement {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{3, 2, 3};
-        int res = majorityElement(nums);
+        int[] nums = new int[]{1,1,1,2,1,2,2,3,1,3,4,4,4,1,1,4,4,4,4,4};
+        int res = find(nums);
         System.out.println(res);
 
-        nums = new int[]{2, 2, 1, 1, 1, 2, 2};
-        res = majorityElement(nums);
-        System.out.println(res);
+//        List<Integer> numbers = List.of(2, 2, 1, 1, 1, 2, 2);
+//        res = majorityElementList(numbers);
+//        System.out.println(res);
     }
 
     public static int majorityElement(int[] nums) {
@@ -55,6 +52,86 @@ public class MajorityElement {
         }
         return -1;//not found
     }
+
+    public static int majorityElementList(List<Integer> nums) {
+        if (nums.size() == 1) {
+            return nums.get(0);
+        }
+
+        Map<Integer, Integer> intToTimesOccurred = new HashMap<>();
+
+        for (int each : nums) {
+            // +1 because we have to account for current occurence
+            if (intToTimesOccurred.containsKey(each) && intToTimesOccurred.get(each) + 1 > nums.size() / 2) {//> then a half of elements (length/2)
+                return each;
+            } else {
+                intToTimesOccurred.put(each, intToTimesOccurred.getOrDefault(each, 0) + 1);
+            }
+        }
+        return -1;//not found
+    }
+
+    static int find(int[] nums) {
+        Arrays.sort(nums);
+        int count = 0;
+        Map<Integer, Integer> counts = new HashMap<>();
+
+        for (int i = 1; i < nums.length; i++) {
+            count++;
+            if (nums[i] != nums[i - 1] || i == nums.length-1) {
+                if(i == nums.length-1) count++;
+                counts.put(nums[i - 1], count);
+                count = 0;
+            }
+        }
+        int v = 0;
+        int ret = 0;
+        for(int key : counts.keySet()) {
+            int current = counts.get(key);
+            if(current> v){
+                ret = key;
+                v = current;
+            }
+        }
+return ret;
+    }
+
+    //O(1) space
+    //https://blog.devgenius.io/leetcode-169-majority-element-solution-with-images-7abab996e95e
+    private static int majorityElement2(int[] nums) {
+
+        int majorityOccurenceCount = 0, res = 0;
+
+        for (int currentNum : nums) {
+            if (majorityOccurenceCount == 0) {
+                res = currentNum;
+            }
+            if (currentNum != res) {
+                majorityOccurenceCount--;//decrease current mjority
+            } else {
+                majorityOccurenceCount++;//increase
+            }
+        }
+        return res;
+    }
+
+    private static int majorityElementList2(List<Integer> nums) {
+
+        int majorityOccurenceCount = 0, res = 0;
+
+        for (int currentNum : nums) {
+            if (majorityOccurenceCount == 0) {
+                res = currentNum;
+            }
+            if (currentNum != res) {
+                majorityOccurenceCount--;//decrease current mjority
+            } else {
+                majorityOccurenceCount++;//increase
+            }
+        }
+        return res;
+    }
+
 
     public static int majorityElement_just_most_occured(int[] nums) {
 
