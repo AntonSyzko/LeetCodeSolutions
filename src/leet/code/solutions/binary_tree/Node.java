@@ -16,4 +16,11 @@ public class Node {
         val = _val;
         children = _children;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "val=" + val +
+                '}';
+    }
 }

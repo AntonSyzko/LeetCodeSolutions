@@ -1,9 +1,6 @@
 package leet.code.solutions.arrays;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
 https://www.techiedelight.com/find-sub-array-with-0-sum/
@@ -33,8 +30,10 @@ Note that the problem deals with subarrays that are contiguous, i.e., whose elem
  */
 public class SubarraysWithZeroSum {
     public static void main(String[] args) {
-        int[] nums = { 4, 2, -3, -1, 0, 4 };
-        printAllSubarrays(nums);
+      //  int[] nums = { 4, 2, -3, -1, 0, 4 };
+        int[] nums ={ 3, 4, -7, 3, 1, 3, 1, -4, -2, -2 };
+       // printAllSubarrays(nums);
+        System.out.println( hasZeroSumSubarray(nums));
     }
 
 
@@ -88,5 +87,29 @@ public class SubarraysWithZeroSum {
         }
     }
 
+
+    public static boolean hasZeroSumSubarray(int[] nums){
+        if(nums == null || nums.length == 0){
+            return false;
+        }
+        //store ongoin accumulated sums of elements met
+        Set<Integer> ongoingSums = new HashSet<>();
+        // insert 0 into the set to handle the case when subarray with zero-sum starts from index 0
+        ongoingSums.add(0);
+        int ongoingAccumulatedSum = 0;
+
+        for (int each : nums) {
+            // sum of elements so far
+            ongoingAccumulatedSum  += each;
+              //if in set -> zero sum met
+            if(ongoingSums.contains(ongoingAccumulatedSum)){
+                return true;
+            }
+          // insert sum so far into the set
+            ongoingSums.add(ongoingAccumulatedSum);
+        }
+        // we reach here when no subarray with zero-sum exists
+        return false;
+    }
 
 }

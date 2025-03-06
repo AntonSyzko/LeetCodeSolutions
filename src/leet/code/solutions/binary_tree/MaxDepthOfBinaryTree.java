@@ -33,11 +33,51 @@ public class MaxDepthOfBinaryTree {
         root.right.left = rootRightLeft;
         root.right.right = rootRightRight;
 
-        int res = maxDepth(root);
+        int res = maxDepthOfBinTree(root);
         System.out.println(res);
     }
 
-    // O(n) runtime
+    public static int maxDepthOfBinTree(TreeNode root) {
+        if( root == null){
+            return 0;
+        }
+
+        return countDepth(root, 1) ;
+    }
+
+
+   public static int countDepth(TreeNode root, int depth) {
+        if(root==null){
+            return 0;
+        }
+
+     if(root.left==null && root.right==null){
+         return depth;
+     }
+
+     return  Math.max(countDepth(root.left, depth + 1), countDepth(root.right, depth + 1));
+
+    }
+
+    private static int answer = 0;
+
+    public static void maxDepth2(TreeNode root,  int depth) {
+        if(root == null){
+            return ;
+        }
+
+        if(root.left == null && root.right == null){
+            answer  = Math.max(answer,depth);
+        }
+
+        maxDepth2(root.left, depth + 1);
+        maxDepth2(root.right, depth + 1);
+
+    }
+
+
+
+        // O(n) runtime
     // bottom up recursion - we reach bottom NULL and then aggregate ALL
     public static int maxDepth(TreeNode root) {
         if(root == null) { //bottom max in tree branch will hit null and exit recursion

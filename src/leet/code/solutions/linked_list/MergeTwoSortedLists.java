@@ -30,16 +30,18 @@ public class MergeTwoSortedLists {
         ListNode<Integer> list1 = new ListNode<>(1, new ListNode<>(3, null));
         ListNode<Integer> list2 = new ListNode<>(2, new ListNode<>(-4, null));
 
-        ListNode<Integer> skippedNegatives = skipNegatives( list2);
+    //    ListNode<Integer> skippedNegatives = skipNegatives( list2);
 
-        System.out.println(skippedNegatives);
+       // System.out.println(skippedNegatives);
 
         ListNode<Integer> merged = mergeTwoSortedLists(list1, list2);
 
         System.out.println(merged);
     }
 
-    private static ListNode<Integer> mergeTwoSortedLists(ListNode<Integer> list1, ListNode<Integer> list2) {
+
+
+        private static ListNode<Integer> mergeTwoSortedLists(ListNode<Integer> list1, ListNode<Integer> list2) {
         ListNode<Integer> dummyHead = new ListNode(0, null);//future answer holder
 
         //so we are creating HEAD straight away 

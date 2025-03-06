@@ -29,29 +29,25 @@ Explanation: The longest subsequence formed by the consecutive integers is [2, 4
 The distinct subsequence is [2, 4, 3, 1] having length 4.
  */
 public class LongestConsecutiveSubsequence {
-    // Function to find the length of the largest subsequence formed by
-    // consecutive integers
+
+    // Function to find the length of the largest subsequence formed by consecutive integers
     public static int findMaxLenSubseq(int[] arr) {
         // construct a set out of input elements
-        Set<Integer> sequenceStartCandidates = IntStream.of(arr)        // Returns IntStream
-                .boxed()
-                .collect(Collectors.toSet());
+        Set<Integer> sequenceStartCandidates = IntStream.of(arr).boxed().collect(Collectors.toSet());
 
         // initialize result by 0
         int maxLen = 0;
 
         // do for each element of the input sequence
-        for (int e: arr) {
+        for (int num: arr) {
             // check if the current element `e` is a candidate for starting a sequence,
             // i.e., the previous element `e-1` doesn't exist in the set
-            if (!sequenceStartCandidates.contains(e - 1)) {
-                // `len` stores the length of subsequence, starting with the
-                // current element
+            if (!sequenceStartCandidates.contains(num - 1)) {
+                // `len` stores the length of subsequence, starting with the current element
                 int len = 1;
 
-                // check for presence of elements `e+1`, `e+2`, `e+3`, … ,`e+len`
-                // in the set
-                while (sequenceStartCandidates.contains(e + len)) {
+                // check for presence of elements `e+1`, `e+2`, `e+3`, … ,`e+len` in the set
+                while (sequenceStartCandidates.contains(num + len)) {
                     len++;
                 }
 
@@ -64,13 +60,9 @@ public class LongestConsecutiveSubsequence {
         return maxLen;
     }
 
-    public static void main (String[] args)
-    {
+    public static void main (String[] args) {
         int[] arr = { 2, 0, 6, 1, 5, 3, 7 };
 
-        System.out.println("The length of the maximum consecutive subsequence is " +
-                findMaxLenSubseq(arr));
+        System.out.println("The length of the maximum consecutive subsequence is " + findMaxLenSubseq(arr));
     }
-
-
 }

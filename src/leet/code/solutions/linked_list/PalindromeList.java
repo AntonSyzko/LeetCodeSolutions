@@ -28,7 +28,7 @@ public class PalindromeList {
         ListNode<Integer> firstHalfIter = list;//start from HEAD
         ListNode<Integer> secondHalfReversedIter = reverseList(slowPointer);//ex second half list - but reversed
 
-        while (secondHalfReversedIter != null && firstHalfIter != null){ //whilr there's room to iterate
+        while (secondHalfReversedIter != null && firstHalfIter != null){ //while there's room to iterate
             if(secondHalfReversedIter.val != firstHalfIter.val){ //vals NOT same
                 return false;//not a palindrome
             }

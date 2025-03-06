@@ -35,6 +35,8 @@ public class StonesAndJewels {
         System.out.println(numberOfJewelsInStones);
     }
 
+
+
     // O(n)  // key here indexOf which is -1 when not found and the fact that jewels are less than stones
     private static int numJewelsInStonesOptimal(String jewels, String stones) {
         int res = 0;

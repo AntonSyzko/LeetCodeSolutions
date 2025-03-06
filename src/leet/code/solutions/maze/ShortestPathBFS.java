@@ -30,17 +30,20 @@ If any such path were possible, we would have already explored it.
  */
 public class ShortestPathBFS {
 
-    private static final int[] row = { -1, 0, 0, 1 };
-    private static final int[] col = { 0, -1, 1, 0 };
-
     // Function to check if it is possible to go to position (row, col)
     // from the current position. The function returns false if (row, col)
     // is not a valid position or has a value 0 or already visited.
-    private static boolean isValid(int[][] mat, boolean[][] visited, int row, int col)
-    {
-        return (row >= 0) && (row < mat.length) && (col >= 0) && (col < mat[0].length)
-            && mat[row][col] == 1 && !visited[row][col];
+    private static boolean isValid(int[][] mat, boolean[][] visited, int row, int col) {
+        return (row >= 0) && (row < mat.length) //row boundaries are OK
+                && (col >= 0) && (col < mat[0].length) // col boundaries are OK
+                && mat[row][col] == 1 // cell is valid = 1
+                && !visited[row][col];// cell is not yet visited
     }
+
+
+    //possible moves from current cell
+    private static final int[] row_checks_from_current_cell = { -1, 0, 0, 1 };
+    private static final int[] col_checks_from_current_cell = { 0, -1, 1, 0 };
 
     // Find the shortest possible route in a matrix `matrix` from source
     // cell (fromRow, fromCol) to destination cell (targetRow, targetCol)
@@ -51,58 +54,55 @@ public class ShortestPathBFS {
         }
 
         // `M × N` matrix
-        int M = matrix.length;
-        int N = matrix[0].length;
+        int ROWS = matrix.length;
+        int COLS = matrix[0].length;
 
         // construct a matrix to keep track of visited cells
-        boolean[][] visited = new boolean[M][N];
+        boolean[][] visited = new boolean[ROWS][COLS];
 
         // create an empty queue
         Queue<Node> q = new ArrayDeque<>();
 
-        // mark the source cell as visited and enqueue the source node
+        // mark the source cell as visited and enqueue the source node with distance 0 as we have not started looking up yet
         visited[fromRow][fromCol] = true;
         q.add(new Node(fromRow, fromCol, 0));
 
         // stores length of the longest path from source to destination
-        int min_dist = Integer.MAX_VALUE;
+        int min_dist_res = Integer.MAX_VALUE;
 
         // loop till queue is empty
         while (!q.isEmpty()) {
             // dequeue front node and process it
-            Node node = q.poll();
+            Node nodeFromQueue = q.poll();
 
             // (fromRow, fromCol) represents a current cell, and `dist` stores its
             // minimum distance from the source
-            fromRow = node.x;
-            fromCol = node.y;
-            int dist = node.dist;
+            fromRow = nodeFromQueue.x;
+            fromCol = nodeFromQueue.y;
+            int dist = nodeFromQueue.dist;//distance from the source
 
             // if the destination is found, update `min_dist` and stop
             if (fromRow == targetRow && fromCol == targetCol) {
-                min_dist = dist;
+                min_dist_res = dist;
                 break;
             }
 
-            // check for all four possible movements from the current cell
-            // and enqueue each valid movement
-            for (int k = 0; k < 4; k++)
-            {
+            // check for all four possible movements from the current cell and enqueue each valid movement
+            for (int k = 0; k < row_checks_from_current_cell.length; k++) {//could have been written in 4 times isValid() method call
                 // check if it is possible to go to position
                 // (fromRow + row[k], fromCol + col[k]) from current position
-                if (isValid(matrix, visited, fromRow + row[k], fromCol + col[k]))
-                {
+                if (isValid(matrix, visited, fromRow + row_checks_from_current_cell[k], fromCol + col_checks_from_current_cell[k])) {
                     // mark next cell as visited and enqueue it
-                    visited[fromRow + row[k]][fromCol + col[k]] = true;
-                    q.add(new Node(fromRow + row[k], fromCol + col[k], dist + 1));
+                    visited[fromRow + row_checks_from_current_cell[k]][fromCol + col_checks_from_current_cell[k]] = true;
+                    q.add(new Node(fromRow + row_checks_from_current_cell[k], fromCol + col_checks_from_current_cell[k], dist + 1));//distnce+ 1 = increased
                 }
             }
         }
 
-        if (min_dist != Integer.MAX_VALUE) {
-            return min_dist;
+        if (min_dist_res != Integer.MAX_VALUE) {//some res found
+            return min_dist_res;
         }
-        return -1;
+        return -1;//no res
     }
 
     public static void main(String[] args)

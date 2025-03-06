@@ -15,6 +15,7 @@ The number of nodes in the tree is in the range [1, 1000].
 -100 <= Node.val <= 100
  */
 public class SymmetricBinaryTree {
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
         TreeNode left1 = new TreeNode(2);
@@ -31,11 +32,34 @@ public class SymmetricBinaryTree {
         right1.left = right1left;
         right1.right = right1right;
 
-        boolean isSymmetric = isSymmetric(root);
+        boolean isSymmetric = isSymmetricMy(root);
         System.out.println(isSymmetric);
 
 
     }
+
+    public static boolean isSymmetricMy(TreeNode root) {
+         return isMirror(root, root);
+    }
+
+    private static boolean isMirror(TreeNode left, TreeNode right) {
+        if(left == null && right == null){
+            return true;
+        }
+
+        if(left == null || right == null){
+            return false;
+        }
+
+        boolean currentValsAreSame =  left.val == right.val;
+
+        boolean outerLeafsSame = isMirror(left.left, right.right);
+        boolean innerLeafsSame = isMirror(left.right, right.left);
+
+        return currentValsAreSame && outerLeafsSame && innerLeafsSame;
+
+    }
+
 
     public static boolean isSymmetric(TreeNode root) {
         if (root == null) {//null only - technically symmetric

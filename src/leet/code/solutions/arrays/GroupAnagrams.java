@@ -30,8 +30,11 @@ public class GroupAnagrams {
 
     public static void main(String[] args) {
     String [] words = {"eat","tea","tan","ate","nat","bat"};
+  //  String [] words = {"eat","tea","tan"};
     List<List<String>> grouppedAnagrams = groupAnagrams(words);
-        System.out.println(grouppedAnagrams);
+        for(List<String> group : grouppedAnagrams){
+            System.out.println("anagram group " + group);
+        }
     }
 
     private static List<List<String>> groupAnagrams(String[] strs) {

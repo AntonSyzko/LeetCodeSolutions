@@ -22,20 +22,25 @@ Constraints: The number of nodes in the tree is in the range [0, 100].  -100 <= 
 public class InvertBinaryTree {
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(4);
+//        TreeNode root = new TreeNode(4);
+//        TreeNode left = new TreeNode(2);
+//        TreeNode right = new TreeNode(7);
+//        TreeNode left_left = new TreeNode(1);
+//        TreeNode left_right = new TreeNode(3);
+//        TreeNode right_left = new TreeNode(6);
+//        TreeNode right_right = new TreeNode(9);
+//        root.left = left;
+//        root.right = right;
+//        root.left.left = left_left;
+//        root.left.right = left_right;
+//        root.right.left = right_left;
+//        root.right.right = right_right;
+
+        TreeNode root = new TreeNode(1);
         TreeNode left = new TreeNode(2);
-        TreeNode right = new TreeNode(7);
-        TreeNode left_left = new TreeNode(1);
-        TreeNode left_right = new TreeNode(3);
-        TreeNode right_left = new TreeNode(6);
-        TreeNode right_right = new TreeNode(9);
+        TreeNode right = new TreeNode(3);
         root.left = left;
         root.right = right;
-        root.right = right;
-        root.left.left = left_left;
-        root.left.right = left_right;
-        root.right.left = right_left;
-        root.right.right = right_right;
 
         System.out.println(root);
         System.out.println("======================");

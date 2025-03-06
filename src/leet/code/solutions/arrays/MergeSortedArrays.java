@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 /*
 https://leetcode.com/problems/merge-sorted-array/
+
 You are given two integer arrays nums1 and nums2, sorted in non-decreasing order,
 and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
 Merge nums1 and nums2 into a single array sorted in non-decreasing order.
@@ -49,42 +50,44 @@ public class MergeSortedArrays {
         merge(nums1, 2, nums2, 2);
 
 
-        nums1 = new int[]{1, 2, 3, 0, 0, 0};
-        nums2 = new int[]{2, 5, 6};
-        merge(nums1, 3, nums2, 3);
-
-        nums1 = new int[]{4, 5, 6, 0, 0, 0};
-        nums2 = new int[]{1, 2, 3};
-        merge(nums1, 3, nums2, 3);
+//        nums1 = new int[]{1, 2, 3, 0, 0, 0};
+//        nums2 = new int[]{2, 5, 6};
+//        merge(nums1, 3, nums2, 3);
+//
+//        nums1 = new int[]{4, 5, 6, 0, 0, 0};
+//        nums2 = new int[]{1, 2, 3};
+//        merge(nums1, 3, nums2, 3);
     }
 
     // O (m + n )
-    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+    public static void merge(int[] nums1, int nums1Elements, int[] nums2, int nums2Elements) {
 
-        m--;//since indexes shifted, start from 0
-        n--;
+        nums1Elements--;//since indexes shifted, ( array starts from 0)
+        nums2Elements--;
+
         int indexOfNums1Tail = nums1.length - 1;//we will add to the end as we traverse ( -1 - shift index )
 
         while (indexOfNums1Tail >= 0) {
 
-            if (m < 0) {//empty first array
-                nums1[indexOfNums1Tail] = nums2[n];
-                n--;//inserted from nums2 - decrement n
-            } else if (n < 0) {//empty second array
-                nums1[indexOfNums1Tail] = nums1[m];
-                m--;//inserted from nums1 - decrement m
+            if (nums1Elements < 0) {//empty first array
+                nums1[indexOfNums1Tail] = nums2[nums2Elements];
+                nums2Elements--;//inserted from nums2 - decrement n
+            } else if (nums2Elements < 0) {//empty second array
+                nums1[indexOfNums1Tail] = nums1[nums2Elements];
+                nums1Elements--;//inserted from nums1 - decrement m
             } else {
-                if (nums1[m] > nums2[n]) { // if in first MORE than second
-                    nums1[indexOfNums1Tail] = nums1[m]; //shift FIRST to the end index
-                    m--;// nums1 shifted - decrement m !!!
+                if (nums1[nums1Elements] > nums2[nums2Elements]) { // if element in first is bigger than second
+                    nums1[indexOfNums1Tail] = nums1[nums1Elements]; //shift FIRST to the end index
+                    nums1Elements--;// nums1 shifted - decrement m !!!
                 } else { // if in second MORE than first
-                    nums1[indexOfNums1Tail] = nums2[n];//shift SECOND to the end index
-                    n--;// nums2 shifted - decrement n !!!
+                    nums1[indexOfNums1Tail] = nums2[nums2Elements];//shift SECOND to the end index
+                    nums2Elements--;// nums2 shifted - decrement n !!!
                 }
             }
 
             indexOfNums1Tail--;//decrement for while loop
         }
+
         System.out.println(Arrays.toString(nums1));
     }
 

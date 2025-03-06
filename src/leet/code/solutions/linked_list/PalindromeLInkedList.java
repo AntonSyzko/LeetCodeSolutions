@@ -23,12 +23,25 @@ Follow up: Could you do it in O(n) time and O(1) space?
 public class PalindromeLInkedList {
 
     public static void main(String[] args) {
-        ListNode node = new ListNode(1, new ListNode(2, new ListNode(2, new ListNode(1))));
+        ListNode node = new ListNode(1);
+        ListNode nodeN1 = new ListNode(2);
+        ListNode nodeN2 = new ListNode(2);
+        ListNode nodeN3 = new ListNode(1);
+
+        node.next = nodeN1;
+        nodeN1.next = nodeN2;
+        nodeN2.next = nodeN3;
+
+//        ListNode nodeN4= new ListNode(1);
+//        nodeN3.next = nodeN4;
+
+
         boolean res = isPalindrome(node);
         System.out.println(res);
     }
 
-    public static boolean isPalindrome(ListNode<Integer> head) {
+
+public static boolean isPalindrome(ListNode<Integer> head) {
         List<Integer> list = new ArrayList<>();
 
         while (head != null) { //populate List with ListNodes

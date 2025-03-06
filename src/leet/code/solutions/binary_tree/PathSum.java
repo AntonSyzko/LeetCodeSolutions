@@ -48,49 +48,49 @@ public class PathSum {
         System.out.println(res);
     }
 
-    public static boolean hasPathSum(TreeNode<Integer> root, int targetSum) {
-        if (root == null) {
+        public static boolean hasPathSum(TreeNode<Integer> root, int targetSum) {
+            if (root == null) {
+                return false;
+            }
+
+            Stack<TreeNode<Integer>> previousNodes = new Stack<>();//track prev nodes
+            Stack<Integer> sumDifference = new Stack<>();//track differences from target sum as we go
+            previousNodes.add(root);
+            sumDifference.add(targetSum - root.val);//add diff from target and root staright away
+
+            while (!previousNodes.isEmpty()) {//while nodes in stack
+                TreeNode<Integer> currentNode = previousNodes.pop();//get from top of stack
+                int currentSumDiffFromTarget = sumDifference.pop();
+
+                if (currentNode.left == null && currentNode.right == null //leaf - no siblings - end of tree
+                    && currentSumDiffFromTarget == 0) {//sum differnece = 0
+                    return true;//it's a match
+                }
+
+                if (currentNode.left != null) {//more nodes left at left branch
+                    previousNodes.add(currentNode.left);//add
+                    sumDifference.add(currentSumDiffFromTarget - (int) currentNode.left.val);//decrement from target sum
+                }
+
+                if (currentNode.right != null) {
+                    previousNodes.add(currentNode.right);
+                    sumDifference.add(currentSumDiffFromTarget - (int) currentNode.right.val);
+                }
+            }
+            // got here - no match
             return false;
-        }
-
-        Stack<TreeNode<Integer>> previousNodes = new Stack<>();//track prev nodes
-        Stack<Integer> sumDifference = new Stack<>();//track differences from target sum as we go
-        previousNodes.add(root);
-        sumDifference.add(targetSum - root.val);//add diff from target and root staright away
-
-        while (!previousNodes.isEmpty()) {//while nodes in stack
-            TreeNode<Integer> currentNode = previousNodes.pop();//get from top of stack
-            int currentSumDiffFromTarget = sumDifference.pop();
-
-            if (currentNode.left == null && currentNode.right == null //leaf - no siblings - end of tree
-                && currentSumDiffFromTarget == 0) {//sum differnece = 0
-                return true;//it's a match
-            }
-
-            if (currentNode.left != null) {//more nodes left at left branch
-                previousNodes.add(currentNode.left);//add
-                sumDifference.add(currentSumDiffFromTarget - (int) currentNode.left.val);//decrement from target sum
-            }
-
-            if (currentNode.right != null) {
-                previousNodes.add(currentNode.right);
-                sumDifference.add(currentSumDiffFromTarget - (int) currentNode.right.val);
-            }
-        }
-        // got here - no match
-        return false;
     }
 
-    private static boolean hasPathSumRecursive(TreeNode<Integer> root, int sum){
-        if(root == null) {//recursion base
+    private static boolean hasPathSumRecursive(TreeNode<Integer> node, int sum){
+        if(node == null) {//recursion base
             return false;
         }
 
-        if(root.left == null && root.right == null){ // both leaves - no more siblings
-            return sum == root.val;//actual calc
+        if(node.left == null && node.right == null){ // both leaves - no more siblings
+            return sum == node.val;//actual equality check
         }
 
-        return hasPathSumRecursive(root.left, sum - root.val) || hasPathSumRecursive(root.right,  sum - root.val);
+        return hasPathSumRecursive(node.left, sum - node.val) || hasPathSumRecursive(node.right,  sum - node.val);
 
     }
 
@@ -111,4 +111,6 @@ public class PathSum {
         //has siblings - continue aggregating and checking if target hit
         return hasPathSumRecursiveHelper(node.left, ongoingSum, targetSum) || hasPathSumRecursiveHelper(node.right, ongoingSum, targetSum);
     }
+
+
 }

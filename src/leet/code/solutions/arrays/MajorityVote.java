@@ -13,8 +13,7 @@ For example, the majority element is 2 in array {2, 8, 7, 2, 2, 5, 2, 3, 1, 2, 2
  */
 public class MajorityVote {
     public static void main(String[] args) {
-       // int[] nums = {2, 8, 7, 2, 2, 5, 2, 3, 1, 2, 2};
-        int[] nums = {1,2,3,1,5};
+        int[] nums = { 1, 8, 7, 4, 1, 2, 2, 2, 2, 2, 2 };
         int maxVote = findMajorityElementBoyerMoore(nums);
         System.out.println(maxVote);
     }
@@ -28,7 +27,7 @@ public class MajorityVote {
         }
 
         for (Map.Entry<Integer, Integer> each : mapOfFrequencies.entrySet()) {
-            if (each.getValue() >= nums.length / 2) {//more than half - means majority
+            if (each.getValue() >= nums.length / 2) {//more or = than half - means majority
                 return each.getKey();
             }
         }
@@ -53,11 +52,11 @@ public class MajorityVote {
                 // reset the counter to 1
                 occurences = 1;
             }
-            // otherwise, increment the counter if `nums[j]` is a current candidate
+            // otherwise, increment the counter if `nums[j]` is a current candidate ( so if duplicate element is detected that equals to curr majority)
             else if (majorityElement == nums[j]) {
                 occurences++;
             }
-            // otherwise, decrement the counter if `nums[j]` is a current candidate
+            // otherwise, decrement the counter if `nums[j]` is NOT a current candidate
             else {
                 occurences--;
             }

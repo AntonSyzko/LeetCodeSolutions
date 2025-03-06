@@ -44,16 +44,36 @@ public class LinkedListCycle {
         head.next = node2;
         node2.next = node3;
         node3.next = node4;
-        node4.next = node2; // cycle here
+       node4.next = head; // cycle here = pos = 0
+       // node4.next = null; // no cycle
 
-        boolean listHasCycle = hasCycle(head);
+        boolean listHasCycle = hasCycle2(head);
         System.out.println(listHasCycle);
 
-        ListNode<Integer> cycleStart = findCycleStart(head);
-        System.out.println(cycleStart.val);
+      //  ListNode<Integer> cycleStart = findCycleStart(head);
+       // System.out.println(cycleStart.val);
     }
 
-    //O(1) memory
+
+    public static boolean hasCycle2(ListNode head) {
+
+        if( head == null) return false;
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if( slow == fast ){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+        //O(1) memory
     //O(n) runtime
     public static boolean hasCycle(ListNode head) {
 

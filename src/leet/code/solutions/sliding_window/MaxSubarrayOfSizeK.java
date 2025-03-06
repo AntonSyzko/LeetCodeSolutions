@@ -1,4 +1,4 @@
-package leet.code.solutions.arrays;
+package leet.code.solutions.sliding_window;
 
 /*
 https://www.educative.io/courses/grokking-the-coding-interview/JPKr0kqLGNP
@@ -20,10 +20,10 @@ public class MaxSubarrayOfSizeK {
     public static void main(String[] args) {
         int[] arra = {2, 1, 5, 1, 3, 2};
 
-        int subarrayMax = findMaxSumSubArray(3, arra);
+        int subarrayMax = findMaxSumSubArray2(3, arra);
         System.out.println(subarrayMax);
-        int subarrayMin = findMinSumSubArray(3, arra);
-        System.out.println(subarrayMin);
+      //  int subarrayMin = findMinSumSubArray(3, arra);
+       // System.out.println(subarrayMin);
     }
 
     // O(N)
@@ -38,8 +38,7 @@ public class MaxSubarrayOfSizeK {
 
             if (windowEnd >= k - 1) { // when hit the K block ( k-1 - we are zero based )
                 res = Math.max(res, currentSum); // find max
-                currentSum = currentSum - arr[windowStart]; // extract what's left behind the moving window ( extract starting
-                // from beginning as we  go )
+                currentSum = currentSum - arr[windowStart]; // extract what's left behind the moving window ( extract starting from beginning as we  go )
                 windowStart++; // move start of sliding window
             }
         }
@@ -78,5 +77,29 @@ public class MaxSubarrayOfSizeK {
         }
 
         return subarrayMax;
+    }
+
+
+    public static int findMaxSumSubArray2(int k, int[] arr) {
+        int subarrayMaxSum = Integer.MIN_VALUE;
+        int currentSum = 0;
+
+        int windowStart = 0;
+        int windowEnd = 0;
+
+        for (int i = 0; i <= arr.length - k; i++) {
+            windowStart = i;
+            windowEnd = i + 1;
+            currentSum += arr[windowStart];
+            while (windowEnd - windowStart + 1  == k) {
+                currentSum +=  arr[windowEnd];//2+1=3
+                windowEnd++;
+            }
+            subarrayMaxSum = Math.max(subarrayMaxSum, currentSum);
+            currentSum = 0;
+            //currentSum -= arr[windowStart];
+        }
+        return subarrayMaxSum;
+
     }
 }

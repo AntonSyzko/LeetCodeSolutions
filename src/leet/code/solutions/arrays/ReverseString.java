@@ -29,7 +29,10 @@ public class ReverseString {
         reverseString(array);
     }
 
-    public static void reverseString(char[] s) {
+
+
+
+        public static void reverseString(char[] s) {
 
         int start = 0;
         int end = s.length - 1;
