@@ -23,33 +23,34 @@ For n = 5, the following combinations are possible:
 public class PrintAllCOmbinationsFromNToZero {
 
     public static void main(String[] args) {
-        int number = 5;
-        int[] out = new int[number];
+        int numberAndTotalSum = 5;
+        int[] resultArray = new int[numberAndTotalSum];
 
+        System.out.println("\r\n\t all combinations that equal in sum  to " + numberAndTotalSum);
         // print all combinations of numbers from 1 to `n` having sum `n`
-        printCombinations(1, number, out, 0);
+        printCombinations(1, numberAndTotalSum, resultArray, 0);
     }
 
     // Recursive function to print all combinations of numbers from `startNumber` to `number` having sum `number`.
     // The `index` denotes the next free slot in the output array `out`
-    public static void printCombinations(int startNumber, int number, int[] out, int index) {
+    public static void printCombinations(int startNumber, int numberAndTotalSum, int[] resultArray, int index) {
 
         // if the sum becomes `number`, print the combination
-        if (number == 0) {//number exhausetd to 0
-            System.out.println(Arrays.stream(out).limit(index).boxed().collect(Collectors.toList()));
+        if (numberAndTotalSum == 0) {//number exhausetd to 0
+            System.out.println(Arrays.stream(resultArray).limit(index).boxed().collect(Collectors.toList()));
         }
 
 
         // start from the previous element in the combination till `number`
-        for (int currentNumber = startNumber; currentNumber <= number; currentNumber++) {
+        for (int currentNumber = startNumber; currentNumber <= numberAndTotalSum; currentNumber++) {
 
             // place current element at the current index
-            out[index] = currentNumber;
+            resultArray[index] = currentNumber;
 
-            // recur with a reduced sum
-            printCombinations(currentNumber, number - currentNumber, out, index + 1);//recur and insert number in next index
+            // recur with a reduced sum ( sum - current number) , starting from current number onwards, increasing INDEX of next position in OUT array
+            printCombinations(currentNumber, numberAndTotalSum - currentNumber, resultArray, index + 1);//recur and insert number in next index
 
         }
-
     }
+
 }

@@ -2,10 +2,7 @@ package leet.code.solutions.binary_tree;
 
 import leet.code.solutions.utils.Pair;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /*
 https://leetcode.com/problems/deepest-leaves-sum/
@@ -26,16 +23,23 @@ The number of nodes in the tree is in the range [1, 104].
 1 <= Node.val <= 100
  */
 public class DeepestLEaveSum {
+
     public static void main(String[] args) {
         TreeNode<Integer> root = new  TreeNode<Integer>(1);
         TreeNode<Integer> rootLeft = new  TreeNode<Integer>(2);
         TreeNode<Integer> rootRight = new  TreeNode<Integer>(3);
         TreeNode<Integer> rootLeftLeft = new  TreeNode<Integer>(4);
         TreeNode<Integer> rootRightRight = new  TreeNode<Integer>(5);
+      //  TreeNode<Integer> rootRightLeft = new  TreeNode<Integer>(6);
+        TreeNode<Integer> rootLeftLeftLeft= new  TreeNode<Integer>(23);
+
         root.left = rootLeft;
         root.right = rootRight;
         rootLeft.left = rootLeftLeft;
         rootRight.right = rootRightRight;
+     //   rootRight.left = rootRightLeft;
+
+        rootLeft.left.left = rootLeftLeftLeft;
 
         int maxDepthSum = deepestLeavesSumBFS(root);
         System.out.println(maxDepthSum);
@@ -47,13 +51,10 @@ public class DeepestLEaveSum {
         queue.add(root);
 
         int levelSum = 0;
-        int deepestLevelSum = 0;
 
         while (!queue.isEmpty()) {//keeps ONLY LEVEL nodes at a time
 
             levelSum = 0;//reset level sum each time processing the NEW level
-
-            deepestLevelSum = levelSum;//contsantly updating deepest - but last will be the MOST deep
 
             //this must be BEFORE FOR loop, othervise polling inside for loop will decrease size each time and some nodes will be BYPASSED
             int levelNodesSize = queue.size();//currently all NODEs in Queue is a level

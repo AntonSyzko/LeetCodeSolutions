@@ -4,7 +4,7 @@ package leet.code.solutions.sliding_window;
 target = 7
 nums [ 2,3,1,2,4,3 ]
 
-out: [4,3] has minium elements = 2 and target = 7
+out: [4,3] has minimum elements = 2 and target = 7
 
 
  */
@@ -25,11 +25,12 @@ public class MinimumSizeSUbarraySum {
 
         int windowStart = 0;
 
-        int resMinSubarrayLen = nums.length;
+        int resMinSubarrayLen = nums.length;//the entire array len to start with
 
         int ongoingSum = 0;
 
         for (int widnowEnd = 0; widnowEnd < nums.length; widnowEnd++) {
+
             ongoingSum += nums[widnowEnd];
 
             while(ongoingSum >= target){

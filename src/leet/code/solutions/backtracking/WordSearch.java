@@ -32,7 +32,6 @@ public class WordSearch {
         String target = "CAT";
 
         System.out.println(exist(board, target));
-
     }
 
     private static boolean[][] visited;
@@ -52,7 +51,6 @@ public class WordSearch {
                     }
 
                 }
-
             }
         }
 
@@ -60,6 +58,7 @@ public class WordSearch {
     }
 
     private static boolean dfs(char[][] board, String word, int row, int col, int positionOfCharInTargetWord) {
+        //BASE
         if (positionOfCharInTargetWord == word.length()) {//found all characters
             return true;
         }
@@ -68,8 +67,8 @@ public class WordSearch {
         int COLS = board[0].length;
 
         if (row < 0 || row >= ROWS || // row boundaries
-            col < 0 || col >= COLS || // coul boundaries
-            board[row][col] != word.charAt(positionOfCharInTargetWord) || // non matching hcars
+            col < 0 || col >= COLS || // col boundaries
+            board[row][col] != word.charAt(positionOfCharInTargetWord) || // non matching chars
             visited[row][col]) { // already visited
 
             return false;
@@ -78,12 +77,12 @@ public class WordSearch {
 
         visited[row][col] = true;
 
-        boolean res = dfs(board, word, row + 1, col, positionOfCharInTargetWord + 1) || // up row
-                dfs(board, word, row - 1, col, positionOfCharInTargetWord + 1) || // down row
-                dfs(board, word, row, col + 1, positionOfCharInTargetWord + 1) ||// right col
-                dfs(board, word, row, col - 1, positionOfCharInTargetWord + 1);//left col
+        boolean res = dfs(board, word, row + 1, col, positionOfCharInTargetWord + 1) ||           // up row
+                      dfs(board, word, row - 1, col, positionOfCharInTargetWord + 1) ||          // down row
+                      dfs(board, word, row, col + 1, positionOfCharInTargetWord + 1) ||          // right col
+                      dfs(board, word, row, col - 1, positionOfCharInTargetWord + 1);            //left col
 
-        visited[row][col] = false;//backtrack
+        visited[row][col] = false;//BACKTRACK
 
         return res;
     }
@@ -118,11 +117,11 @@ public class WordSearch {
         int ROWS = board.length;
         int COLS = board[0].length;
 
-        Pair<Integer, Integer> currentPair = new Pair(row, col);
+        Pair<Integer, Integer> currentPair = new Pair<>(row, col);
 
         if (row < 0 || row >= ROWS || //row boundary
                 col < 0 || col >= COLS || // col boundary
-                board[row][col] != word.charAt(positionOfWordChar) || // char mismacth in board and target
+                board[row][col] != word.charAt(positionOfWordChar) || // char mismatch in board and target
                 backtrackingPath.contains(currentPair)) { // visited already
 
             return false;
@@ -131,15 +130,15 @@ public class WordSearch {
 
 
         if (board[row][col] == word.charAt(positionOfWordChar)) {
-            backtrackingPath.add(new Pair(row, col));
+            backtrackingPath.add(new Pair<>(row, col));
         }
 
-        boolean res = DFS(board, word, row - 1, col, positionOfWordChar + 1) ||//up row
-                DFS(board, word, row + 1, col, positionOfWordChar + 1) ||// down row
-                DFS(board, word, row, col - 1, positionOfWordChar + 1) ||//left col
-                DFS(board, word, row, col + 1, positionOfWordChar + 1);//right col
+        boolean res = DFS(board, word, row - 1, col, positionOfWordChar + 1) ||   //up row
+                      DFS(board, word, row + 1, col, positionOfWordChar + 1) ||   // down row
+                      DFS(board, word, row, col - 1, positionOfWordChar + 1) ||   //left col
+                      DFS(board, word, row, col + 1, positionOfWordChar + 1);     //right col
 
-        backtrackingPath.remove(currentPair);//remove from visted
+        backtrackingPath.remove(currentPair);//BACKTRACK   remove from visited
 
         return res;
 

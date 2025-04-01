@@ -32,7 +32,7 @@ public class CountGoodNodesInBinaryTree {
     }
 
     private static int countNodes(TreeNode<Integer> root) {
-        return DFS(root, root.val);
+        return DFS(root, root.val);//root val is what will compare to
 
     }
 
@@ -41,6 +41,7 @@ public class CountGoodNodesInBinaryTree {
         if(node==null){
             return 0;
         }
+        System.out.println("\r\n\t processing " + node.val);
 
          int countOfGoodNodes = (node.val >= maxValSoFar) ? 1 : 0;//if curr node VAL > max so far it ONE more to RES, otherwise carry ZERO onward
 

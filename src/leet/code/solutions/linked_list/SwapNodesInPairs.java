@@ -32,21 +32,49 @@ public class SwapNodesInPairs {
        node1.next=node2;
        node2.next = node3;
        node3.next = node4;
-        System.out.println(node1);
+       System.out.println(node1);
 
-       ListNode<Integer> swappedAdjacent = swapPairs(node1);
+       ListNode<Integer> swappedAdjacent = swapPairsIter(node1);
         System.out.println(swappedAdjacent);
     }
 
-    private static ListNode<Integer> swapPairs(ListNode<Integer> head) {
-        if(head == null || head.next == null){//recursion base case
+    private static ListNode<Integer> swapPairsIter(ListNode<Integer> head) {
+        if(head==null || head.next==null){
             return head;
         }
 
-        ListNode<Integer> next = head.next;
-        head.next = swapPairs(head.next.next);//same procedure for next pair
-        next.next = head;
+        ListNode<Integer> temp = new ListNode<>(0);
+        temp.next = head;
+        ListNode<Integer> curr = temp;
 
-        return next;
+
+        while (curr.next != null && curr.next.next != null) {
+                //extract for future swap
+                ListNode firstNode = curr.next;
+                ListNode secondNode = curr.next.next;
+
+                firstNode.next = secondNode.next;//just store for next cycle reassignment
+
+                //actual swap
+                curr.next = secondNode;
+                curr.next.next = firstNode;//mind line 56 we have stored next to this
+
+                curr = curr.next.next;//to proceed in WHILE jump in TWO as we swap pairs
+        }
+
+        return temp.next;
+    }
+
+
+        private static ListNode<Integer> swapPairs(ListNode<Integer> head) {
+            if(head == null || head.next == null){//recursion base case
+                return head;
+            }
+
+            ListNode<Integer> next = head.next;
+            head.next = swapPairs(head.next.next);//same procedure for next pair
+            next.next = head;
+
+            return next;
     }
 }

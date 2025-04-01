@@ -24,7 +24,7 @@ public class MoveZeros {
 
     public static void main(String[] args) {
         int[] nums = new int[]{0, 1, 0, 3, 12};
-        moveZeroes(nums);
+        moveZeroes2(nums);
         System.out.println(Arrays.toString(nums));
 
        nums = new int[]{0, 0,  1, 2};
@@ -36,7 +36,7 @@ public class MoveZeros {
         System.out.println(Arrays.toString(nums));
     }
 
-    public static void moveZeroes(int[] nums) {
+        public static void moveZeroes(int[] nums) {
         int nonZeroIndex = 0;//new nonZeroIndex to insert to
 
         for (int i = 0; i < nums.length; i++) {
@@ -49,6 +49,23 @@ public class MoveZeros {
         //all non zeros are set, nonZeroIndex is at last non zero
         for (int i = nonZeroIndex; i < nums.length ; i++) {
             nums[i]=0;//fill the rest with zeros
+        }
+    }
+
+    public static void moveZeroes2(int[] nums) {
+
+        int indexOfFirstNonZeroElementMet = 0 ;
+
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i] != 0){
+                nums[indexOfFirstNonZeroElementMet] = nums[i];
+                indexOfFirstNonZeroElementMet++;
+            }
+        }
+
+        while (indexOfFirstNonZeroElementMet < nums.length) {
+            nums[indexOfFirstNonZeroElementMet] = 0;
+            indexOfFirstNonZeroElementMet++;
         }
     }
 }

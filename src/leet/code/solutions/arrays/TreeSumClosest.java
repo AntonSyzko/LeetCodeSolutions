@@ -32,19 +32,20 @@ public class TreeSumClosest {
 
     public static int threeSumClosest(int[] nums, int target) {
         int res = nums[0] + nums[1] + nums[nums.length - 1];//first, second, last
+
         Arrays.sort(nums);//SORT !!!
 
-        for (int i = 0; i < nums.length - 2; i++) {
-            int a_pointer = i + 1; //next to i
-            int b_pointer = nums.length - 1;//last in for loop
+        for (int firstPointer = 0; firstPointer < nums.length - 2; firstPointer++) {
+            int secondPointer = firstPointer + 1; //next to i
+            int thirdPointer = nums.length - 1;//last in for loop
 
-            while (a_pointer < b_pointer) {
-                int current_sum = nums[i] + nums[a_pointer] + nums[b_pointer];//i, next to i , last
+            while (secondPointer < thirdPointer) {
+                int current_sum = nums[firstPointer] + nums[secondPointer] + nums[thirdPointer];//i, next to i , last
 
                 if (current_sum > target) {//too high
-                    b_pointer--;//reduce end window edge
+                    thirdPointer--;//reduce end window edge
                 } else {// too low
-                    a_pointer++;//raise bottom edge ( next to i )
+                    secondPointer++;//raise bottom edge ( next to i )
                 }
 
                 if (Math.abs(current_sum - target) < Math.abs(res - target)) {//choose between two summs, initial and current

@@ -16,31 +16,31 @@ is the string BABC having length 4.
  */
 public class LongestCommonSubstring {
 
-
     public static void main(String[] args) {
         String first = "ABABC";
-        String sec = "BABA";
+        String sec   = "BABA";
 
         String longestCommonSubstring = LCSLength(first, sec, first.length(), sec.length());
 
-                System.out.println(longestCommonSubstring);
+       System.out.println(longestCommonSubstring);
 }
 
 private static String LCSLength(String firstString, String secondString, int firstLen, int secLen){
 
        int maxLength = 0;// stores the max length of LCS
-       int endingIndex =  firstLen; // stores the ending index of LCS in `X`
 
-    // `lookup[i][j]` stores the length of LCS of substring `X[0…i-1]`, `Y[0…j-1]`
+       int endingIndex =  firstLen; // stores the ending index of LCS in `firstString`
+
+    // `lookup[i][j]` stores the length of LCS of substring `firstString[0…i-1]`, `secondString[0…j-1]`
        int[][] lookup = new int[firstLen+1][secLen+1];
 
         // fill the lookup table in a bottom-up manner
         for(int i = 1; i <= firstLen; i++){
            for(int j = 1; j <= secLen; j++){
 
-               // if the current character of `X` and `Y` matches
-               if( firstString.charAt(i-1) == secondString.charAt(j-1)){
-                   lookup[i][j] = lookup[i-1][j-1] + 1;
+               // if the current ( previous)  character of `firstString` and `secondString` matches
+               if( firstString.charAt(i-1) == secondString.charAt(j-1)){//chars are common
+                   lookup[i][j] = lookup[i-1][j-1] + 1;//common length in lookup table increases by 1
 
                    // update the maximum length and ending index
                    if(lookup[i][j] > maxLength){

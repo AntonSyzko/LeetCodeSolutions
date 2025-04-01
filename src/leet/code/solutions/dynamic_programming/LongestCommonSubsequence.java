@@ -9,22 +9,25 @@ https://www.techiedelight.com/longest-common-subsequence/
 The Longest Common Subsequence (LCS) problem is finding the longest subsequence present in given two sequences in the same order, i.e.,
 find the longest sequence which can be obtained from the first original sequence by deleting some items and from the second original sequence by deleting other items.
 
+mind ! subsequence are not substrings and do not contain chars positioned next to each other
 X: ABCBDAB
 Y: BDCABA
-The length of the LCS is 4LCS are
+The length of the LCS is 4
+LCS are
 BDAB, BCAB, and BCBA
  */
 public class LongestCommonSubsequence {
 
     public static void main(String[] args) {
           String firstStr = "ABCBDAB";
-          String secStr = "BDCABA";
+          String secStr   = "BDCABA";
 
-          int longestCommonSubsequence = LCSLength(firstStr, secStr, firstStr.length(), secStr.length());
+          int longestCommonSubsequence = LCSSubsequenceLength(firstStr, secStr, firstStr.length(), secStr.length());
+
         System.out.println(longestCommonSubsequence);
     }
 
-    public static int LCSLength(String firstString, String secondString, int firstLen, int secLen){
+    public static int LCSSubsequenceLength(String firstString, String secondString, int firstLen, int secLen){
         //BASE
         if(firstLen== 0 || secLen==0){//if ANY of strings length is exhausted
             return 0 ;
@@ -32,14 +35,15 @@ public class LongestCommonSubsequence {
 
         if(firstString.charAt(firstLen - 1) == secondString.charAt(secLen - 1)){//both Strings end with same character
 
-            return  LCSLength(firstString, secondString, firstLen - 1, secLen - 1) + 1;//add 1 do LCS length res and continue without those last 2 same characters
+            return  LCSSubsequenceLength(firstString, secondString, firstLen - 1, secLen - 1) + 1;//add 1 do LCS length res and continue without those last 2 same characters
 
         }
 
         return Integer.max(
-                LCSLength(firstString, secondString, firstLen-1, secLen), //first string without LAST char
+                LCSSubsequenceLength(firstString, secondString, firstLen-1, secLen), //first string without LAST char
                 //OR
-                LCSLength(firstString, secondString, firstLen, secLen-1));//second String without LAST char
+                LCSSubsequenceLength(firstString, secondString, firstLen, secLen-1)//second String without LAST char
+        );
     }
 
 

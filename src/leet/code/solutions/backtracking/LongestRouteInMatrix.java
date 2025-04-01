@@ -3,8 +3,11 @@ package leet.code.solutions.backtracking;
 /*
 https://www.techiedelight.com/find-longest-possible-route-matrix/
 
-Given a rectangular path in the form of a binary matrix, find the length of the longest possible route from source to destination by moving to only non-zero adjacent positions, i.e.,
-We can form the route from positions having their value as 1. Note there should not be any cycles in the output path.
+Given a rectangular path in the form of a binary matrix,
+ find the length of the longest possible route from source to destination by moving to only non-zero adjacent positions, i.e.,
+We can form the route from positions having their value as 1.
+
+ Note there should not be any cycles in the output path.
  */
 public class LongestRouteInMatrix {
 
@@ -33,7 +36,7 @@ public class LongestRouteInMatrix {
         int endRow = 5;
         int endCol = 7;
 
-        int longestPath = 0;
+        int longestPath = Integer.MIN_VALUE;
         int currentDistance = 0;
 
         boolean[][] visited = new boolean[rows][cols];
@@ -47,8 +50,8 @@ public class LongestRouteInMatrix {
         }
     }
 
-    public static int findLongestPath(int[][] mat, boolean[][] visitedCells, int startRow, int startCol, int endRow, int endCol, int maxDist, int dist){
-        if(mat == null || mat.length == 0 || mat[0].length == 0){
+    public static int findLongestPath(int[][] mat, boolean[][] visitedCells, int startRow, int startCol, int endRow, int endCol, int maxDist, int currentDistance){
+        if(mat == null || mat.length == 0 || mat[0].length == 0){//invalid input
             return -1;
         }
 
@@ -57,29 +60,33 @@ public class LongestRouteInMatrix {
             return 0;
         }
 
-        if(startRow == endRow && startCol == endCol){
-            return Math.max(maxDist,  dist);
+        if(startRow == endRow && startCol == endCol){//target is reached
+            return Math.max(maxDist,  currentDistance);
         }
 
-        visitedCells[startRow][startCol] = true;
+        visitedCells[startRow][startCol] = true;//mark as visisted
 
+        //UP
         if(isSafe(mat,visitedCells,startRow - 1 ,startCol)){
-            maxDist = findLongestPath(mat,visitedCells,startRow - 1 ,startCol,endRow, endCol, maxDist, dist + 1);
+            maxDist = findLongestPath(mat,visitedCells,startRow - 1 ,startCol,endRow, endCol, maxDist, currentDistance + 1);
         }
 
+        //DOWN
         if(isSafe(mat,visitedCells,startRow + 1 ,startCol)){
-            maxDist = findLongestPath(mat,visitedCells,startRow + 1 ,startCol,endRow, endCol, maxDist, dist + 1);
+            maxDist = findLongestPath(mat,visitedCells,startRow + 1 ,startCol,endRow, endCol, maxDist, currentDistance + 1);
         }
 
+        //LEFT
         if(isSafe(mat,visitedCells,startRow  ,startCol - 1 )){
-            maxDist = findLongestPath(mat,visitedCells,startRow ,startCol - 1 ,endRow, endCol, maxDist, dist + 1);
+            maxDist = findLongestPath(mat,visitedCells,startRow ,startCol - 1 ,endRow, endCol, maxDist, currentDistance + 1);
         }
 
+       //RIGHT
         if(isSafe(mat,visitedCells,startRow ,startCol + 1 )){
-            maxDist = findLongestPath(mat,visitedCells,startRow  ,startCol +  1 ,endRow, endCol, maxDist, dist + 1);
+            maxDist = findLongestPath(mat,visitedCells,startRow  ,startCol +  1 ,endRow, endCol, maxDist, currentDistance + 1);
         }
 
-        visitedCells[startRow][startCol] = false;
+        visitedCells[startRow][startCol] = false;//BACKTRACK
 
         return maxDist;
     }
@@ -93,4 +100,4 @@ public class LongestRouteInMatrix {
                 && !visited[row][col]
                 && matrix[row][col] != 0;
     }
-    }
+}

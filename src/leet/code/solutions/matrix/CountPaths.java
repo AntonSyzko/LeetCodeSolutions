@@ -12,24 +12,24 @@ public class CountPaths {
     public static void main(String[] args)
     {
         // `M × N` matrix
-        int M = 3;
-        int N = 3;
+        int ROWS = 3;
+        int COLS = 3;
 
-        int k = countPaths(0, 0, M, N);
-        System.out.println("The total number of paths is " + k);
+        int totalPaths = countPaths(0, 0, ROWS, COLS);
+        System.out.println("The total number of paths is " + totalPaths);
     }
 
     // Top-down recursive function to count all paths from cell (col, row)
     // to the last cell (M-1, N-1) in a given `M × N` rectangular grid
-    public static int countPaths(int col, int row, int M, int N) {
+    public static int countPaths(int col, int row, int ROWS, int COLS) {
         // there is only one way to reach the last cell
         // when we are at the last row or the last column
-        if (col == M - 1 || row == N - 1) {//here LAST col-row
+        if (col == ROWS - 1 || row == COLS - 1) {//here LAST col-row
             return 1;//and there's only ONE way to get to last, = 1
         }
 
-        return countPaths(col + 1, row, M, N)     // move down
-            + countPaths(col, row + 1, M, N);     // move right
+        return countPaths(col + 1, row, ROWS, COLS)     // move down
+            + countPaths(col, row + 1, ROWS, COLS);     // move right
     }
 
     /*

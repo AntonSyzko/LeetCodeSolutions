@@ -5,9 +5,12 @@ The Levenshtein distance (or Edit distance) is a way of quantifying how differen
 
 The Levenshtein distance between two words is the minimum number of single-character edits (i.e., insertions, deletions, or substitutions) required to change one word into the other. Each of these operations has a unit cost.
 
- For example, the Levenshtein distance between kitten and sitting is 3. The minimal edit script that transforms the former into the latter is:
+ For example, the Levenshtein distance between kitten and sitting is 3. T
+ he minimal edit script that transforms the former into the latter is:
 
-kitten —> sitten (substitution of s for k)sitten —> sittin (substitution of i for e)sittin —> sitting (insertion of g at the end)
+kitten —> sitten (substitution of s for k)
+sitten —> sittin (substitution of i for e)
+sittin —> sitting (insertion of g at the end)
 
  */
 public class LevensteinDistance {
@@ -16,12 +19,13 @@ public class LevensteinDistance {
         String source = "kitten";
         String target = "sitting";
 
-        int distance = dist(source, source.length(), target, target.length());
+        int distance = levensteinDist(source, source.length(), target, target.length());
 
         System.out.println(distance);
     }
 
-    public static int dist(String sourceStr, int sourceLen, String targetStr, int targetLen) {
+
+    public static int levensteinDist(String sourceStr, int sourceLen, String targetStr, int targetLen) {
         if (sourceLen == 0) {
             return targetLen;
         }
@@ -30,16 +34,16 @@ public class LevensteinDistance {
             return sourceLen;
         }
 
-        int cost = sourceStr.charAt(sourceLen - 1) == targetStr.charAt(targetLen - 1) ? 0 : 1;//last  chars same ?
+        int lastCharacterReplacementCost = sourceStr.charAt(sourceLen - 1) == targetStr.charAt(targetLen - 1) ? 0 : 1;   //last  chars same ?
 
         //Delete the last character of source. The size of SOURCE reduces by 1, and target remains the same. This accounts for X[1…i-1], Y[1…j] as we move in on the source string, but not in the target string.
-        int delete = dist(sourceStr, sourceLen - 1, targetStr, targetLen) + 1;
+        int deleteLastFromSource = levensteinDist(sourceStr, sourceLen - 1, targetStr, targetLen) + 1;
         //Insert the last character of TARGET into SOURCE. The size of TARGET reduces by 1, and X remains the same. This accounts for X[1…i], Y[1…j-1] as we move in on the target substring, but not in the source substring.
-        int insert = dist(sourceStr, sourceLen, targetStr, targetLen - 1) + 1;
+        int insertLastFromTargetIntoSource = levensteinDist(sourceStr, sourceLen, targetStr, targetLen - 1)  + 1;
         //Substitute (Replace) the current character of SOURCE by the current character of TARGET. The size of both SOURCE and TARGET reduces by 1. This accounts for X[1…i-1], Y[1…j-1] as we move in both the source and target string.
-        int substitute = dist(sourceStr, sourceLen - 1, targetStr, targetLen - 1) + cost;
+        int substituteSourceCharByTargetChar = levensteinDist(sourceStr, sourceLen - 1, targetStr, targetLen - 1) + lastCharacterReplacementCost;
 
-        return minOfThree(delete, insert, substitute);
+        return minOfThree(deleteLastFromSource, insertLastFromTargetIntoSource, substituteSourceCharByTargetChar);
     }
 
 

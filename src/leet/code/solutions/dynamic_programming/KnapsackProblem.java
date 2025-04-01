@@ -29,7 +29,7 @@ public class KnapsackProblem {
         //if weight of curr item is BIGGER than the entire knapsack capacity
         //mind [numberOfItems-1] here is just a zero based index access to last item from tail
         if(weights[numberOfItems-1] > knapsackCapacity ){
-            return findMaxValue(values, weights, knapsackCapacity, numberOfItems-1);//then apply algo excluding the current item, which was BIGGER than entire knapsack capacity
+            return findMaxValue(values, weights, knapsackCapacity, numberOfItems-1);//then apply algo excluding(numberOfItems-1) the current item, which was BIGGER than entire knapsack capacity
         }
 
         //Maximum value obtained from n-1 items and all the  weights (Excluding the n-1-th item)
@@ -37,7 +37,10 @@ public class KnapsackProblem {
 
         //including here means counting in VALUES array  but not counting in KNAPSACK CAPACITY
         //Value of the n-th item plus the maximum value that can be obtained from n-1 items and W-wt[n] weights (Including the n-th item)
-        int maxValueIncludingCurrentItem =  values[numberOfItems - 1] + findMaxValue(values,  weights, knapsackCapacity - weights[numberOfItems-1], numberOfItems-1);
+        //mind [numberOfItems-1] here is just a zero based index access to last item from tail
+        int maxValueIncludingCurrentItem =  values[numberOfItems - 1]
+                +
+                findMaxValue(values,  weights, knapsackCapacity - weights[numberOfItems-1], numberOfItems-1);
 
         return Math.max(maxValuesExcludingCurrentItem, maxValueIncludingCurrentItem);
     }

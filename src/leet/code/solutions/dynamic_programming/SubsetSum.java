@@ -1,7 +1,5 @@
 package leet.code.solutions.dynamic_programming;
 
-import java.util.Arrays;
-
 /*
 https://www.callicoder.com/subset-sum-problem/
 
@@ -20,26 +18,32 @@ Output: False
 There is no subset that add up to 30.
  */
 public class SubsetSum {
-    public static void main(String[] args) {
-   int[] nums = {3, 34, 4, 12, 5, 2};
-   int n = nums.length;
-   int targetSum = 9;
 
-   boolean exists = hasSubsetSum(nums, targetSum, n);
-        System.out.println(exists);
+    public static void main(String[] args) {
+       int[] nums = {3, 34, 4, 12, 5, 2};
+       int n = nums.length;
+       int targetSum = 9;
+
+       boolean exists = hasSubsetSum(nums, targetSum, n);
+
+       System.out.println(exists);
     }
 
     //time O(2^n) Exponential
     //space O(1) only call stack
     private static boolean hasSubsetSum(int[] values, int targetSum, int length) {
         //BASE: We can't obtain a positive sum with no items
-        if(length == 0) return false;
+        if(length == 0){
+            return false;
+        }
 
         //BASE:  We DO CAN obtain a zero sum by not choosing any items and having an empty subset(above passed)
-        if(targetSum == 0) return true;
+        if(targetSum == 0) {
+            return true;
+        }
 
         if(values[length-1] > targetSum) {//current item itself is BIGGER that target sum
-            return  hasSubsetSum(values, targetSum, length - 1);//repeat without it ( without last)
+            return  hasSubsetSum(values, targetSum, length - 1);//repeat without it ( without last) - excluding
         }
 
         boolean includingCurrentItem = hasSubsetSum(values, targetSum - values[length - 1], length - 1);

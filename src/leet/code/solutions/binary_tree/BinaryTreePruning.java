@@ -56,7 +56,7 @@ public class BinaryTreePruning {
     }
 
     private static boolean containsOne(TreeNode<Integer> node) {
-        if( node == null || node.val == 0){
+        if( node == null || node.val == 0){//BASE
             return false;
         }
 

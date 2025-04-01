@@ -71,9 +71,9 @@ public class LowestCommonAncestorOfBinSearchTree {
             return null;
         }
         if (Math.max(p.val, q.val) < root.val) {// both smaller
-            return lowestCommonAncestor(root.left, p, q);//lookup left
+            return lowestCommonAncestorRecursive(root.left, p, q);//lookup left
         } else if (Math.min(p.val, q.val) > root.val) {//both  higher
-            return lowestCommonAncestor(root.right, p, q);//lookup right
+            return lowestCommonAncestorRecursive(root.right, p, q);//lookup right
         } else {
             return root;//not BOTH smaller OR higher
         }

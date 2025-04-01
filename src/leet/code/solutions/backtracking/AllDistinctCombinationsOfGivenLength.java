@@ -9,10 +9,12 @@ Given an integer array, find all distinct combinations of a given length k.
 
 For example,
 
-Input:  {2, 3, 4}, k = 2
+Input:  {2, 3, 4},
+k = 2
 Output: {2, 3}, {2, 4}, {3, 4}
 
- Input:  {1, 2, 1}, k = 2
+ Input:  {1, 2, 1},
+ k = 2
  Output: {1, 2}, {1, 1}, {2, 1}
 
 The program should print all the distinct combinations,
@@ -31,6 +33,7 @@ public class AllDistinctCombinationsOfGivenLength {
             int[] nums = {2, 3, 4};
 
             List<List<Integer>> res = printAllDistinctCombinations(nums, 2);
+
              for (List<Integer> list : res) {
                  System.out.println(list);
              }
@@ -39,37 +42,34 @@ public class AllDistinctCombinationsOfGivenLength {
 
     private static List<List<Integer>> printAllDistinctCombinations(int[] nums, int combinationLimit) {
         List<List<Integer>> distinctCombinationsRes = new ArrayList<>();
+        List<Integer> ongoingCombination = new ArrayList<>();
+        int startNum = 0;
 
-        findDistinctCombinations(nums,0,combinationLimit, distinctCombinationsRes, new ArrayList<>());
+        findDistinctCombinations(nums,startNum,combinationLimit, distinctCombinationsRes, ongoingCombination);
 
         return distinctCombinationsRes;
     }
 
-    private static void findDistinctCombinations(int[] nums, int start, int combinationLimit, List<List<Integer>> distinctCombinations, ArrayList<Integer> currentResult) {
+    private static void findDistinctCombinations(int[] nums, int start, int combinationLimit, List<List<Integer>> distinctCombinationsRes, List<Integer> ongoingCombination) {
         //invalid input
         if(nums.length == 0 || combinationLimit > nums.length){
             return;
         }
 
-   //     System.out.println("combinationLimit = " + combinationLimit);
-        //base case
+        //BASE case
         if(combinationLimit == 0){//combinationLimit exhausted - add to res
-          //  System.out.println("\r\n\t ---- K exhausted -> put : "  + currentResult + " ----");
-            distinctCombinations.add(new ArrayList<>(currentResult));//put to final result
+            distinctCombinationsRes.add(new ArrayList<>(ongoingCombination));//put to final result
             return;//mind return here is from function on top of the call stack not the entire method - and it will jump to REMOVE LAST operation after this return
         }
 
         //traverse all digits
         for (int i = start; i < nums.length; i++) {
 
-            currentResult.add(nums[i]);
-            //System.out.println("added " + nums[i]);
-           // System.out.println("\r\n\t curtr res " + Arrays.toString(currentResult.toArray()));
+            ongoingCombination.add(nums[i]);
 
-            findDistinctCombinations(nums,i + 1,combinationLimit - 1, distinctCombinations, currentResult);//with combinationLimit one less, and start moved one UP
+            findDistinctCombinations(nums,i + 1,combinationLimit - 1, distinctCombinationsRes, ongoingCombination);//with combinationLimit one less, and start moved one UP
 
-         //   System.out.println(" removing " + currentResult.get(currentResult.size() - 1));
-            currentResult.remove(currentResult.size() - 1);//backtrack - remove last
+            ongoingCombination.remove(ongoingCombination.size() - 1);//BACKTRACK - remove last
             //currentResult.removeLast(); // alternative
 
         }

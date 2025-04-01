@@ -28,7 +28,7 @@ public class LongestCommonPrefix {
 
     public static void main(String[] args) {
         String[] arr = new String[]{"flower", "flow", "flight"};
-        String longestCommonPrefix = longestCommonPrefix3(arr);
+        String longestCommonPrefix = longestCommonPrefix44(arr);
         System.out.println(longestCommonPrefix);
 
         arr = new String[]{"dog", "racecar", "car"};
@@ -41,7 +41,8 @@ public class LongestCommonPrefix {
 
         int index = 0;//cannot be more than smallest of em
 
-        for (char each : strs[0].toCharArray()) {
+        for (char each : strs[0].toCharArray()) {//base is first
+
             for (int i = 1; i < strs.length; i++) {
                 if (index > strs[i].length() //index is more than others ( cannot be common )
                     || //OR
@@ -113,4 +114,26 @@ public class LongestCommonPrefix {
         }
         return "";
     }
-}
+
+    public static String longestCommonPrefix44(String[] strs) {
+            if (strs == null || strs.length == 0) {
+                return "";
+            }
+
+            String commonPrefix = strs[0];//take any first
+
+            for (int word = 0; word < strs.length; word++){//iterate over all words
+
+                while(strs[word].indexOf(commonPrefix) != 0){//while index of common prefix is not ZERO - so the beginning og of word
+
+                    commonPrefix = commonPrefix.substring(0, commonPrefix.length()-1);//substract last char - decrease by 1 char from end
+
+                    if(commonPrefix.isEmpty()){//all exhaused - not common pref
+                        return "";
+                    }
+                }
+
+            }
+            return commonPrefix;
+    }
+    }

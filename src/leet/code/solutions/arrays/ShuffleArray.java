@@ -32,12 +32,28 @@ public class ShuffleArray {
     public static void main(String[] args) {
         int[] nums = {1, 3, 5, 2, 4, 6};
         int pivot = 3;
-        int[] shuffled = shuffle2(nums, pivot);
+        int[] shuffled = shuffleMy(nums, pivot);
 
         System.out.println(Arrays.toString(nums));
 
         System.out.println(Arrays.toString(shuffled));
     }
+
+    private static int[] shuffleMy(int[] nums, int n) {
+        int[] shuffledRes = new int[nums.length];
+
+        int indexInShuffled = 0;
+
+        for (int i = 0; i < n ; i++) {//iterate up to N !!!
+
+            shuffledRes[indexInShuffled++] = nums[i];
+            shuffledRes[indexInShuffled++] = nums[i + n];
+        }
+
+        return shuffledRes;
+
+    }
+
 
     private static int[] shuffle(int[] nums, int n) {
         int[] res = new int[nums.length];

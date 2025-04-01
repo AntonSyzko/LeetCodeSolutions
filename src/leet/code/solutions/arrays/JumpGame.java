@@ -24,6 +24,7 @@ Constraints:
 
  */
 public class JumpGame {
+
     public static void main(String[] args) {
         int[] jumpsOptions = {3, 2, 1, 0, 4};
         boolean canReachEnd = canJump(jumpsOptions);

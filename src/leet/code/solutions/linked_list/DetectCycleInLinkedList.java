@@ -21,8 +21,39 @@ public class DetectCycleInLinkedList {
         boolean result = detectCycleUsingSet(head);
         System.out.println(result);
 
+        ListNode  start = detectCycleStart(head);
+        System.out.println(start.val);
+
     }
 
+    private static ListNode detectCycleStart(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                System.out.println("\r\n\t cycle detected at " + slow.val);
+                break;
+            }
+        }
+
+        if(fast==null || fast.next==null){//reached end with no cycle
+            return null;//null -> no cycle detected
+        }
+
+        //slow stayed at cycle
+        while (head != slow) {//head used as is from start -> until they met -> they met at cycle start
+            head = head.next;
+            slow = slow.next;
+        }
+
+        return  head;
+    }
+
+    //O(n) time and space
     private static boolean detectCycleUsingMap(ListNode head) {
 
         if(head==null || head.next==null){

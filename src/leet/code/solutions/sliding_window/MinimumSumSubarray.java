@@ -16,11 +16,10 @@ public class MinimumSumSubarray {
     public static void main(String[] args) {
     int[] arr = {10, 4, 2, 5, 6, 3, 8, 1};
     int k = 3;
-    findSubarray(arr, k);
+        findSubarray(arr, k);
     }
 
-
-    public static void findSubarray(int[] arr, int windowLimit){
+public static void findSubarray(int[] arr, int windowLimit){
         // base case
         if(arr == null || arr.length == 0 || arr.length <= windowLimit) {
             return;
@@ -32,7 +31,6 @@ public class MinimumSumSubarray {
         // stores ending index of the minimum sum subarray found so far
             int lastIndexOfSubarray = 0;
 
-
              int ongoingSUm = 0;
 
             for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {
@@ -40,7 +38,8 @@ public class MinimumSumSubarray {
                 ongoingSUm += arr[windowEnd];
 
                 // if the window size is more than equal to `windowLimit`
-                if(windowEnd + 1 >= windowLimit){
+                if(windowEnd + 1 >= windowLimit){//hit window limit
+
                     if(ongoingSUm < minSum){
                         // update the minimum sum window
                         minSum = ongoingSUm;
@@ -51,7 +50,7 @@ public class MinimumSumSubarray {
                     ongoingSUm -= arr[windowEnd + 1 - windowLimit];
                 }
             }
-            System.out.printf("Minimum sum subarray of size 3 is (%d, %d)", lastIndexOfSubarray - windowLimit + 1, lastIndexOfSubarray);
+            System.out.printf("Minimum sum subarray of size %d is (%d, %d)", windowLimit, lastIndexOfSubarray - windowLimit + 1, lastIndexOfSubarray);
     }
 
 }

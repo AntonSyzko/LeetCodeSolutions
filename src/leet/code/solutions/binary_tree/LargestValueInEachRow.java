@@ -1,7 +1,9 @@
 package leet.code.solutions.binary_tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /*
 https://leetcode.com/problems/find-largest-value-in-each-tree-row/
@@ -37,6 +39,9 @@ public class LargestValueInEachRow {
         List<Integer> res = largestValues(root);
         System.out.println(res);
 
+        res = findLargestBFS(root);
+        System.out.println(res);
+
     }
 
     public static List<Integer> largestValues( TreeNode<Integer> root) {
@@ -48,6 +53,7 @@ public class LargestValueInEachRow {
 
     }
 
+    //DFS
     private static void addLargest( TreeNode<Integer> root, List<Integer> largestRowValues, int level) {
         if(root==null){//recursion exit base
             return;
@@ -62,7 +68,35 @@ public class LargestValueInEachRow {
         //recursion
         addLargest(root.left, largestRowValues, level+1);//left and level down
         addLargest(root.right, largestRowValues, level+1);//right and level down
+    }
 
+    private static List<Integer> findLargestBFS( TreeNode<Integer> root){
+        ArrayList<Integer> result = new ArrayList<>();
+        if(root == null) return result;
+
+        LinkedList<TreeNode> queue = new LinkedList<>();//BFS queue
+        queue.add(root);
+
+        while(!queue.isEmpty()){
+
+            int currentRowMax = Integer.MIN_VALUE;
+
+            int currentSize = queue.size();//it's number of ALL elements in row
+
+            for(int i = 0; i < currentSize; i++) {// iterate for as many times as elements in this list - size in list will traverse all level elements
+
+                TreeNode node = queue.removeFirst();// MIND remove FIRST
+                currentRowMax = Math.max(currentRowMax, (Integer) node.val);
+
+                if(node.left != null) queue.addLast(node.left);//it will insert in list but for future traversals, in this traversal we iterate = 'currentSize' over elements previously stored
+                if(node.right != null) queue.addLast(node.right);// mind ADD LAST
+
+            }
+            //we have traversed all nodes of level , since we extracted nodes currentSize time from list , just store max
+            result.add(currentRowMax);
+        }
+
+        return result;
     }
 
 }

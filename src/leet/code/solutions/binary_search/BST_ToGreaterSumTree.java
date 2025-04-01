@@ -27,7 +27,7 @@ All the values in the tree are unique.
 
  */
 
-import leet.code.solutions.binary_tree.TreeNode;
+import java.util.Stack;
 
 public class BST_ToGreaterSumTree {
 
@@ -44,34 +44,90 @@ public class BST_ToGreaterSumTree {
         rootL.right = rootLR;
         rootR.right = rootRR;
 
-        bstToGst(root);
+        System.out.println(bstToGst(root));
 
-       // System.out.println(bstToGst(root));
+       // System.out.println(bstToGstStack(root));
 
     }
 
    private static int aggregatingSum = 0;
 
     private static TreeNode bstToGst(TreeNode root) {
+       if(root==null) return null;
 
-        calculateSum(root);
+       calculateSumHelper(root);
+
+       return root;
+    }
+
+    private static void calculateSumHelper(TreeNode currentNode) {
+        //BASE
+        if(currentNode == null) {
+            return;
+        }
+
+        calculateSumHelper(currentNode.right);//dive as far right as possible
+
+        aggregatingSum += currentNode.val;//aggregate sum as we dive deep
+
+        currentNode.val = aggregatingSum;//override current node's value with aggregated sum
+
+        calculateSumHelper(currentNode.left);//dive as far left as possible
+
+    }
+
+
+    private static TreeNode bstToGstStack(TreeNode root) {
+        if (root == null) return null;
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode currentNode = root;
+        int sum = 0;
+
+        // Reverse in-order traversal using a stack
+        while (!stack.isEmpty() || currentNode != null) {
+            // Go as far right as possible
+            while (currentNode != null) {
+
+                stack.push(currentNode);
+
+                currentNode = currentNode.right;//continue pushing right subtree nodes as long as there are some
+
+            }
+
+            // Process the current node
+            currentNode = stack.pop();
+            sum += currentNode.val;     // Add the original value to our running sum
+            currentNode.val = sum;      // Update the node's value
+
+            // Move to the left subtree
+            currentNode = currentNode.left;
+        }
 
         return root;
     }
 
-    private static void calculateSum(TreeNode<Integer> currentNode) {
-        if (currentNode == null) {//recursion base
-            //System.out.println("\r\n\t end of recursion");
-            return;
+
+
+    private static class TreeNode {
+        int val;
+       TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
-       // System.out.println("calculating for " + currentNode.val);
 
-
-        calculateSum(currentNode.right);//DFS to the RIGHT bottom (stack will contain vals AND future method calls
-        aggregatingSum += currentNode.val;
-       // System.out.println("aggregating " + aggregatingSum);
-        currentNode.val = aggregatingSum;//reset current NODE val
-        calculateSum(currentNode.left);//DFS to LEFT bottom ( unless right ones are met - these will take priority )
-
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
+        }
     }
 }

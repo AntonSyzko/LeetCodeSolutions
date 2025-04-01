@@ -25,25 +25,25 @@ public class FindAllPathFromFirstToLastCellOfTheMatrix {
 
     public static void main(String[] args) {
 
-        int[][] mat =
-                {
-                        { 1, 2, 3 },
-                        { 4, 5, 6 },
-                        { 7, 8, 9 }
-                };
+            int[][] mat =
+                    {
+                            { 1, 2, 3 },
+                            { 4, 5, 6 },
+                            { 7, 8, 9 }
+                    };
 
-        Stack<Integer> path = new Stack<>();
+            Stack<Integer> path = new Stack<>();
 
-        // start from `(0, 0)` cell
-        int row = 0, col = 0;
+            // start from `(0, 0)` cell
+            int row = 0, col = 0;
 
-       // findPaths(mat, path, row, col);
+           // findPaths(mat, path, row, col);
 
-        boolean[][] visited = new boolean[mat.length][mat[0].length];
-        int startRow = 1;
-        int startCol = 1;
-    //    findPathsFromAnyCellAnyDirection(mat,path,visited, startRow,startCol);
-        findPathsFromAnyCellOnlyMovingRightOrDown(mat,path, startRow,startCol);
+            boolean[][] visited = new boolean[mat.length][mat[0].length];
+            int startRow = 1;
+            int startCol = 1;
+        //    findPathsFromAnyCellAnyDirection(mat,path,visited, startRow,startCol);
+            findPathsFromAnyCellOnlyMovingRightOrDown(mat,path, startRow,startCol);
     }
 
     private static void findPaths(int[][] matrix, Stack<Integer> pathStack, int row, int col){

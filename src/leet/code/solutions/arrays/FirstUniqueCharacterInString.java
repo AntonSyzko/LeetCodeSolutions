@@ -31,21 +31,27 @@ public class FirstUniqueCharacterInString {
         System.out.println(res);
     }
 
-    public static int firstUniqChar(String s) {
+
+
+
+        public static int firstUniqChar(String s) {
         Map<Character, Integer> charsToIndexes = new HashMap<>(); // chars to it's index occurences
 
         for (int i = 0; i < s.length(); i++) {
+
             char current = s.charAt(i);
+
             if(!charsToIndexes.containsKey(current)){ // if NOT in map
-                charsToIndexes.put(current, i);// store
+                charsToIndexes.put(current, i);// store it's index as a value
             } else { // if IS in map - duplicate
-                charsToIndexes.put(current, -1); // invalidate - set to -1
+                charsToIndexes.put(current, -1); // invalidate - set  index to -1
             }
         }
 
         int min = Integer.MAX_VALUE;// starting MIN with MAX value
 
         for (char each : charsToIndexes.keySet()){
+
             if(charsToIndexes.get(each) > -1 // if NOT invalidtaed ( duplicate )
                 &&  //AND
                 charsToIndexes.get(each) < min){ // less than temp MIN
