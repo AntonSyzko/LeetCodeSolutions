@@ -15,8 +15,36 @@ public class SumOfLeftLeeaves {
         System.out.println(sumOfLeftLeaves(root));
     }
 
-
     private static int sumOfLeftLeaves(TreeNode node) {
+        if(node == null){
+            return 0;
+        }
+
+        int sumOfLeft = 0;
+
+
+        if(node.left != null){
+
+            if(node.left.left == null && node.left.right == null){//is leaf
+                sumOfLeft += node.left.getVal();
+            }else{
+                sumOfLeft+=  sumOfLeftLeaves(node.left);
+            }
+        }
+
+
+        if(node.right != null){
+            if(node.right.left != null || node.right.right != null){
+                sumOfLeft +=  sumOfLeftLeaves(node.right);
+            }
+        }
+
+        return sumOfLeft;
+
+    }
+
+
+    private static int sumOfLeftLeaves2(TreeNode node) {
 
         if(node==null){
             return 0;

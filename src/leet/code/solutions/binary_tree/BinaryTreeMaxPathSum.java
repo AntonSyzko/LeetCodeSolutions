@@ -3,54 +3,111 @@ package leet.code.solutions.binary_tree;
 /*
 https://leetcode.com/problems/binary-tree-maximum-path-sum/
 
-A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
+ A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
 
 The path sum of a path is the sum of the node's values in the path.
 
 Given the root of a binary tree, return the maximum path sum of any non-empty path.
+
+
+
+Example 1:
+
+
+Input: root = [1,2,3]
+Output: 6
+Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
+Example 2:
+
+
+Input: root = [-10,9,20,null,null,15,7]
+Output: 42
+Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
+
  */
 public class BinaryTreeMaxPathSum {
 
+
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        TreeNode rootL = new TreeNode(2);
-        TreeNode rootR = new TreeNode(3);
-        root.left = rootL;
-        root.right = rootR;
+         TreeNode root = new TreeNode(1);
+         root.left = new TreeNode(2);
+         root.right = new TreeNode(3);
 
-        int maxPath = maxPathSum(root);
-        System.out.println(maxPath);
+         root.left.left = new TreeNode(4);
+         root.left.right = new TreeNode(5);
+
+         root.right.left = new TreeNode(10);
+         root.right.right = new TreeNode(20);
+         root.right.left.left = new TreeNode(30);
+         root.right.right.right = new TreeNode(40);
+
+         int maxPathSum = maxPathSum(root);
+         System.out.println(maxPathSum);
     }
 
 
-    private static int maxPathSum = Integer.MIN_VALUE;
+    private static int maxSUm = Integer.MIN_VALUE;
 
+    private  static int maxPathSum(TreeNode root) {
+      if(root==null) return 0;
 
-    private static int maxPathSum(TreeNode<Integer> root) {
-        if(root == null){
-            return 0;
-        }
+        maxGain2(root);
 
-        findMathPathDFS(root);
-
-        return maxPathSum;
+       return maxSUm;
     }
 
-    private static int findMathPathDFS(TreeNode<Integer> node) {
-        if(node == null){
-            return 0 ;
+    private static int maxGain(TreeNode node) {
+        if(node==null) return 0;//BASE , as well no gain
+
+        int leftGain = maxGain(node.left);//how much can we gain from adding nodes from left connected edges
+        int rightGain = maxGain(node.right);
+
+        int priceNewPAth = node.val + leftGain + rightGain;//accumulated path as we recursively go
+
+        maxSUm = Math.max(maxSUm, priceNewPAth);//update max as we go
+
+        return node.val + Math.max(leftGain, rightGain); //as we continue adding to  current node value whatever BIGGEST value LEFT or RIGHT gain can offer
+    }
+
+    private static int maxGain2(TreeNode node) {
+        if(node==null) return 0;//BASE , as well no gain
+
+        int leftGain = maxGain2(node.left);//how much can we gain from adding nodes from left connected edges
+        int rightGain = maxGain2(node.right);
+
+        int priceNewPAth = node.val + leftGain + rightGain;//recursively accumulated path as we recursively go ( will stop only at BASE)
+
+        maxSUm = Math.max(maxSUm, priceNewPAth);//update max as we go
+
+        int nodeLeftVal = node.left == null ? 0 : node.left.val;
+        int nodeRightVal = node.right == null ? 0 : node.right.val;
+
+        return node.val + Math.max(nodeLeftVal, nodeRightVal); //as we continue adding to  current node value whatever BIGGEST value LEFT or RIGHT gain can offer
+    }
+
+
+
+    private static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
 
-        // Get max path sums from left and right subtrees
-        // Use Math.max with 0 to handle negative values - if a path sum is negative, we're better off NOT including that path AT ALL !!!
-        int leftPathSum = Math.max(0, findMathPathDFS(node.left));
-        int rightPathSum = Math.max(0, findMathPathDFS(node.right));
 
-        // Update max path by considering current node as the root of a path
-        maxPathSum = Math.max(maxPathSum, node.val + leftPathSum + rightPathSum);
-
-        // Return maximum sum of path that can be extended by parent node
-        //remember we can count only left OR right node, hence pick the max of em
-        return  node.val + Math.max(leftPathSum, rightPathSum);
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
+        }
     }
 }

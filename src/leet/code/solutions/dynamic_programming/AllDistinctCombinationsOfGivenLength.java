@@ -66,7 +66,7 @@ public class AllDistinctCombinationsOfGivenLength {
         findCombinations(nums, start + 1, distinctCombinationsLimit - 1, finalRes, currentRes);
 
         // exclude the lastly added element from the current combination
-        currentRes.remove(currentRes.size() - 1);
+        currentRes.remove(currentRes.size() - 1); // BACKTRACK
        // currentRes.removeLast();//alternative
 
         // exclude the current element from the current combination and recur

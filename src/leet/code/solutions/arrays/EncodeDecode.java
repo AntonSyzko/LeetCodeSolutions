@@ -45,13 +45,13 @@ public class EncodeDecode {
         StringBuffer finalString = new StringBuffer();
 
         for (String str : strs) {
-            finalString.append(str.length()).append(",");
+            finalString.append(str.length()).append(",");//append lengthes like 4,5,6,
         }
 
-        finalString.append("#");
+        finalString.append("#");//delimit length with following letters
 
         for (String each : strs) {
-            finalString.append(each);
+            finalString.append(each);//append letters ,all letters
         }
 
         return finalString.toString();
@@ -65,9 +65,11 @@ public class EncodeDecode {
         }
 
         List<String> decodedRes = new ArrayList<>();
+
         List<Integer> sizes = new ArrayList<>();
         int index = 0;
 
+        //process length numbers
         while (str.charAt(index)!='#') {
 
             StringBuilder curr = new StringBuilder();
@@ -84,12 +86,13 @@ public class EncodeDecode {
 
         index++;//last comma move before #
 
-        for (Integer strSize : sizes) {
-            decodedRes.add(str.substring(index,index+strSize));
-            index = index+strSize;//jump index
+        for (Integer strSize : sizes) {//for all defined sizes of length
+
+            //mind index left where we finishes length - so here letters start
+            decodedRes.add(str.substring(index,index + strSize));
+            index = index + strSize;//jump index
         }
 
         return decodedRes;
     }
-
 }

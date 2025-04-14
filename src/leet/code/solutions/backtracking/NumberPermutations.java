@@ -45,9 +45,22 @@ public class NumberPermutations {
     }
 
     /*
-    Time O( n! * n)
-    Space O(n1 * n) for output list
-    n1 -s is factorial complexity
+       Time and Space Complexity Analysis
+                    Time Complexity
+
+                    We generate all possible permutations of the input array.
+                    For an array of length n, there are n! (n factorial) permutations.
+                    For each permutation, we do O(n) work to build it.
+                    Therefore, the time complexity is O(n × n!).
+
+                    Space Complexity
+
+                    Recursion stack: O(n) in the worst case, where n is the length of the input array.
+                    visited array: O(n) space.
+                    ongoingPermutation list: O(n) space.
+                    Result storage: O(n × n!) to store all permutations.
+
+Overall space complexity: O(n × n!)
      */
     private static void doPermutationBacktracking(int[] nums, List<List<Integer>> result, ArrayList<Integer> ongoingPermutation, boolean[] visited) {
         if(ongoingPermutation.size() == nums.length) {//each permutation is anyway size of all numbers and not more
@@ -57,7 +70,10 @@ public class NumberPermutations {
 
         for (int number = 0; number < nums.length; number++) {
 
-            if(!visited[number]) {
+            if(visited[number]){//if it is visited - SKIP !!!!!!!!!!!
+                continue;
+            }
+
 
                 ongoingPermutation.add(nums[number]);//add to ongoing result
 
@@ -67,8 +83,9 @@ public class NumberPermutations {
 
                 ongoingPermutation.remove(ongoingPermutation.size()-1);//BACKTRACK remove last
                // ongoingPermutation.removeLast();//alternative
+
                 visited[number] = false; // BACKTRACK
-            }
+
         }
     }
 

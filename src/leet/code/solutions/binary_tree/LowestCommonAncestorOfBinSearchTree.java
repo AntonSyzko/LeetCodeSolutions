@@ -51,6 +51,7 @@ public class LowestCommonAncestorOfBinSearchTree {
 
     // MIND binary SEARCH TREE -> meaning it balanced - lower at LEFT, higher at RIGHT
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode nodeOne, TreeNode nodeTwo) {
+
         if(nodeOne.val < root.val && nodeTwo.val < root.val){// both SMALLER -> look up LEFT
 
             return lowestCommonAncestor(root.left, nodeOne, nodeTwo);//look at the left subtree as BOTH node's vals are LESS than roots LEFT
@@ -70,28 +71,45 @@ public class LowestCommonAncestorOfBinSearchTree {
         if (root == null || p == null || q == null) {
             return null;
         }
+
         if (Math.max(p.val, q.val) < root.val) {// both smaller
+
             return lowestCommonAncestorRecursive(root.left, p, q);//lookup left
+
         } else if (Math.min(p.val, q.val) > root.val) {//both  higher
+
             return lowestCommonAncestorRecursive(root.right, p, q);//lookup right
+
         } else {
+
             return root;//not BOTH smaller OR higher
+
         }
     }
 
     private static TreeNode lowestCommonAncestorIterative(TreeNode root, TreeNode p, TreeNode q) {
+
         TreeNode cur = root;
 
         while (cur != null) {
+
             if (p.val > cur.val && q.val > cur.val) {//both bigger
+
                 cur = cur.right;// lookup right
+
             } else if (p.val < cur.val && q.val < cur.val) {//both lower
+
                 cur = cur.left;//lookup left
+
             } else {
+
                 return cur;//not BOTH bigger OR higher
+
             }
         }
+
         return null;
+
     }
 
 

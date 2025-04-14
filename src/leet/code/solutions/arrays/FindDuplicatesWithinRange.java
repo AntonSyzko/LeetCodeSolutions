@@ -7,7 +7,9 @@ import java.util.Set;
 
 /*
 https://www.techiedelight.com/find-duplicates-within-given-range-array/
-Given an array and a positive number k, check whether the array contains any duplicate elements within the range k. If k is more than the array’s size, the solution should check for duplicates in the complete array.
+
+Given an array and a positive number k, check whether the array contains any duplicate elements within the range k.
+If k is more than the array’s size, the solution should check for duplicates in the complete array.
 
 Input:
 nums[] = { 5, 6, 8, 2, 4, 6, 9 }

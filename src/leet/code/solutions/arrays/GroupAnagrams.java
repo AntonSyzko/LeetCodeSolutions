@@ -37,6 +37,19 @@ public class GroupAnagrams {
         }
     }
 
+    /*
+            Time Complexity: O(n * k log k), where:
+
+        n is the number of strings in the input array
+
+        k is the maximum length of a string
+
+        The sorting operation for each string takes O(k log k) time
+
+
+        Space Complexity: O(n * k) for storing all n strings of max len k  in the HashMap
+     */
+
     private static List<List<String>> groupAnagrams(String[] strs) {
         List<List<String>> groupedAnagrams = new ArrayList<>();//future result
         Map<String, List<String>> wordToAnagrams = new HashMap<>();//word(sorted) : [ it's anagrams ] ( aka. {ate : [tea, aet] }

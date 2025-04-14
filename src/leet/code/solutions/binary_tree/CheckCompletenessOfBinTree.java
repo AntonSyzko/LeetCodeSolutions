@@ -67,13 +67,16 @@ public class CheckCompletenessOfBinTree {
 
                 lastNullNodeMet = true;
 
-            } else {//not null node met
+            } else {//current not null
 
                 if (lastNullNodeMet) { // if previously NULL node already met ( true ) and now we see NON NULL after that
+
+//if there was a NULL currentNode BEFORE and  current currentNode is NOT null - TREE is INCOMPLETE by default, since we visit LEFT nodes before RIGHT ones and if LEFT was NULL - having right as NULL - incomplete
+
                     return false;// not a complete tree - NON NULL node met after NULL - so either not complete level or LAST not all nodes are as LEFT
                 }
 
-                //ORDER of insertion matters - LEFTS then RIGHTS
+                //ORDER of insertion matters - LEFTS then RIGHTS -> level order traversal
                 queue.offer(current.left);
                 queue.offer(current.right);
             }
@@ -82,3 +85,9 @@ public class CheckCompletenessOfBinTree {
         return true;
     }
 }
+/**
+ IMPORTANT !!! - LEVEL ORDER TRAVERSAL
+ we will be checking LEFT ones before right
+ hence if NULL seen before current - it was on left , and right is NULL which makes the tree incomplete
+ since at the last level nodes have to be as LEFT as possible for completeness
+ **/

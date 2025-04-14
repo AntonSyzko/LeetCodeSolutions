@@ -137,16 +137,17 @@ public class MeetingRooms2 {
 
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
-        for (Interval interval : intervals) {//mind on first iteration min heap will be empty
+        for (Interval curr : intervals) {//mind on first iteration min heap will be empty
 
             if (!minHeap.isEmpty() // non empty check to avoid NPE
                     &&
-                    minHeap.peek() <= interval.start) {//curr min time is BEFORE curr interval start
+                    minHeap.peek() <= curr.start) {//most min time is BEFORE curr  start
 
-                minHeap.poll();//delete as non overlapping
+                minHeap.poll();//delete as NON  overlapping, min most is not the most min
+
             }
-
-            minHeap.offer(interval.end);
+//as no overlap occurred, most min will be current END
+            minHeap.offer(curr.end);
 
         }
         return minHeap.size();//number of overlapping intervals left in HEAP - is the number of days needed

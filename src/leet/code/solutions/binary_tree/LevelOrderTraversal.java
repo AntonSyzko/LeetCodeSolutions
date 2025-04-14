@@ -67,9 +67,9 @@ public class LevelOrderTraversal {
                 TreeNode node = queue.poll();
 
                 if(node != null){
-                    levelNodes.add(node.val);//add polled node to level
+                    levelNodes.add(node.val);//add polled node to current level nodes
 
-
+                    // these below ones will go to next level
                     if(node.left != null) {//left siblings exist ?
                         queue.add(node.left);
                     }

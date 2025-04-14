@@ -5,7 +5,8 @@ https://leetcode.com/problems/distribute-coins-in-binary-tree/description/
 
 You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree.
 
-In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent.
+In one move, we may choose two adjacent nodes and move one coin from one node to another.
+ A move may be from parent to child, or from child to parent.
 
 Return the minimum number of moves required to make every node have exactly one coin.
 
@@ -29,6 +30,7 @@ public class DistributeCoinsInBST {
        System.out.println(numOfMoves);
     }
 
+
     private static int NUM_MOVES;
 
     private static int distributeCoins(TreeNode root) {
@@ -36,23 +38,30 @@ public class DistributeCoinsInBST {
 
          NUM_MOVES = 0;
 
-        calculateMovesHelper(root);
+        dfs(root);
 
         return NUM_MOVES;
     }
 
-    //to evenly distribute coins amongsr BST - we need to add the ABS of each and every  of BST value - 1
-    private static int  calculateMovesHelper(TreeNode node) {
-        if(node==null) {
-            return 0;
-        }
+    //to evenly distribute coins amongst BST - we need to add the ABS of each and every  of BST value - 1
+    private static int dfs(TreeNode node) {
+        if (node == null) return 0;
 
-        int leftMoves = calculateMovesHelper(node.left);
-        int rightMoves = calculateMovesHelper(node.right);
+        System.out.println("\r\n\t current node " + node.val);
 
-        NUM_MOVES += Math.abs(leftMoves) + Math.abs(rightMoves);
+        // Calculate excess/deficit in left and right subtrees
+        int leftDeficit = dfs(node.left);
+        int rightDeficit = dfs(node.right);
 
-        return node.val + leftMoves + rightMoves - 1;
+        System.out.println(" left deficit " + leftDeficit);
+        System.out.println(" right deficit " + rightDeficit);
+
+        // Update the total moves needed
+        NUM_MOVES += Math.abs(leftDeficit) + Math.abs(rightDeficit);
+
+        // Return the excess/deficit for this subtree
+        // Current node's coins plus excesses from children, minus 1 (the coin we need to keep)
+        return node.val + leftDeficit + rightDeficit - 1;
     }
 
     private static class TreeNode {

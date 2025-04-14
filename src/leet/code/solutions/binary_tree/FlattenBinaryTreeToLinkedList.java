@@ -1,5 +1,7 @@
 package leet.code.solutions.binary_tree;
 
+import leet.code.solutions.sandbox.Sandbox1;
+
 import java.util.Stack;
 
 /*
@@ -29,17 +31,52 @@ The number of nodes in the tree is in the range [0, 2000].
 public class FlattenBinaryTreeToLinkedList {
 
     public static void main(String[] args) {
+     TreeNode root = new TreeNode(1);
+
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(5);
+
+        root.left.left = new TreeNode(3);
+        root.left.right = new TreeNode(4);
+
+        root.right.right = new TreeNode(6);
+
+        System.out.println(root);
+
+        flattenRecursive(root);
+
+
+        System.out.println(root);
+    }
+
+    // This will keep track of the previous node in pre-order traversal
+    private  static TreeNode prev = null;
+
+    private static void flattenRecursive(TreeNode root) {
+        if (root == null) return;
+
+        // Process right first, then left, then root (reverse pre-order)
+        flattenRecursive(root.right);
+        flattenRecursive(root.left);
+
+        // Set current node's right to previous node
+        root.right = prev;
+        // Set left to null
+        root.left = null;
+        // Update previous node
+        prev = root;
 
     }
 
-    private static void flatten(TreeNode<Integer> root) {
+
+    private static void flatten(TreeNode root) {
         if(root == null) return;
 
-        Stack<TreeNode<Integer>> stack = new Stack<>();//try Deque array deque todo
+        Stack<TreeNode> stack = new Stack<>();//try Deque array deque todo
         stack.push(root);
 
         while (!stack.isEmpty()) {
-            TreeNode<Integer> currentNode = stack.pop();//pop removes obj
+            TreeNode currentNode = stack.pop();//pop removes obj
 
             if(currentNode.right != null) {
                 stack.push(currentNode.right);
@@ -56,6 +93,28 @@ public class FlattenBinaryTreeToLinkedList {
             }
             //left nodes are eliminated
             currentNode.left = null;
+        }
+    }
+
+    private static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
         }
     }
 }

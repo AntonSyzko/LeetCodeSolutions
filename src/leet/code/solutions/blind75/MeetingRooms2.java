@@ -1,5 +1,7 @@
 package leet.code.solutions.blind75;
 
+import leet.code.solutions.sandbox.Sandbox1;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -51,9 +53,6 @@ public class MeetingRooms2 {
 
         if(intervals.size() == 1) return 1;
 
-
-        int  numberOfDays = 0;
-
         int size = intervals.size();
 
         int[] startTimes = new int[size];
@@ -66,6 +65,8 @@ public class MeetingRooms2 {
 
         Arrays.sort(startTimes);
         Arrays.sort(endTimes);
+
+        int  numberOfDays = 0;
 
         int startTimeIndex = 0;
         int endTimeIndex = 0;
@@ -85,13 +86,10 @@ public class MeetingRooms2 {
     }
 
 
-        private static int minMeetingRooms(List<Interval> intervals) {
+    private static int minMeetingRooms(List<Interval> intervals) {
         if(intervals.isEmpty()) return 0;
 
         if(intervals.size() == 1) return 1;
-
-
-       int  numberOfDays = 0;
 
        int size = intervals.size();
 
@@ -105,6 +103,8 @@ public class MeetingRooms2 {
 
         Arrays.sort(startTimes);
         Arrays.sort(endTimes);
+
+        int  numberOfDays = 0;
 
         int startTimeIndex = 0;
         int endTimeIndex = 0;
@@ -153,6 +153,41 @@ public class MeetingRooms2 {
         }
         return minHeap.size();//number of overlapping intervals left in HEAP - is the number of days needed
     }
+
+
+
+    private static int minIntervalRoomsRequired(Interval[] intervals) {
+
+        if(intervals == null || intervals.length==0) return 0;
+
+        Arrays.sort(intervals, (a,b) -> a.start - b.start);
+
+        PriorityQueue<Interval> minHeap = new PriorityQueue<>((a, b) -> a.end - b.end);
+        minHeap.offer(intervals[0]);
+
+        for (int i = 1; i < intervals.length ; i++) {
+
+            Interval curr = intervals[i];
+            Interval earliest = minHeap.remove();
+
+            if(curr.start >= earliest.end){//no overlap
+
+                earliest.end = curr.end; // expand earliest ending as non overlapping intervals - second ending is further in time
+
+            }else{//overlap
+
+                minHeap.offer(curr);//add to min heap
+            }
+
+            minHeap.offer(earliest);//save previously removed
+
+        }
+
+        return minHeap.size();
+
+
+    }
+
 
 
     private static class Interval {

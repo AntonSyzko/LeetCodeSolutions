@@ -74,41 +74,43 @@ We check left <= right before traversing up to handle cases where we have a sing
         int ROWS = matrix.length;
         int COLS = matrix[0].length;
 
-        int top = 0;//first row
-        int bottom = ROWS - 1;//last row
+        int topRow = 0;//first row
+        int bottomRow = ROWS - 1;//last row
 
-        int left = 0;//first col
-        int right = COLS - 1;//last col
+        int leftCol = 0;//first col
+        int rightCol = COLS - 1;//last col
 
 
-        while (top <= bottom && left <= right) {
+        while (topRow <= bottomRow && leftCol <= rightCol) {
 
-            // Traverse right
-            for (int rightMove = left; rightMove <= right; rightMove++) {//move from left to right
-                result.add(matrix[top][rightMove]);
+            /// Traverse rightCol
+            for (int rightMove = leftCol; rightMove <= rightCol; rightMove++) {//move from leftCol to rightCol
+                result.add(matrix[topRow][rightMove]);
             }
-            top++;//raise top - shrink it - for not to visit in next iteration
+            topRow++;//raise topRow - shrink it - for not to visit in next iteration
 
-            // Traverse down
-            for (int downMove = top; downMove <= bottom; downMove++) {//move from top to down
-                result.add(matrix[downMove][right]);
+            /// Traverse down
+            for (int downMove = topRow; downMove <= bottomRow; downMove++) {//move from topRow to down
+                result.add(matrix[downMove][rightCol]);
             }
-            right--;
+            rightCol--;
 
-            // Traverse left (if there are still ROWS to traverse)
-            if (top <= bottom) {
-                for (int leftMove = right; leftMove >= left; leftMove--) {//move from right to left
-                    result.add(matrix[bottom][leftMove]);
+            // /Traverse leftCol (if there are still ROWS to traverse)
+            if (topRow <= bottomRow) {//additional necessary check
+
+                for (int leftMove = rightCol; leftMove >= leftCol; leftMove--) {//move from rightCol to leftCol
+                    result.add(matrix[bottomRow][leftMove]);
                 }
-                bottom--;
+                bottomRow--;
             }
 
-            // Traverse up (if there are still columns to traverse)
-            if (left <= right) {//move from bottom to top
-                for (int upMove = bottom; upMove >= top; upMove--) {
-                    result.add(matrix[upMove][left]);
+            /// Traverse up (if there are still columns to traverse)
+            if (leftCol <= rightCol) {//additional necessary check
+
+                for (int upMove = bottomRow; upMove >= topRow; upMove--) {//move from bottomRow to topRow
+                    result.add(matrix[upMove][leftCol]);
                 }
-                left++;
+                leftCol++;
             }
         }
 
