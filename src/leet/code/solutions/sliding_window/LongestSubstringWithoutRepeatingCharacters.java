@@ -1,9 +1,6 @@
 package leet.code.solutions.sliding_window;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 find length of longest substring without repeating chars
@@ -32,6 +29,88 @@ public class LongestSubstringWithoutRepeatingCharacters {
          longest = findLongestSubstringWithoutRepeatingCharsSlidingWindow(str);
         System.out.println(longest);
     }
+
+    /*
+
+    Time and Space Complexity:
+
+            Time Complexity: O(n) where n is the length of the string. We traverse the string only once.
+
+            Space Complexity: O(min(m, n)) where m is the size of the character set (typically constant for ASCII) and n is the string length.
+     */
+
+    private static int lengthOfLongestSubstring(String s) {
+        // Edge case: empty string
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        int maxLength = 0;
+        int windowStart = 0;
+
+        // Use a HashMap to store character -> index mapping
+        // We could also use a HashSet, but HashMap allows us to jump directly
+        // when we find a duplicate rather than shrinking one by one
+        Map<Character, Integer> charIndexMap = new HashMap<>();
+
+        // Expand the window
+        for (int windowEnd = 0; windowEnd < s.length(); windowEnd++) {
+
+            char currentChar = s.charAt(windowEnd);
+
+            // If we've seen this character before and it's in our current window
+            if (charIndexMap.containsKey(currentChar) && charIndexMap.get(currentChar) >= windowStart) {
+                // Move window start to position after the previous occurrence
+                windowStart = charIndexMap.get(currentChar) + 1;
+            }
+
+            // Update character position in map
+            charIndexMap.put(currentChar, windowEnd);
+
+            // Update max length found so far
+            maxLength = Math.max(maxLength, ( windowEnd - windowStart + 1));
+        }
+
+        return maxLength;
+    }
+
+
+    private static int lengthOfLongestSubstringOptimised(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        int maxLength = 0;
+        int windowStart = 0;
+
+        int[] charIndex = new int[128];
+        Arrays.fill(charIndex, -1);
+
+        for (int windowEnd = 0; windowEnd < s.length(); windowEnd++) {
+
+            char currentChar = s.charAt(windowEnd);
+
+            if (charIndex[currentChar] >= windowStart) {
+
+                // Move window start to position after the previous occurrence
+                windowStart = charIndex[currentChar] + 1;
+
+            } else {
+                //keep growing window length and updating max
+                maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
+            }
+
+            charIndex[currentChar] = windowEnd;
+
+            // Early termination: if remaining characters can't form a longer substring
+            if (maxLength >= s.length() - windowStart) {
+                break;
+            }
+        }
+
+        return maxLength;
+    }
+
 
     // time O ( N) - only while
     // space O(N) - set if all uniques

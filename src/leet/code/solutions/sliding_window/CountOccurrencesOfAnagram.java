@@ -39,40 +39,6 @@ public class CountOccurrencesOfAnagram {
         System.out.println(occurrencesOfPattern);
     }
 
-    private static int countOccurrencesMy(String str, String pattern) {
-        int occurrencesRes = 0;
-
-        Map<Character, Integer> patternCharsCounts = new HashMap<>();
-
-        for(char each : pattern.toCharArray()) {
-            patternCharsCounts.put(each, patternCharsCounts.getOrDefault(each,0)+1);
-        }
-
-        int right;
-        int patternLen = pattern.length();
-
-        Map<Character, Integer> ongoingCounts = new HashMap<>();
-
-        for (int i = 0; i <= str.length() - patternLen; i++) {
-            right = i;
-
-
-            while (right < patternLen + i){
-                ongoingCounts.put(str.charAt(right), ongoingCounts.getOrDefault(str.charAt(right),0)+1);
-                right++;
-            }
-            if(ongoingCounts.keySet().containsAll(patternCharsCounts.keySet())
-            && ongoingCounts.values().containsAll(patternCharsCounts.values())){
-
-                occurrencesRes++;
-
-            }
-            ongoingCounts.clear();
-        }
-
-        return occurrencesRes;
-    }
-
     private static int countOccurrenceOfAnagramSlidingWindow(String text, String pattern) {
         int textLen = text.length();
         int patternLen = pattern.length();
@@ -133,6 +99,40 @@ public class CountOccurrencesOfAnagram {
             }
         }
           return res;
+    }
+
+    private static int countOccurrencesMy(String str, String pattern) {
+        int occurrencesRes = 0;
+
+        Map<Character, Integer> patternCharsCounts = new HashMap<>();
+
+        for(char each : pattern.toCharArray()) {
+            patternCharsCounts.put(each, patternCharsCounts.getOrDefault(each,0)+1);
+        }
+
+        int right;
+        int patternLen = pattern.length();
+
+        Map<Character, Integer> ongoingCounts = new HashMap<>();
+
+        for (int i = 0; i <= str.length() - patternLen; i++) {
+            right = i;
+
+
+            while (right < patternLen + i){
+                ongoingCounts.put(str.charAt(right), ongoingCounts.getOrDefault(str.charAt(right),0)+1);
+                right++;
+            }
+            if(ongoingCounts.keySet().containsAll(patternCharsCounts.keySet())
+                    && ongoingCounts.values().containsAll(patternCharsCounts.values())){
+
+                occurrencesRes++;
+
+            }
+            ongoingCounts.clear();
+        }
+
+        return occurrencesRes;
     }
 
 

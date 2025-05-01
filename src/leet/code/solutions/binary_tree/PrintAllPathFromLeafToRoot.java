@@ -44,16 +44,16 @@ public class PrintAllPathFromLeafToRoot {
 
     private static List<List<TreeNode>> printAllPaths(TreeNode root) {
 
-
         List<List<TreeNode>> res = new ArrayList<>();
+        List<TreeNode> combo = new ArrayList<>();
 
-        printPath(root, new ArrayList<>(), res);
+        printPath(root, combo, res);
 
         return res;
 
     }
 
-    private static void printPath(TreeNode node, ArrayList<TreeNode> out, List<List<TreeNode>> res) {
+    private static void printPath(TreeNode node, List<TreeNode> out, List<List<TreeNode>> res) {
         if (node == null) {//BASE
             return;
         }

@@ -71,7 +71,8 @@ public class CourseSchedule {
         Set<Integer> visitedCourses = new HashSet<>();
 
         for (int currentCourse = 0; currentCourse < numCourses; currentCourse++) {
-            if(courseSchedule(currentCourse,visitedCourses, courseToPrerequsuites) == false){
+
+            if(!courseSchedule(currentCourse, visitedCourses, courseToPrerequsuites)){
                 return false;
             }
         }
@@ -95,7 +96,7 @@ public class CourseSchedule {
 
        for (int prerequisite : courseToPrerequsuites.get(currentCourse)) {
 
-           if(courseSchedule(prerequisite, visitedCourses, courseToPrerequsuites) == false){//recurr for every current course's prerequsiste
+           if(!courseSchedule(prerequisite, visitedCourses, courseToPrerequsuites)){//recurr for every current course's prerequsiste
                return false;//no way
            }
 

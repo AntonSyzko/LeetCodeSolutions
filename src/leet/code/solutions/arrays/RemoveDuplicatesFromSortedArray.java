@@ -52,14 +52,18 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 public class RemoveDuplicatesFromSortedArray {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 1, 2};//1,2 = 2 unique
-        int res = removeDuplicates2(nums);
-        System.out.println("Number of duplicate records : " + res);
+//        int[] nums = new int[]{1, 1, 2};//1,2 = 2 unique
+//        int res = removeDuplicates2(nums);
+//        System.out.println("Number of duplicate records : " + res);
+//
+//
+//        nums = new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4};//0,1,2,3,4 = 5 unique
+//        res = removeDuplicates2(nums);
+//        System.out.println("Number of duplicate records : " + res);
 
-
-        nums = new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4};//0,1,2,3,4 = 5 unique
-        res = removeDuplicates2(nums);
-        System.out.println("Number of duplicate records : " + res);
+        int [] nums2 = new int[]{1, 1, 2,2,3};
+        int[] resArray  = removeDuplicatesFromArrayTwoPointers(nums2);
+        System.out.println(Arrays.toString(resArray));
     }
 
     public static int removeDuplicates2(int[] nums) {
@@ -75,9 +79,29 @@ public class RemoveDuplicatesFromSortedArray {
         return lastUniqueIndex;
     }
 
-    public static int[] removeDuplicatesFromArray(int[] nums) {
-        Set<Integer> res = Arrays.stream(nums).boxed().collect(Collectors.toSet());
-        return res.stream().mapToInt(Integer::intValue).toArray();
+    private static int[] removeDuplicatesFromArrayTwoPointers(int[] array) {
+
+        int start = 0;
+        int next = 1;
+
+        while (next < array.length) {
+            if(array[next] == array[start]){//duplicate
+
+                next++;
+
+            }else{
+
+                start++;//move start cause we met diplicate above
+                array[start] = array[next];
+                next++;
+
+            }
+        }
+
+        int rangeToCopy = start + 1;//so from zero to this range
+
+        return Arrays.copyOf(array,rangeToCopy);
+
     }
 
     public int removeDuplicates(int[] nums) {
@@ -94,5 +118,10 @@ public class RemoveDuplicatesFromSortedArray {
             }
         }
         return indexToReplace;
+    }
+
+    public static int[] removeDuplicatesFromArray(int[] nums) {
+        Set<Integer> res = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+        return res.stream().mapToInt(Integer::intValue).toArray();
     }
     }

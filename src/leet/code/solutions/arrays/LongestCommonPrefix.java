@@ -136,4 +136,35 @@ public class LongestCommonPrefix {
             }
             return commonPrefix;
     }
+
+    private static String longestCommonPrefix55(String[] strs) {
+        String longestCommonPrefix = "";
+
+        String shortest = strs[0];
+        for(String each : strs) {
+            shortest = each.length() < shortest.length() ? each : shortest;
+        }
+
+        while (shortest.length() > 0) {
+
+            int numberOfContainingSTrs = 0;
+
+            for(String s : strs) {
+                if(!s.startsWith(shortest)) {
+                    break;
+                }else{
+                    numberOfContainingSTrs++;
+                }
+            }
+
+            if(numberOfContainingSTrs == strs.length) {
+                return shortest;
+            }
+
+            shortest = shortest.substring(0,shortest.length()-1);
+        }
+
+        return longestCommonPrefix;
+
+    }
     }

@@ -25,7 +25,8 @@ public class FindIncreasingSubsequences {
 
     public static List<List<Integer>> findSubsequences(int[] nums) {
         List<List<Integer>> result = new LinkedList<>();
-        recur(nums, result, new Stack<>(), 0);//using stack to keep last elements on top
+        Stack<Integer> ongoingSequence = new Stack<>();
+        recur(nums, result, ongoingSequence, 0);//using stack to keep last elements on top
         return result;
     }
 
@@ -39,21 +40,23 @@ public class FindIncreasingSubsequences {
         }
 
         // take a visitedSetForThisSequnece to keep track of the processed elements
-        Set<Integer> visitedSetForThisSequnece = new HashSet<>();//at each recursive iteration will be reset to new empty visitedSetForThisSequnece
+        Set<Integer> visitedSetForThisSequnece = new HashSet<>();//at each recursive iteration will be reset to new empty set
 
         // startIndex from the next index till the last
         for (int currentIndex = startIndex; currentIndex < nums.length; currentIndex++) {
+
+            int currentNumber = nums[currentIndex];
             // proceed only if the current element is not processed before
             // nad is BIGGER  than the previous element in the sequence
-            if (!visitedSetForThisSequnece.contains(nums[currentIndex])
+            if (!visitedSetForThisSequnece.contains(currentNumber)
                     &&
-                    (ongoingSequence.isEmpty() || nums[currentIndex] > ongoingSequence.peek())) {//curr num is bigger thna previously stored
+                    (ongoingSequence.isEmpty() || currentNumber > ongoingSequence.peek())) {//curr num is bigger than previously stored
 
                 // mark current element as processed
-                visitedSetForThisSequnece.add(nums[currentIndex]);
+                visitedSetForThisSequnece.add(currentNumber);
 
                 // include current element to the ongoing  sequence
-                ongoingSequence.add(nums[currentIndex]);
+                ongoingSequence.add(currentNumber);
 
                 // recur for the next index `currentIndex+1`
                 recur(nums, result, ongoingSequence, currentIndex + 1);

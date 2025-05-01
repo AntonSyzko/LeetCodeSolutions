@@ -1,4 +1,4 @@
-package leet.code.solutions.binary_search;
+package leet.code.solutions.matrix;
 
 /*
 Write an efficient algorithm that searches for a value in an m x n matrix. This matrix
@@ -12,53 +12,41 @@ For example, consider the following matrix:
 [23, 30, 34, 50]
 ]
 Given target = 3, return true.
-
  */
-public class SearchIn2DMatrix {
+public class Search2DMatrix {
 
     public static void main(String[] args) {
-         int[][] matrix = {
-                 {1,3,5,7},
-                 {10,11,16,20},
-                 {23,30,34,50}
-         };
+        int[][] matrix = {
+                {1,3,5,7},
+                {10,11,16,20},
+                {23,30,34,50}
+        };
 
-         int target = 3;
-         boolean exists = searchMatrix(matrix, target);
-         System.out.println(exists);
+        System.out.println(searchMatrix(matrix, 3));
+
     }
 
-
     private static boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+
+        if(matrix== null || matrix.length == 0 || matrix[0].length == 0) return false;
 
         int ROWS = matrix.length;
         int COLS = matrix[0].length;
 
         int start = 0;
-        int end = ROWS * COLS -1;
+        int end = ROWS*COLS -1;
 
-        while(start <= end){
-
+        while (start <= end) {
             int mid = start + (end - start)/2;
+            int midX = mid / COLS;
+            int midY = mid % COLS;
 
-            int midX = mid / ROWS;
-            int midY = mid % ROWS;
+            if(matrix[midX][midY] == target) return true;
 
-            int midPointElement = matrix[midX][midY];
-
-            if(midPointElement == target) {
-
-                return true;
-
-            }else if (midPointElement< target){//too low
-
+            else if(matrix[midX][midY] < target) {
                 start = mid + 1;
-
-            }else{
-
+            }else if (matrix[midX][midY] > target) {
                 end = mid - 1;
-
             }
         }
 

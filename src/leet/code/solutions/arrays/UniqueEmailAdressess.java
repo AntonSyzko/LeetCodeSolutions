@@ -39,11 +39,27 @@ public class UniqueEmailAdressess {
         System.out.println(unques);
     }
 
+        /*
+    Time Complexity: O(n × m), where:
+
+            n is the number of emails in the input array
+            m is the maximum length of an email string
+            For each email, we perform several string operations (split, indexOf, substring, replace), which all take O(m) time in the worst case
+
+
+            Space Complexity: O(n × m)
+
+            In the worst case, all emails normalize to different addresses, so our HashSet will store n strings
+            Each normalized email can be up to m characters in length
+     */
+
     private static int numUniqueEmails(String[] emails) {
         Set<String > unqueEmails = new HashSet<>();
 
         for (String email : emails) {
+
             StringBuilder address = new StringBuilder();
+
             for (int i = 0; i < email.length(); i++) {
 
                 char currChar = email.charAt(i);
@@ -56,7 +72,7 @@ public class UniqueEmailAdressess {
                         i++;
                     }
 
-                    address.append(email.substring(i + 1));//substring exluding skipped
+                    address.append(email.substring(i + 1));//substring excluding skipped
 
                 } else {
                     address.append(currChar);
@@ -66,5 +82,37 @@ public class UniqueEmailAdressess {
             unqueEmails.add(address.toString());
         }
         return unqueEmails.size();
+    }
+
+    private static int numUniqueEmailsMy(String[] emails) {
+        if(emails == null || emails.length == 0) return 0;
+
+        if(emails.length == 1) return 1;
+
+        Set<String> set = new HashSet<>();
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String email : emails) {
+
+            String[] parts = email.split("@");
+            String local =  parts[0];
+            String domain = parts[1];
+
+            for(char c : local.toCharArray()){
+                if(c == '.'){
+                    continue;
+                }else if (c == '+'){
+                    break;
+                }
+                sb.append(c);
+            }
+
+            sb.append("@").append(domain);
+            set.add(sb.toString());
+            sb = new StringBuilder();
+        }
+
+        return set.size();
     }
 }

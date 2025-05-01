@@ -36,10 +36,12 @@ public class PathSum {
     private static boolean hasPathSum(TreeNode node, int targetSum) {
         if (node == null) return false;
 
-        int sum  = targetSum  - node.val;//decrease target bu current node's value
+        int sum  = targetSum  - node.val;//decrease target by current node's value
 
         if (node.left == null && node.right == null) {//LEAF
+
             if (sum == 0) return true;//if decereased all the way through nodes ended 0 -> means there was a target path
+
         }
 
         return hasPathSum(node.left, sum ) //recur on left node

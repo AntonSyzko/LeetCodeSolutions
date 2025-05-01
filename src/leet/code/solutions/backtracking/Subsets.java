@@ -78,4 +78,25 @@ public class Subsets {
             subsetHelper(nums, start + 1, ongoingSubset, res);// recur EXCLUDING ( as we removed above )
     }
 
+    private static List<List<Integer>> subsetsBackwards(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> combo = new ArrayList<>();
+        int start = nums.length - 1;
+
+        dfsBackwards(nums, start, combo, res);
+        return res;
+    }
+
+    private static void dfsBackwards(int[] nums, int start, List<Integer> combo, List<List<Integer>> res) {
+
+        res.add(new ArrayList<>(combo));
+
+        for(int i = start; i >= 0; i--) {
+            combo.add(nums[i]);
+            dfsBackwards(nums, i -1, combo, res);
+            combo.remove(combo.size() - 1);
+        }
+
+    }
+
 }

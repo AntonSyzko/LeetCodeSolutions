@@ -41,20 +41,23 @@ public class DailyTemperatures {
     //spapce O(n)
     private static int[] dailyTemperatures(int[] temperatures) {
          int[] answers = new int[temperatures.length];
+
         Stack<TemperatureIndexPair> stack = new Stack<>();
 
-        for (int i = temperatures.length-1; i >= 0; i--) {
+        for (int i = temperatures.length-1; i >= 0; i--) {//iterate backwards
 
-            //if temperature on top of stack is LESS  or == then curr
+            //if temperature on top of non-empty stack is LESS  or == then curr temp
             while (!stack.isEmpty() //if smth is in stack
                     &&
                     stack.peek().temperature <= temperatures[i]) {
-               stack.pop();//delete it from stack ( as anyways it will lower temperature for everything later , since even current is BIGGER than it
+
+               stack.pop();//delete it from stack ( as anyway it is lower temperature for everything later , since even current is BIGGER than it
+
             }
 
-            if(!stack.isEmpty()){//so now if stack is not empty - there is a temperature that is HOTTER than current on top of stack
+            if(!stack.isEmpty()){//so now if stack is not empty - there is a temperature   on top of stack that is HOTTER than current temp
 
-                answers[i] = stack.peek().index - i;//result - substract indexes
+                answers[i] = stack.peek().index - i;//result - substract indexes, mind PEEK, we keep it there
 
             }
 

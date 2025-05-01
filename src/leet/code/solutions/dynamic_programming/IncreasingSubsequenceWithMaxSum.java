@@ -5,11 +5,13 @@ import java.nio.charset.MalformedInputException;
 /*
 https://www.techiedelight.com/increasing-subsequence-with-maximum-sum/
 
-Find a subsequence of a given sequence such that the subsequence sum is as high as possible and the subsequence’s elements are sorted in ascending order. This subsequence is not necessarily contiguous or unique.
+Find a subsequence of a given sequence such that the subsequence sum is as high as possible and the subsequence’s elements are sorted in ascending order.
+ This subsequence is not necessarily contiguous or unique.
 
 Please note that the problem specifically targets subsequences that need not be contiguous, i.e., subsequences are not required to occupy consecutive positions within the original sequences.
 
-For example, consider subsequence {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11}. The maximum sum increasing subsequence is {8, 12, 14} which has sum 34.
+For example, consider subsequence {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11}.
+The maximum sum increasing subsequence is {8, 12, 14} which has sum 34.
  */
 public class IncreasingSubsequenceWithMaxSum {
 

@@ -26,18 +26,19 @@ Rod length: 4
 public class RodCuttingProblem {
 
     public static void main(String[] args) {
-        int price[] = { 1, 5, 8, 9, 10, 17, 17, 20 };
+        int prices[] = { 1, 5, 8, 9, 10, 17, 17, 20 };
 
         // rod length
         int n = 4;
 
-        System.out.println("Profit is " + rodCut_DP(price, n));
+        System.out.println("Profit is " + rodCut_DP(prices, n));
     }
 
     //The time complexity of the above bottom-up solution is O(n2) and requires O(n) extra space, where n is the rod length.
-    public static int rodCut_DP(int[] price, int rodLength) {
+    public static int rodCut_DP(int[] prices, int rodLength) {
         // `DP[i]` stores the maximum profit achieved from a rod of length `i`
         int[] DP = new int[rodLength + 1];
+        //DP[0] = 0;//just for visibility here - cutting rod with 0 lenth yeilds 0 profit
 
         // consider a rod of length `i`
         for (int i = 1; i <= rodLength ; i++) {
@@ -45,7 +46,7 @@ public class RodCuttingProblem {
             // divide the rod of length `i` into two rods of length `j` and `i-j` each and take maximum
             for (int j = 1; j <= i ; j++) {
 
-                DP[i] = Integer.max(DP[i], price[j - 1] + DP[i - j]);
+                DP[i] = Math.max(DP[i], prices[j - 1] + DP[i - j]);
 
             }
         }
@@ -79,5 +80,4 @@ public class RodCuttingProblem {
 
         return maxValue;
     }
-
 }

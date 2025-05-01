@@ -41,7 +41,7 @@ public class MaxDepthOfBinTree {
         System.out.println(maxDepth);
     }
 
-    //O(n)
+    //O(n) time
     private static int maxDepth(TreeNode root) {
         if(root==null) {
             return 0;
@@ -54,6 +54,17 @@ public class MaxDepthOfBinTree {
         int maxDepthOnRight = maxDepth(root.right) + 1;
 
         return Math.max(maxDepthOnLeft, maxDepthOnRight);
+    }
+
+    private static int maxDepth2(TreeNode root) {
+        if(root==null) {
+            return 0;
+        }
+
+        int maxDepthOnLeft = maxDepth(root.left) ;
+        int maxDepthOnRight = maxDepth(root.right) ;
+
+        return Math.max(maxDepthOnLeft, maxDepthOnRight) + 1 ;
     }
     
 private static class TreeNode {

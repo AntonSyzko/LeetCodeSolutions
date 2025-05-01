@@ -47,8 +47,11 @@ public class SearchBST {
 
         //since BST - we can check only Left and Right  branches
         if (val < root.val) {//potential val is at the LEFT
+
             return searchBST(root.left, val);
+
         } else {//potential val is at the LEFT
+
             return searchBST(root.right, val);
         }
     }

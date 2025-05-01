@@ -32,21 +32,22 @@ public class LongestPalindromicSubstring {
 
         int longestPalindromeSubstringLength = 0;
         int len = input.length();
+
         int start = 0;
         int end = 0;
 
-        boolean[][] dp = new boolean[len][len];
+        boolean[][] DP = new boolean[len][len];
 
         for (int outer = 0; outer < len ; outer++) {
 
-            dp[outer][outer] = true;
+            DP[outer][outer] = true;
 
             for (int inner = 0; inner < outer ; inner++) {
 
                 if(input.charAt(outer) == input.charAt(inner) &&
-                        (outer - inner <=2 || dp[inner +1 ][outer - 1])){
+                        (outer - inner <= 2 || DP[inner + 1 ][outer - 1])){
 
-                    dp[inner][outer] = true;
+                    DP[inner][outer] = true;
 
                     if(outer - inner + 1 > longestPalindromeSubstringLength){
                         longestPalindromeSubstringLength = outer - inner + 1;

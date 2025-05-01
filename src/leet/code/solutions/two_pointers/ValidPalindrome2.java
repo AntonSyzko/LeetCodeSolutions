@@ -1,4 +1,4 @@
-package leet.code.solutions.arrays;
+package leet.code.solutions.two_pointers;
 
 /*
 https://leetcode.com/problems/valid-palindrome/
@@ -37,26 +37,32 @@ public class ValidPalindrome2 {
         int start = 0;
         int end = s.length() - 1;
 
-        boolean result = false;
         while (start < end) {
-            if (s.charAt(start) == s.charAt(end)) {
-                result = true;
-            } else {
-                return checkPalindromeWithoutOneChar(s, start + 1, end) || //we need to check just is palindrome with ONE (only one char ) missing
+
+            if (s.charAt(start) != s.charAt(end)) {
+
+                return checkPalindromeWithoutOneChar(s, start + 1, end)  //we need to check just is palindrome with ONE (only one char ) missing
+                        ||
                     checkPalindromeWithoutOneChar(s, start, end - 1);
             }
+
             start++;
             end--;
         }
-        return result;
+
+        return true;
     }
 
     private static boolean checkPalindromeWithoutOneChar(String s, int start, int end) {
         while (start < end) {
-            if (s.charAt(start++) != s.charAt(end--)) {
+
+            if (s.charAt(start) != s.charAt(end)) {
                 return false;
             }
+            start++;
+            end--;
         }
+
         return true;
     }
 

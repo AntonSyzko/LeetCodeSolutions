@@ -68,5 +68,63 @@ public class IsValidSudoku {
         }
         return true;
     }
-    
+
+
+    private static boolean isValidSudoku2(char[][] board) {
+
+        //check rows
+        for (int row = 0; row < 9; row++) {
+            Set<Character> rowSet = new HashSet<>();
+            for (int col = 0; col < 9; col++) {
+                if(board[row][col] != '.'){
+
+                    if(rowSet.contains(board[row][col])){
+                        return false;
+                    }
+
+                    rowSet.add(board[row][col]);
+                }
+            }
+        }
+
+
+
+        //check cols
+        for (int col = 0; col < 9; col++) {
+            Set<Character> colSet = new HashSet<>();
+            for (int row = 0; row < 9; row++) {
+                if(board[row][col] != '.'){
+
+                    if(colSet.contains(board[row][col])){
+                        return false;
+                    }
+
+                    colSet.add(board[row][col]);
+                }
+            }
+        }
+
+        //check box
+
+        for (int rowGroup = 0; rowGroup < 3; rowGroup++) {
+            for (int colGroup = 0; colGroup < 3; colGroup++) {
+
+                Set<Character> boxSet = new HashSet<>();
+
+                for (int row = rowGroup * 3; row < rowGroup * 3 + 3; row ++) {
+                    for (int col = colGroup * 3; col < colGroup * 3 + 3; col++) {
+
+                        if(board[row][col] != '.'){
+                            if(boxSet.contains(board[row][col])){
+                                return false;
+                            }
+                            boxSet.add(board[row][col]);
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+
+    }
     }
