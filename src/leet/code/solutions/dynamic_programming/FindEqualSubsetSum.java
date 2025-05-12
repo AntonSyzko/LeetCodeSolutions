@@ -1,5 +1,9 @@
 package leet.code.solutions.dynamic_programming;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 https://www.callicoder.com/equal-subset-sum-partition-problem/
 
@@ -48,6 +52,7 @@ public class FindEqualSubsetSum {
     }
 
 
+    // O ( m * n )
     private static boolean hasSubsetSum(int[] values, int targetSum, int length) {
         //BASE case
         if(targetSum == 0){
@@ -68,5 +73,67 @@ public class FindEqualSubsetSum {
 
         return includeCurrent || excludeCurrent;
 
+    }
+
+    private static boolean canPartition(int[] nums) {
+
+        if(nums == null || nums.length == 0) return false;
+
+        if(nums.length == 1) return true;
+
+        int aggregatedSum  = Arrays.stream(nums).sum();
+
+        if(aggregatedSum % 2 != 0){
+            return false;
+        }
+
+        Map<String, Boolean> DP = new HashMap<>();
+
+        return checkHalfSum(nums, 0,aggregatedSum/2, DP);
+        //return checkHalfSum2(nums, 0, 0, aggregatedSum/2, DP);
+    }
+
+    private static boolean checkHalfSum2(int[] nums, int index, int sum, int aggregatedSum,  Map<String, Boolean> DP ) {
+        String currentState =  index + "" + sum;
+        if(DP.containsKey(currentState)) {
+            return DP.get(currentState);
+        }
+
+        if(sum > aggregatedSum || index >= nums.length){
+            return false;
+        }
+        if(sum == aggregatedSum){
+            return true;
+        }
+
+        boolean currentPartition = checkHalfSum2(nums, index + 1, sum + nums[index], aggregatedSum, DP) //with
+                || //or
+                checkHalfSum2(nums, index+1, sum, aggregatedSum,DP);//without
+
+        DP.put(currentState, currentPartition);
+
+        return currentPartition;
+
+    }
+
+    private static boolean checkHalfSum(int[] nums, int index, int halfSum, Map<String, Boolean> DP ) {
+        String currentState = index + "" + halfSum;
+
+        if(DP.containsKey(currentState)) {
+            return DP.get(currentState);
+        }
+        if(halfSum < 0 || index >= nums.length){
+            return false;
+        }
+
+        if(halfSum == 0) return true;
+
+        boolean with = checkHalfSum(nums, index+1, halfSum - nums[index], DP);
+        boolean without = checkHalfSum(nums, index+1, halfSum, DP);
+
+        boolean currentPartition = with || without;
+        DP.put(currentState, currentPartition);
+
+        return currentPartition;
     }
     }

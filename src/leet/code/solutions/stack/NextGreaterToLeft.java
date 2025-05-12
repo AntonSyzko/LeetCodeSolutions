@@ -38,18 +38,23 @@ public class NextGreaterToLeft {
         Stack<Integer> stack = new Stack<>();
 
         for (int i = 0; i < nums.length; i++) {
-            NGL[i] = -1;
+
+            NGL[i] = -1;//default for not found
 
             while (!stack.isEmpty()) {
+
                 int elementOnTopOfStack = stack.peek();
 
                 if(nums[i] < elementOnTopOfStack){
+
                     NGL[i] = elementOnTopOfStack;
                     break;
-                }else{
-                    stack.pop();
-                }
 
+                }else{
+
+                    stack.pop();
+
+                }
             }
 
             stack.push(nums[i]);

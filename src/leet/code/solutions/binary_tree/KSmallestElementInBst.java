@@ -38,7 +38,7 @@ public class KSmallestElementInBst {
 
         root.right.right.right = new TreeNode(10);
 
-        int kSmalest = kthSmallest(root, 2);
+        int kSmalest = kthSmallest_lessMemory(root, 2);
         System.out.println(kSmalest);
 
     }
@@ -76,7 +76,30 @@ public class KSmallestElementInBst {
         inOrder(root.right, inOrderList);
     }
 
-    private static class TreeNode {
+    private static int kthSmallest_lessMemory(TreeNode root, int k) {
+        int[] inOrderRes =new int[2];//first cell is position in in orer traversal , like at what step are we in in order, second is res
+        inOrderWithLessSpace(root, inOrderRes, k);
+        return inOrderRes[1];
+    }
+    private static void inOrderWithLessSpace(TreeNode root, int[] inOrderRes, int k) {
+        if(root==null) {
+            return;
+        }
+
+        inOrderWithLessSpace(root.left, inOrderRes, k);
+
+        inOrderRes[0]++;//we are increasing as we go through BST in order where from left to right nums are increasing
+
+        if(inOrderRes[0] == k){
+            inOrderRes[1] = root.val;
+            return;
+        }
+
+        inOrderWithLessSpace(root.right, inOrderRes, k);
+    }
+
+
+        private static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;

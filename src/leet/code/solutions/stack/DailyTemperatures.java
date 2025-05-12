@@ -1,5 +1,7 @@
 package leet.code.solutions.stack;
 
+import leet.code.solutions.utils.Pair;
+
 import java.util.Arrays;
 import java.util.Stack;
 
@@ -68,6 +70,32 @@ public class DailyTemperatures {
         return answers;
     }
 
+    private static int[] dailyTemperatures2(int[] temperatures) {
+        int [] res = new int[temperatures.length];
+
+        Stack<Pair<Integer,Integer>> stack = new Stack<>();//pair of temperature <-> index it has occurred
+
+        for (int index = 0; index < temperatures.length; index++) {
+
+            int currTemperature = temperatures[index];
+
+            while(!stack.isEmpty() && currTemperature > stack.peek().key) {//whils smth in stak and current temp >  top of stak temp
+
+                Pair<Integer,Integer> topOfSTackPair = stack.pop();
+                int topOfstackTempIndex = topOfSTackPair.val;
+
+                int numberOfDaysDifference =  index - topOfstackTempIndex;//number of days diff = current temp index - top of stack index
+
+                res[topOfstackTempIndex] = numberOfDaysDifference;
+
+            }
+
+            stack.push(new Pair<>(currTemperature,index));
+        }
+
+        return res;
+    }
+
 
     private static class TemperatureIndexPair {
         int temperature;
@@ -92,6 +120,16 @@ public class DailyTemperatures {
 
         public void setIndex(int index) {
             this.index = index;
+        }
+    }
+
+    private static  class Pair<T,K> {
+        public T key;
+        public K val;
+
+        public Pair(T key, K val){
+            this.key = key;
+            this.val = val;
         }
     }
 }

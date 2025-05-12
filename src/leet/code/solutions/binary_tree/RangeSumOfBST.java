@@ -1,5 +1,7 @@
 package leet.code.solutions.binary_tree;
 
+import leet.code.solutions.sandbox.Sandbox1;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -113,6 +115,23 @@ public class RangeSumOfBST {
         return sum;
     }
 
+
+    private  static int sum = 0;
+
+    private static int rangeSumBST_withGlobalVal(TreeNode root, int low, int high) {
+        if(root==null){
+            return 0;
+        }
+
+        if(root.val >= low && root.val <= high){
+            sum += root.val;
+        }
+
+        rangeSumBST_withGlobalVal(root.left, low, high);
+        rangeSumBST_withGlobalVal(root.right, low, high);
+
+        return sum;
+    }
 
         static public class TreeNode {
           int val;

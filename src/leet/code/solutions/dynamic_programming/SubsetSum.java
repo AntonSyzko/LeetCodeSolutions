@@ -1,6 +1,8 @@
 package leet.code.solutions.dynamic_programming;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 https://www.callicoder.com/subset-sum-problem/
@@ -60,6 +62,48 @@ public class SubsetSum {
 
         return includingCurrentItem || excludingCurrentItem;
     }
+
+    // --- DP----
+    private static boolean subsetSumDP(int[] nums, int targetSum){
+        if(nums.length == 0) return false;
+
+        Map<String, Boolean> DP = new HashMap<>();
+
+        return findSubsetSum(nums, 0, targetSum, DP);
+    }
+
+    /*
+    Time: O(n × T) - where n is the number of elements and T is the target sum
+Space: O(n × T) for the memoization table + O(n) for the recursion stack
+     */
+    private static boolean findSubsetSum(int[] nums, int index, int targetSum, Map<String, Boolean> DP){
+        if(index >= nums.length || targetSum < 0) {
+            return false;
+        }
+        if(targetSum == 0){
+            return true;
+        }
+        String key = index + "|" + targetSum;
+
+        if(nums[index] > targetSum){//number itself is bigger than target sum
+            boolean result = findSubsetSum(nums, index + 1, targetSum, DP);
+            DP.put(key, result);//store in DP in case smae num occurs later in recursive calls
+            return result;
+        }
+
+        if(DP.containsKey(key)){
+            return DP.get(key);
+        }
+
+        boolean includingCurrIndex = findSubsetSum(nums, index+1, targetSum - nums[index], DP);
+        boolean excludingCurrIndex = findSubsetSum(nums, index+1, targetSum , DP);
+
+        boolean sumForCurrentCombo = includingCurrIndex || excludingCurrIndex;
+        DP.put(key, sumForCurrentCombo);
+
+        return sumForCurrentCombo;
+    }
+
 
     //------------------- RECURSION with MEMO --------------------------------
 
@@ -137,6 +181,23 @@ public class SubsetSum {
         }
 
         return subsetSum[targetSum][len];
+    }
+
+    private static boolean subsetSumDP_Optimal(int[] nums, int targetSum) {
+        boolean[] dp = new boolean[targetSum + 1];
+
+        // Base case: we can always form sum of 0
+        dp[0] = true;
+
+        // Fill the dp array
+        for (int num : nums) {
+            // Iterate backwards to avoid using results from current iteration
+            for (int currSum = targetSum; currSum >= num; currSum--) {
+                dp[currSum] = dp[currSum] || dp[currSum - num];
+            }
+        }
+
+        return dp[targetSum];
     }
 
 

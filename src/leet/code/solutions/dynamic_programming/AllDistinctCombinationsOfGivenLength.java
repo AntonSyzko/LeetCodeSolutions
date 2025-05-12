@@ -28,8 +28,9 @@ public class AllDistinctCombinationsOfGivenLength {
 
     public static void main(String[] args) {
         int[] nums = {2, 3, 4};
+        int combinationLimit = 2;
 
-        Set<List<Integer>> res = findCombinations(nums, 2);
+        Set<List<Integer>> res = findCombinations(nums, combinationLimit);
 
         for (List<Integer> list : res) {
             System.out.println(list);
@@ -37,21 +38,22 @@ public class AllDistinctCombinationsOfGivenLength {
     }
 
         public static Set<List<Integer>> findCombinations(int[] nums, int distinctCombinationsLimit) {
-            Set<List<Integer>> finalRes = new HashSet<>();
-            findCombinations(nums, 0, distinctCombinationsLimit, finalRes, new ArrayList<>());
+            Set<List<Integer>> res = new HashSet<>();
+            List<Integer> combo = new ArrayList<>();
+            findCombinations(nums, 0, distinctCombinationsLimit, combo, res);
 
-            return finalRes;
+            return res;
         }
 
-    public static void findCombinations(int[] nums, int start, int distinctCombinationsLimit, Set<List<Integer>> finalRes, List<Integer> currentRes) {
+    public static void findCombinations(int[] nums, int start, int distinctCombinationsLimit,  List<Integer> combo, Set<List<Integer>> res) {
         if(nums.length == 0){
             return;
         }
 
         //BASE, distinctCombinations exhausted
         if( distinctCombinationsLimit == 0){
-            finalRes.add(new ArrayList<>(currentRes));//add to res
-            return;//exists stack call -> jumps to remove last
+            res.add(new ArrayList<>(combo));//add to res
+            return;//exits stack call -> jumps to remove last
         }
 
         //return if no more elements are left
@@ -60,17 +62,17 @@ public class AllDistinctCombinationsOfGivenLength {
         }
 
         // include the current element in the current combination res and recur
-        currentRes.add(nums[start]);
+        combo.add(nums[start]);
 
         //include means - retrieve from distinctCombinations ( by extracting -1 = adding to result )
-        findCombinations(nums, start + 1, distinctCombinationsLimit - 1, finalRes, currentRes);
+        findCombinations(nums, start + 1, distinctCombinationsLimit - 1, combo,res);
 
         // exclude the lastly added element from the current combination
-        currentRes.remove(currentRes.size() - 1); // BACKTRACK
+        combo.remove(combo.size() - 1); // BACKTRACK
        // currentRes.removeLast();//alternative
 
         // exclude the current element from the current combination and recur
         //exclude means keep it in distinctCombinations not accounting for it in res
-        findCombinations(nums, start + 1, distinctCombinationsLimit , finalRes, currentRes);
+        findCombinations(nums, start + 1, distinctCombinationsLimit ,combo,  res);
     }
 }

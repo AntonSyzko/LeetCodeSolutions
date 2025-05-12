@@ -36,7 +36,7 @@ public class ClosestLowerNumber {
 
         if(indexToSwap==-1) return null;
 
-        int swapIndexInSubNum = getSwapIndexInSubnum(nums, nums[indexToSwap]); //index of  first digit that is LOWER to num[indexToSwap] going  to the right of it
+        int swapIndexInSubNum = getSwapIndexInSubnum(nums, nums[indexToSwap]); //index of  first digit that is LOWER to num[indexToSwap] going  to the right of it going from the END !!!
 
         System.out.println("swapIndexInSubNum : "+indexToSwap + " is number " + nums[swapIndexInSubNum]);
 

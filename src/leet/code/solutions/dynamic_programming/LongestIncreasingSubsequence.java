@@ -47,6 +47,7 @@ public class LongestIncreasingSubsequence {
     }
 
     private  static   int[] LIS_DP ;
+
     private static int findLengthOfLongestIncreasingSubsequenceMemo(int[] arr) {
 
         LIS_DP = new int[arr.length];
@@ -94,11 +95,9 @@ public class LongestIncreasingSubsequence {
     }
 
 
-
-
     private static int findLengthOfLongestIncreasingSubsequenceReq(int[] arr) {
 
-            int longestSoFar = Integer.MIN_VALUE;
+       int longestSoFar = Integer.MIN_VALUE;
 
         for(int i = 0; i < arr.length; i++ ){
             int subsequenceLength = calculateSubsequenceLengthReqHelper(arr, i);
@@ -124,13 +123,13 @@ public class LongestIncreasingSubsequence {
 
         int currentSubsequenceLength = 0;
 
-        for (int start = 0; start < index; start++) {//iterate from start upt to current index
+        for (int i = 0; i < index; i++) {//iterate from i upt to current index
 
-              if(arr[start] < arr[index]){//for increasing subsequence
+              if(arr[i] < arr[index]){//for increasing subsequence
 
                   currentSubsequenceLength = Math.max(
                           currentSubsequenceLength,
-                          calculateSubsequenceLengthReqHelper(arr, start) +  1);//+1 because we found increasing spot
+                          calculateSubsequenceLengthReqHelper(arr, i) +  1);//+1 because we found increasing spot
 
               }
 

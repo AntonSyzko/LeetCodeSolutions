@@ -44,13 +44,9 @@ public class NextGreaterElement {
 
         for (int index = 0; index < nums.length; index++) {
 
-            System.out.println("\r\n\tintex " + index + " element " + nums[index]);
-            System.out.println("\r\n\tstack " + stack);
             while (!stack.isEmpty() && nums[stack.peek()] < nums[index]) {
-                System.out.println("\r\n\t --->  popping from the stack " + stack.peek());
                 int indexFromTopOfTheStack = stack.pop();//pop() -> extracted
                 res[indexFromTopOfTheStack] = nums[index];
-                System.out.println("\r\n\t --->  current res" + Arrays.toString(res));
             }
 
             stack.push(index);

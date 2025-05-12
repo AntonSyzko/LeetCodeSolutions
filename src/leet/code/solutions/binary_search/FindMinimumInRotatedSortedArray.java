@@ -96,8 +96,4 @@ public class FindMinimumInRotatedSortedArray {
         }
         return nums[0];
     }
-
-
-
-
-    }
+}

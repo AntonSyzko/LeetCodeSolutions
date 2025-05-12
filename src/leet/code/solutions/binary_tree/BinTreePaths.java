@@ -1,5 +1,8 @@
 package leet.code.solutions.binary_tree;
 
+import leet.code.solutions.sandbox.Sandbox1;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,10 +26,10 @@ The number of nodes in the tree is in the range [1, 100].
  */
 public class BinTreePaths {
     public static void main(String[] args) {
-       TreeNode<Integer> root = new TreeNode<>(1);
-       TreeNode<Integer> rootL = new TreeNode<>(2);
-       TreeNode<Integer> rootR = new TreeNode<>(3);
-       TreeNode<Integer> rootLR = new TreeNode<>(5);
+       TreeNode root = new TreeNode(1);
+       TreeNode rootL = new TreeNode(2);
+       TreeNode rootR = new TreeNode(3);
+       TreeNode rootLR = new TreeNode(5);
        root.left = rootL;
        root.right = rootR;
        rootL.right = rootLR;
@@ -35,6 +38,33 @@ public class BinTreePaths {
     }
 
     private static List<String> binaryTreePaths(TreeNode root) {
+        if(root==null) return new ArrayList<>();
+        List<String> res = new ArrayList<>();
+
+        dfs(root, res,"");
+
+        return res;
+    }
+
+    //Time O(n)
+    //Space O(n)
+    private static void dfs(TreeNode node, List<String> res, String path) {
+
+        if( node.left == null && node.right == null) {//reached leaf
+            path +=  node.val;
+            res.add(path);
+            return;
+        }
+
+        if(node.left != null) {
+            dfs(node.left, res, path  + node.val + "->");
+        }
+        if(node.right != null) {
+            dfs(node.right, res, path + node.val + "->");
+        }
+    }
+
+    private static List<String> binaryTreePaths2(TreeNode root) {
        List<String> res = new LinkedList<>();
        process(root, "", res);
        return res;
@@ -53,5 +83,28 @@ public class BinTreePaths {
 
         process(node.left, nextPath, res);
         process(node.right, nextPath, res);
+    }
+
+
+    private static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
+        }
     }
 }

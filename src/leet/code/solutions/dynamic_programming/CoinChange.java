@@ -37,9 +37,9 @@ public class CoinChange {
     private static int coinChangeMy(int[] coins, int amount) {
         Arrays.sort(coins);//optimization - no need to traverse more than needed later
 
-        int[]DP = new int[amount+1];
+        int[]DP = new int[amount + 1];
 
-        Arrays.fill(DP,amount+1);//pre-fill with MAX (bigger than target here )
+        Arrays.fill(DP,amount + 1);//pre-fill with MAX (bigger than target here )
 
         DP[0]=0;//takes 0 coins to make 0 amount - smallest subproblem - going bottom UP
 
@@ -48,7 +48,7 @@ public class CoinChange {
             for (int eachCoin : coins){//traverse each coin in coins
 
                 if(eachCoin <= subAmount){//if to make this subAmount with current coin is possible
-                    //min of stored so far OR amount to make this subamount with current coin +1 coin
+                    //min of stored so far OR amount to make this subamount with current coin + 1 coin
                     DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - eachCoin] + 1);
 
                 }else {
@@ -60,6 +60,7 @@ public class CoinChange {
         return DP[amount] > amount ?   -1 : DP[amount];
     }
 
+    //O ( M * N ) - inefficient
     private static int coinChangeRecursive(int[] coins, int amount) {
         int res = Integer.MAX_VALUE;
 
@@ -90,11 +91,11 @@ public class CoinChange {
         Arrays.fill(DP, amount + 1);//pre fill with smth invalid, not default zeroes
         DP[0] = 0;//to get amount of 0 - we need 0 coins
 
-        for (int i = 0; i <= amount; i++) {//traverse all sum-amounts untill <= amount
-            for (int j = 0; j < coins.length; j++) {//traverse each coin
-                if (coins[j] <= i) {//if coin is less than very amount
+        for (int subAmount = 0; subAmount <= amount; subAmount++) {//traverse all sum-amounts untill <= amount
+            for (int coin = 0; coin < coins.length; coin++) {//traverse each coin
+                if (coins[coin] <= subAmount) {//if coin is less than very subAmount
                     //choose current min so far, or amount - current coin =1
-                    DP[i] = Math.min(DP[i], DP[i - coins[j]] + 1);
+                    DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - coins[coin]] + 1);
                 }else {
                     break;//optimized - no need to check further coins since they are sorted and the current one is less tha amount anyways
                 }

@@ -54,57 +54,77 @@ public class NextGreaterToRight {
 
                 int elementOnTopOfStack = stack.peek();
 
-//                System.out.println("\r\n\t element on top of the stack " + elementOnTopOfStack);
-//                System.out.println("\r\n\t current index "+ i + " elelemnt " + array[i]);
-//                System.out.println("\r\n\t stack " + stack);
 
                 if(elementOnTopOfStack > array[i]){
 
                     NGE[i] = elementOnTopOfStack;//found prev bigger than current - so store it in res
-                //    System.out.println("\r\n\t updated res " + Arrays.toString(NGE));
                     break;//break while
 
                 }else {//current is BIGGER than elementOnTopOfStack
 
-                   // System.out.println("\r\n\t removing " + stack.peek());
                     stack.pop();//remove from stack since we will push current to stack as it is BIGGER tha what is on top of stack currently
                 }
 
-
             }
             stack.push(array[i]);//push current to the stack's TOP
-          //  System.out.println("------------------------------");
-
 
         }
         return NGE;
-
     }
 
 
 
 
         private static int[] findNextGreaterToRight(int[] nums) {
+             Stack<Integer> stack = new Stack<>();
+
+            int[] res = new int[nums.length];
+            Arrays.fill(res, -1);//to store all -1 if no next greater will be found
+
+            for (int index = 0; index < nums.length; index++) {
+
+                while (!stack.isEmpty() // while stack has smth
+                        && // AND
+                        nums[stack.peek()] < nums[index]) {//on top of stack ( without retrieving !!!) is LESS than current element
+
+                   int indexFromTopOfStack =  stack.pop();
+
+                    res[indexFromTopOfStack] = nums[index];
+
+                }
+
+                stack.push(index);//push to top of stack
+            }
+
+        return res;
+    }
+
+    private static int[] nextGreaterElementToRight(int[] arr) {
+        int[] NGE = new int[arr.length];
+
         Stack<Integer> stack = new Stack<>();
 
-        int[] res = new int[nums.length];
-        Arrays.fill(res, -1);//to store all -1 if no next greater will be found
+        for(int i = arr.length - 1; i >= 0; i--) {
+            NGE[i] = -1;//-1 default for not found
 
-        for (int i = 0; i < nums.length; i++) {
+            int curr = arr[i];
 
-            while (!stack.isEmpty() // while stack has smth
-                    && // AND
-                    nums[stack.peek()] < nums[i]) {//on top of stack ( without retrieving !!!) is LESS than current element
+            while(!stack.isEmpty() ){
 
-               int indexFromTopOfStack =  stack.pop();
+                int topOsStack = stack.peek();
 
-                res[indexFromTopOfStack] = nums[i];
+                if(topOsStack > curr){
+                    NGE[i] = topOsStack;
+                    break;
+                }else{
+                    stack.pop();
+                }
 
             }
 
-            stack.push(i);//push to top of stack
+            stack.push(curr);
         }
 
-        return res;
+        return NGE;
     }
 }
