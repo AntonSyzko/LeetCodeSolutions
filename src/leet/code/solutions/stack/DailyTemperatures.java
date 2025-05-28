@@ -39,8 +39,11 @@ public class DailyTemperatures {
         System.out.println(Arrays.toString(closestPositiveTemperatures));
     }
 
-    //time O(n) / putting to stack but we are alose deleting from stack as we go
-    //spapce O(n)
+    /*
+    time O(n) / putting to stack but we are alose deleting from stack as we go
+
+    spapce O(n)
+     */
     private static int[] dailyTemperatures(int[] temperatures) {
          int[] answers = new int[temperatures.length];
 
@@ -82,6 +85,7 @@ public class DailyTemperatures {
             while(!stack.isEmpty() && currTemperature > stack.peek().key) {//whils smth in stak and current temp >  top of stak temp
 
                 Pair<Integer,Integer> topOfSTackPair = stack.pop();
+
                 int topOfstackTempIndex = topOfSTackPair.val;
 
                 int numberOfDaysDifference =  index - topOfstackTempIndex;//number of days diff = current temp index - top of stack index

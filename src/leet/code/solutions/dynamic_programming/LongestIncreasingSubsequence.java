@@ -85,7 +85,7 @@ public class LongestIncreasingSubsequence {
             if(arr[i] < arr[index]){//increasing subsequence condition
 
                 currentLength  = Math.max(currentLength,
-                        1 + calculateSubsequenceLengthMemoHelper(arr, i));//+1 since we found increasing ( line 84)
+                        1 + calculateSubsequenceLengthMemoHelper(arr, i));//+1 since we found increasing ( line 85)
             }
         }
 
@@ -132,11 +132,11 @@ public class LongestIncreasingSubsequence {
                           calculateSubsequenceLengthReqHelper(arr, i) +  1);//+1 because we found increasing spot
 
               }
-
         }
 
         return currentSubsequenceLength;
     }
+
 
     private static int lengthOfLIS(int[] nums) {
         int res = 1;//minimal subsequence length for bag of 1 is the very 1

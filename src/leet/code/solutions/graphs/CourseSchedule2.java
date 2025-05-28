@@ -6,7 +6,6 @@ import java.util.*;
 
 https://neetcode.io/problems/course-schedule-ii
 
-
 You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b first if you want to take course a.
 
 For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
@@ -33,19 +32,17 @@ Constraints:
 1 <= numCourses <= 1000
 0 <= prerequisites.length <= 1000
 All prerequisite pairs are unique.
-
-
  */
 public class CourseSchedule2 {
 
     public static void main(String[] args) {
-//        int[][] prereq = {{1,0}};
-//      int[] courses = findOrder(3, prereq);
-//      System.out.println(Arrays.toString(courses));
-//
-//        int[][] prereq2 = {{0,1},{1,2}, {2,0}};
-//        int[] courses2 = findOrder(2, prereq2);
-//        System.out.println(Arrays.toString(courses2));
+        int[][] prereq = {{1,0}};
+      int[] courses = findOrder(3, prereq);
+      System.out.println(Arrays.toString(courses));
+
+        int[][] prereq2 = {{0,1},{1,2}, {2,0}};
+        int[] courses2 = findOrder(2, prereq2);
+        System.out.println(Arrays.toString(courses2));
 
         int[][] prereq3 = {{0, 1}};
         int[] courses3 = findOrder(2, prereq3);
@@ -71,14 +68,19 @@ public class CourseSchedule2 {
             }
         }
 
-        int[] res = new int[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            res[i] = result.get(i);
-        }
-
-        return res;
+        return result.stream().mapToInt(i -> i).toArray();
     }
 
+    /*
+    Time & Space Complexity
+        Time complexity:
+
+                O(V+E)
+                Space complexity:
+
+                 O(V+E)
+        Where V is the number of courses and  E is the number of prerequisites.
+     */
     private static boolean validCOurse(int i, Set<Integer> seenCourses, Set<Integer> cycleCourses,  Map<Integer, List<Integer>> coursePrerequisites, List<Integer> result) {
 
         if(cycleCourses.contains(i)) return false;
@@ -96,7 +98,9 @@ public class CourseSchedule2 {
 
         cycleCourses.remove(i);//backtrack
 
-        seenCourses.add(i);
+        seenCourses.add(i);//mark as visited
+
+        //recursion DFS will make sure that ALL the courses this current was depend on are processed BEFORE and already in RES prior to curr
         result.add(i);
 
         return true;

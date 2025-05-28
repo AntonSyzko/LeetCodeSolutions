@@ -141,7 +141,59 @@ public class WordSearch {
         backtrackingPath.remove(currentPair);//BACKTRACK   remove from visited
 
         return res;
+    }
 
+    //---- my another *---
+
+    private static boolean exist2(char[][] board, String word) {
+        int ROWS = board.length;
+        int COLS = board[0].length;
+
+        boolean[][] visited = new boolean[ROWS][COLS];
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                if (board[row][col] == word.charAt(0)) {
+                    if(dfsSearch(board, word, row, col, visited,0)){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static boolean dfsSearch(char[][] board, String word, int row, int col, boolean[][] visited, int index) {
+        if(index == word.length()){
+            return true;
+        }
+        if(index > word.length()){
+            return false;
+        }
+
+        if(row < 0 || row >= board.length || col <0 || col >= board[0].length ){
+            return false;
+        }
+
+        if(visited[row][col]){
+            return false;
+        }
+
+        if(board[row][col] != word.charAt(index)){
+            return false;
+        }
+
+        visited[row][col] = true;
+
+        boolean left = dfsSearch(board, word, row + 1, col, visited, index + 1);
+        boolean right = dfsSearch(board, word, row - 1, col, visited,index + 1);
+        boolean up = dfsSearch(board, word, row, col -1, visited ,index + 1);
+        boolean down = dfsSearch(board, word, row, col +1, visited,index + 1);
+
+        visited[row][col] = false;
+
+        return left || right || up || down;
     }
 
 }

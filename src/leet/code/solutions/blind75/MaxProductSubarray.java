@@ -3,10 +3,38 @@ package leet.code.solutions.blind75;
 public class MaxProductSubarray {
 
     public static void main(String[] args) {
-      int[] nums = {3,-1,4};
-      int maxProd = maxProductSubarray(nums);
+      int[] nums = {3,-1,0,4};
+      int maxProd = maxProduct(nums);
       System.out.println(maxProd);
+
+        int[] nums2 = {-2,3,0,-4};
+        int maxProduct = maxProduct(nums2);
+        System.out.println(maxProduct);
     }
+
+
+    /*
+            Time complexity:
+                 O(n)
+            Space complexity:
+                 O(1)
+     */
+    private static int maxProduct(int[] nums) {
+        int resMAx = nums[0];
+        int currMax = 1;
+        int currMIn = 1;
+
+        for (int num : nums) {
+            int tempMax = currMax * num;//just not to lose in line 32 where currMax is used but got updated in line 31
+            currMax = Math.max(Math.max( currMax * num, currMIn * num), num);
+            currMIn = Math.min(Math.min( tempMax , currMIn * num), num);
+
+            resMAx = Math.max(resMAx, currMax);
+        }
+
+        return resMAx;
+    }
+
 
     private static int maxProductSubarray(int[] nums) {
         if(nums.length==0) return 0;

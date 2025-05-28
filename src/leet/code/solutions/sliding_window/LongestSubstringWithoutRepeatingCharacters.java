@@ -130,6 +130,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
                 alreadySeen.add(currChar);//add to seen
 
                 longestRes = Math.max(longestRes, windowRight - windowLeft + 1);//update res
+              //  longestRes = Math.max(longestRes, alreadySeen.size());//alternative way
 
                 windowRight ++;
 
@@ -180,5 +181,42 @@ public class LongestSubstringWithoutRepeatingCharacters {
         }
 
         return longestLenRes;
+    }
+
+
+    private static int lengthOfLongestSubstringSet(String s) {
+        if(s == null || s.isEmpty()) return 0;
+
+        if(s.length() == 1) return 1;
+
+        int longestSubstrLength = Integer.MIN_VALUE;
+
+        int windowStart = 0;
+        int windowEnd = 0;
+
+        Set<Character> windowSet = new HashSet<>();// O(26)
+
+        while(windowEnd < s.length()) {
+
+            char ch = s.charAt(windowEnd);
+
+            if(!windowSet.contains(ch)) {
+
+                windowSet.add(ch);
+
+                longestSubstrLength = Math.max(longestSubstrLength, windowSet.size());
+
+                windowEnd++;
+
+            }else {
+
+                //no while loop
+                windowSet.remove(s.charAt(windowStart));
+                windowStart++;
+
+            }
+        }
+
+        return longestSubstrLength;
     }
 }

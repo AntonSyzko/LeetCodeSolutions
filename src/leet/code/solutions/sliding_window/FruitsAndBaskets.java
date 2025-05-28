@@ -70,6 +70,7 @@ public class FruitsAndBaskets {
             fruitOccurrences.put(currFruit,fruitOccurrences.getOrDefault(currFruit,0) + 1);//store curr fruit
 
             while (fruitOccurrences.size() >2) {//window of > 2 fruits in basket hit
+
                 int fruitAtWindowStart = fruits[windowStart];
 
                 fruitOccurrences.put(fruitAtWindowStart,fruitOccurrences.get(fruitAtWindowStart) - 1);

@@ -64,7 +64,30 @@ public class TripletsWIthSumEqualOrLessThanGivenNumber {
         }
     }
 
+    private static void formTriplets(List<Integer> input, int targetSum, int index, List<Integer> combo, List<List<Integer>> result) {
+
+        //BASE
+        if(combo.size() ==3){//triplet formed
+            result.add(new ArrayList<>(combo));
+            return;
+        }
+
+        for (int i = index; i < input.size(); i++) {//iterate from current index onward
+
+            if(input.get(i) > targetSum){//the very curr num is bigger than sum
+                continue;//skip
+            }
+
+            combo.add(input.get(i));
+
+            formTriplets(input, targetSum - input.get(i), i + 1, combo, result);
+
+            combo.remove(combo.size()-1);//backtrack
+        }
+    }
+
     //sort of 3 sum problem
+    //O(n^2)
     public static void printAllTriplets2(int[] nums, int sum){
         Arrays.sort(nums); //!!!!!
 

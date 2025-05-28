@@ -16,16 +16,17 @@ Output: (1, 4), (5, 7), (8, 11), (12, 14)
  */
 public class ActivitySelection {
     public static void main(String[] args) {
-        List<Pair> activities = Arrays.asList(new Pair(1, 4),new Pair(1, 4), new Pair(3, 5),
-                new Pair(0, 6), new Pair(5, 7), new Pair(3, 8),
-                new Pair(5, 9), new Pair(6, 10), new Pair(8, 11),
-                new Pair(8, 12), new Pair(2, 13), new Pair(12, 14));
+        List<ActivityPair> activities = Arrays.asList(
+                new ActivityPair(1, 4),new ActivityPair(1, 4), new ActivityPair(3, 5),
+                new ActivityPair(0, 6), new ActivityPair(5, 7), new ActivityPair(3, 8),
+                new ActivityPair(5, 9), new ActivityPair(6, 10), new ActivityPair(8, 11),
+                new ActivityPair(8, 12), new ActivityPair(2, 13), new ActivityPair(12, 14));
 
-        List<Pair> result = selectActivity2(activities);
+        List<ActivityPair> result = selectActivity2(activities);
         System.out.println(result);
     }
 
-    public static List<Pair> selectActivity(List<Pair> activities) {
+    public static List<ActivityPair> selectActivity(List<ActivityPair> activities) {
         // `k` keeps track of the index of the last selected activity
         int lastSelectedActivity = 0;
 
@@ -38,7 +39,7 @@ public class ActivitySelection {
         }
 
         // sort the activities according to their finishing time
-        Collections.sort(activities, Comparator.comparingInt(Pair::getFinish));
+        Collections.sort(activities, Comparator.comparingInt(ActivityPair::getFinish));
 
         // start iterating from the second element of the
         // list up to its last element
@@ -56,12 +57,12 @@ public class ActivitySelection {
         return result.stream().map(activities::get).collect(Collectors.toList());
     }
 
-    public static List<Pair> selectActivity2(List<Pair> activities){
-        List<Pair> result = new ArrayList<>();
+    public static List<ActivityPair> selectActivity2(List<ActivityPair> activities){
+        List<ActivityPair> result = new ArrayList<>();
 
         int lastSelectedActivity = 0;
 
-        Collections.sort(activities, Comparator.comparingInt(Pair::getFinish));
+        Collections.sort(activities, Comparator.comparingInt(ActivityPair::getFinish));
 
         if(activities.size() >0){
             result.add(activities.get(0));//add first activity -> after sorting it smallest finish time anyways
@@ -78,11 +79,11 @@ public class ActivitySelection {
     }
 
 
-    static class Pair {
+    static class ActivityPair {
         int start;
         int finish;
 
-        public Pair(int start, int finish) {
+        public ActivityPair(int start, int finish) {
             this.start = start;
             this.finish = finish;
         }

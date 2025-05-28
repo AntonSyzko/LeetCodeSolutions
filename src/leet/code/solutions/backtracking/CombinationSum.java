@@ -68,21 +68,20 @@ public class CombinationSum {
             return;
         }
 
-        for (int currNum = startNum; currNum < nums.length; currNum++) {
+        for (int i = startNum; i < nums.length; i++) {
 
-            int currentSumSoFar = ongoingSumAggregation + nums[currNum];
+            int currentSumSoFar = ongoingSumAggregation + nums[i];
 
             if (currentSumSoFar > target) {//exceeding target - skip
                 return;
             }
 
-            ongoingCombination.add(nums[currNum]);//add to ongoing
+            ongoingCombination.add(nums[i]);//add to ongoing
 
-            dfs(nums, currNum,  currentSumSoFar, target,ongoingCombination, res);//recur
+            dfs(nums, i,  currentSumSoFar, target,ongoingCombination, res);//recur, mind i is NOT i+1 -> we can REUSE elements
 
             ongoingCombination.remove(ongoingCombination.size() - 1);//BACKTRACK
 
-            //ongoingCombination.removeLast();
         }
     }
 

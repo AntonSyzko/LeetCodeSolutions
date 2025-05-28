@@ -1,5 +1,8 @@
 package leet.code.solutions.dynamic_programming;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 https://leetcode.com/problems/decode-ways/description/
 
@@ -60,8 +63,6 @@ Explanation:
 
 "06" cannot be mapped to "F" because of the leading zero ("6" is different from "06"). In this case, the string is not a valid encoding, so return 0.
 
-
-
 Constraints:
 
 1 <= s.length <= 100
@@ -70,11 +71,26 @@ s contains only digits and may contain leading zero(s).
 public class DecodeWays {
 
     public static void main(String[] args) {
-      int ways = decodeWays("12");
+      int ways = decodeWays("12");//2
+        System.out.println(ways);
+
+         ways = decodeWays("121");//3
+        System.out.println(ways);
+
+        ways = decodeWaysMAp("441");//1
         System.out.println(ways);
     }
+    /*
+    Time Complexity:
 
+        O(n) where n is the length of the string
+        We process each character once and perform constant-time operations
 
+Space Complexity:
+
+        Array implementation: O(n) for the DP array
+        HashMap implementation: O(n) for the HashMap
+     */
 
     private static int decodeWays(String str) {
         int[] DP = new int[str.length() + 1];//+ 1 since we will put 0 first as there is 1 way to decode zero length string - and this one way is no way
@@ -92,10 +108,45 @@ public class DecodeWays {
                 DP[i] += DP[i -1];
             }
 
-            if(twoDigits >= 10 || twoDigits <= 26){
+            if(twoDigits >= 10 && twoDigits <= 26){
                 DP[i] += DP[i-2];
             }
         }
         return DP[str.length()];
     }
-}
+
+    private static int decodeWaysMAp(String str) {
+        if(str.isEmpty()) return 0;
+        if(str.startsWith("0") ) return 0;
+
+        Map<Integer,Integer> DP = new HashMap<>();//index to number of ways to decode at this index
+        DP.put(0,1);// one way to decode zero length string - there is 1 way to decode zero length string - and this one way is no way
+        DP.put(1,str.charAt(0) == '0' ? 0 : 1);//if it is zero - 0 ways  otherwise one way
+
+        for (int i = 2; i <= str.length(); i++) {
+            int numWays = 0;
+
+            int oneDigit = Integer.parseInt(str.substring(i-1, i));
+            int twoDigits = Integer.parseInt(str.substring(i-2, i));
+
+            // If one digit is valid (not 0), add ways from previous position
+            if(oneDigit >= 1){
+                numWays += DP.get(i-1);
+            }
+
+            // If two digits form a valid character (10-26), add ways from two positions back
+            if(twoDigits >= 10 && twoDigits <= 26){
+                numWays += DP.get(i-2);
+            }
+
+            // If no valid decodings at this position, return 0
+            if(numWays == 0){
+                return 0;//fail fast
+            }
+
+            DP.put(i, numWays);
+        }
+
+        return DP.get(str.length());
+    }
+    }

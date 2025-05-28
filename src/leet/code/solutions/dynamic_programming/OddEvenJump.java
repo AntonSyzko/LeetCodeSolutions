@@ -55,7 +55,7 @@ public class OddEvenJump {
     }
 
     private static int oddEvenJumps(int[] arr) {
-        int goodStartingIndexCount = 1; // start with 1 as last one is always good anywy
+        int goodStartingIndexCount = 1; // start with 1 as last one is always good anyway
 
         int n = arr.length;
 
@@ -68,7 +68,7 @@ public class OddEvenJump {
         TreeMap<Integer,Integer> treeAmp = new TreeMap<>();
         treeAmp.put(arr[n-1],n-1);//put last val : last index
 
-        for (int i =  n - 2; i >=0 ; i--) {//traverse backwards starting from second last ( as we have accounted for the very last already)
+        for (int i =  n - 2; i >= 0 ; i--) {//traverse backwards starting from second last ( as we have accounted for the very last already)
 
             int currentPosition = arr[i];
 

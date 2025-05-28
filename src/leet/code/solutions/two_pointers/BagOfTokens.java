@@ -80,6 +80,7 @@ public class BagOfTokens {
         if(tokens[0] > power) return 0;//if to start with already too high
 
         int score = 0;
+        int maxScore = 0;
 
         //two pointers
         int left = 0;
@@ -94,6 +95,7 @@ public class BagOfTokens {
 
                 power -= lowestToken;//give away power
                 score++;//gain score
+                maxScore = Math.max(maxScore, score);
                 left++;//drop(move) lowest
 
             }else if(score > 0 &&  left < right){// have SCORE and still room to gain in future ( otherwise no point to give AWAY SCORE
@@ -107,6 +109,6 @@ public class BagOfTokens {
             }
         }
 
-        return score;
+        return maxScore;
     }
 }

@@ -34,7 +34,7 @@ public class UniquePaths {
         int[][] grid = {{0, 0, 0},
                         {0, 0, 0}};
         //   System.out.println(Arrays.deepToString(grid));
-        int uniquePaths = uniquePathsOptimized(3, 3);
+        int uniquePaths = uniquePaths_DP_bottom_up(3, 3);
         System.out.println(uniquePaths);
     }
 
@@ -99,4 +99,40 @@ public class UniquePaths {
         
         return paths[m - 1][n - 1];
     }
-}
+
+    private static int uniquePathsRecursive(int ROWS, int COLS) {
+        int startRow = 0;
+        int startCol = 0;
+        return  dfs(startRow, startCol, ROWS, COLS);
+    }
+
+    private static int dfs(int row, int col, int ROWS, int COLS) {
+        //BASE
+         if(row == ROWS -1  && col == COLS -1) {//last row ( target)  met
+             return 1;
+         }
+         if(row >= ROWS || col >= COLS) {//out of bounds
+             return 0;
+         }
+
+         return dfs(row + 1, col, ROWS,COLS) //row down
+                 +
+                 dfs(row, col +1, ROWS,COLS) ; // col right
+    }
+
+    ///  ------------- DP ---------------
+
+    private static int uniquePaths_DP_bottom_up(int m, int n) {
+        int[][] DP = new int[m +1 ][n + 1 ]; // +1 as we fill with 0 additional row and col to the right and down to simulate hitting out of bounds where value will be 0 in DP
+        DP[m -1][n -1] = 1; // takes 1 to reach LAST cell from LAST cell
+
+        for(int row = m -1; row >= 0; row --){//iterate rows backwards from last
+            for(int col = n -1 ; col >= 0; col --){//iterate cols backwards from last
+                DP[row][col] += DP[row  + 1][col] + DP[row][col  + 1];
+            }
+        }
+
+        return DP[0][0];// result is at start cell
+    }
+
+    }

@@ -48,12 +48,13 @@ public class CoinChange {
             for (int eachCoin : coins){//traverse each coin in coins
 
                 if(eachCoin <= subAmount){//if to make this subAmount with current coin is possible
+
                     //min of stored so far OR amount to make this subamount with current coin + 1 coin
                     DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - eachCoin] + 1);
 
                 }else {
                     //go to new sub amount , since the smallest coin was bigger than current subamount ( we are soring in line 1  )
-                    break;
+                    break;//MIND!!! break id array was SORTED
                 }
             }
         }
@@ -98,6 +99,7 @@ public class CoinChange {
                     DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - coins[coin]] + 1);
                 }else {
                     break;//optimized - no need to check further coins since they are sorted and the current one is less tha amount anyways
+                    //MIND!!! break id array was SORTED
                 }
             }
         }
@@ -108,13 +110,15 @@ public class CoinChange {
     private static int coinChangeNoptimization(int[] coins, int amount) {
         int[] DP = new int[amount + 1];
         Arrays.fill(DP, amount + 1);
-        DP[0] = 0;
 
-        for (int i = 0; i <= amount; i++) {
-            for (int j = 0; j < coins.length; j++) {
-                if (coins[j] <= i) {
-                    DP[i] = Math.min(DP[i], DP[i - coins[j]] + 1);
+        DP[0] = 0;//to get amount of 0 - we need 0 coins
+
+        for (int subAmount = 0; subAmount <= amount; subAmount++) {
+            for (int coin : coins) {
+                if (coin <= subAmount) {
+                    DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - coin] + 1);
                 }
+                //mind no break here - we haven't sorted array, hence bigger or smaller coins appear randomly
             }
         }
         return DP[amount] > amount ? -1 : DP[amount];

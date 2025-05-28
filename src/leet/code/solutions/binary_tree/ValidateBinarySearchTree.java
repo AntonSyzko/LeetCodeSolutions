@@ -1,5 +1,7 @@
 package leet.code.solutions.binary_tree;
 
+import leet.code.solutions.sandbox.Sandbox1;
+
 import java.util.Stack;
 
 /*
@@ -81,7 +83,7 @@ public class ValidateBinarySearchTree {
 
 
     private static boolean isValidBST2(TreeNode root) {
-        return validateBST2(root, Long.MIN_VALUE, Long.MAX_VALUE);//min max t ostart with
+        return validateBST2(root, Long.MIN_VALUE, Long.MAX_VALUE);//min max to start with
     }
 
     private static boolean validateBST2(TreeNode node, long min, long max) {
@@ -100,7 +102,8 @@ public class ValidateBinarySearchTree {
                 validateBST2(node.right, node.val, max);
     }
 
-        private static boolean isValidBSTIter(TreeNode root) {
+    
+    private static boolean isValidBSTIter(TreeNode root) {
         if (root == null) return true;
 
         Stack<TreeNode> stack = new Stack<>();
@@ -130,6 +133,20 @@ public class ValidateBinarySearchTree {
         }
 
         return true;
+    }
+
+    public  static  boolean isValidBST3(TreeNode root) {
+        return validateBSTree(root, null, null);
+    }
+
+    private static boolean validateBSTree(TreeNode node, Integer min, Integer max) {
+        if(node == null){
+            return true;
+        } else if ( (max != null && node.val >= max) && (min != null && node.val <= min) ) {
+            return false;
+        }else{
+            return validateBSTree(node.left, min, node.val) && validateBSTree(node.right, node.val, max);
+        }
     }
 
     private static class TreeNode {

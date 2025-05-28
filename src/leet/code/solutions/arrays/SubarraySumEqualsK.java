@@ -30,6 +30,14 @@ public class SubarraySumEqualsK {
     }
 
     private static int subarraySum(int[] nums, int targetSum) {
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+
+        if(nums.length ==1){
+            return nums[0] == targetSum ? 1 : 0;
+        }
+
         //map of  sum : times met
         Map<Integer, Integer> subarraySums = new HashMap<>();
         subarraySums.put(0, 1);//by default, we have seen zero sum ( sum of nothing)  once
@@ -50,6 +58,37 @@ public class SubarraySumEqualsK {
         return result;
     }
 
+    public int subarraySum2(int[] nums, int k) {
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+
+        if(nums.length ==1){
+            return nums[0] == k ? 1 : 0;
+        }
+
+        int res = 0;
+
+        Map<Integer,Integer> sumOccurred = new HashMap<>();
+        sumOccurred.put(0,1);//sum of 0 we saw once as to start with
+
+        int sum = 0;
+
+        for(int i = 0; i < nums.length; i++){
+            sum += nums[i];
+
+            int complement = sum - k;
+
+            if(sumOccurred.containsKey(complement)){
+                res += sumOccurred.get(complement) ;
+            }
+
+            sumOccurred.put(sum, sumOccurred.getOrDefault(sum, 0) +1);
+
+        }
+
+        return res;
+    }
 
     private static int subarraySumBruteForce(int[] nums, int k) {
         int res = 0;

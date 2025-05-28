@@ -30,10 +30,12 @@ public class TripletsWithZeroSum {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(arr);
 
-        for (int first = 0; first < arr.length - 2; first++) {
+        for (int first = 0; first < arr.length - 2; first++) {//iterate till last 2
+
             if (first > 0 && arr[first] == arr[first - 1]) {//skip duplicates
                 continue;
             }
+
             int firstNum = arr[first];
 
             int secondIndex = first + 1;
@@ -51,11 +53,11 @@ public class TripletsWithZeroSum {
                     secondIndex++;
                     thirdIndex--;
 
-                    while (secondIndex < thirdIndex && arr[secondIndex] == arr[secondIndex - 1]) {//skip duplicates
+                    while (secondIndex < thirdIndex && arr[secondIndex] == arr[secondIndex - 1]) {//skip duplicates next to second
                         secondIndex++;
                     }
 
-                    while (secondIndex < thirdIndex && arr[thirdIndex] == arr[thirdIndex + 1]) {//skip duplicates
+                    while (secondIndex < thirdIndex && arr[thirdIndex] == arr[thirdIndex + 1]) {//skip duplicates next to third
                         thirdIndex--;
                     }
 
