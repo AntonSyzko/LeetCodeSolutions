@@ -40,6 +40,14 @@ public class ConstructBinaryTreeFromPreOrderInOrderTraversal {
 
     }
 
+    /*
+    Time Complexity:
+        O(n) where n is the number of nodes
+Space Complexity:
+    O(n) for the hashmap and recursion stack
+
+The hashmap optimization makes root lookup O(1) instead of O(n), preventing the solution from becoming O(n²).
+     */
 
     private  static Map<Integer, Integer> inOrderIndexMap = new HashMap<>();
     private  static int  preOrderIndex = 0;
@@ -51,23 +59,30 @@ public class ConstructBinaryTreeFromPreOrderInOrderTraversal {
             inOrderIndexMap.put(inorder[i], i);//in-order value to it's index
         }
 
-        return arrayToTree(preorder, 0, preorder.length-1);
+        int left = 0;
+        int right = inorder.length - 1;
+        return arrayToTree(preorder, left, right);
     }
 
     private static TreeNode arrayToTree(int[] preorder, int left, int right) {
-
+        // Base case: if start > end, no nodes to process
         if(left > right){//BASE
             return null;
         }
 
-        TreeNode root = new TreeNode(preorder[preOrderIndex]);
+        TreeNode root = new TreeNode(preorder[preOrderIndex]);//root is always first in pre-order
         preOrderIndex++;
 
-        //build entire LEFT subtree
-        root.left = arrayToTree(preorder, left, inOrderIndexMap.get(root.val)-1);//get(root.val)-1 cause in in-order left vals are at left of ROOT
+        // Find the root's position in inorder array
+        int rootIndexInInorderMap = inOrderIndexMap.get(root.val);
 
-        //build entire RIGHT subtree
-        root.right = arrayToTree(preorder, inOrderIndexMap.get(root.val) +1, right);//inOrderIndexMap.get(root.val) +1  cause in in-order right vals are to the RIGH or root
+        // Recursively build left and right subtrees
+
+        // Left subtree: elements before root in inorder
+        root.left = arrayToTree(preorder, left, rootIndexInInorderMap - 1);//get(root.val)-1 cause in in-order left vals are at left of ROOT
+
+        // Right subtree: elements after root in inorder
+        root.right = arrayToTree(preorder, rootIndexInInorderMap + 1, right);//inOrderIndexMap.get(root.val) +1  cause in in-order right vals are to the RIGH or root
 
         return root;
     }

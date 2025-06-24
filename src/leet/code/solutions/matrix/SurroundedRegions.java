@@ -8,8 +8,8 @@ public class SurroundedRegions {
         char[][] board = {
                 {'X','X','X','X'},
                 {'X','0','0','X'},
-                {'X','0','0','X'},
-                {'X','X','X','0'},
+                {'X','X','0','X'},
+                {'X','0','X','X'},
         };
         System.out.println("board at start ");
         System.out.println(Arrays.deepToString(board));
@@ -42,7 +42,7 @@ Time & Space Complexity
             for (int col = 0; col < COLS; col++) {
 
                 if(board[row][col] == '0'//cell is 0
-                               &&
+                               && // AND here's important cause it's about '0' AND border cells
                     ((row == 0 || row == ROWS - 1) // border row
                                || // or
                     (col == 0  || col == COLS - 1)) ) { // border col
@@ -57,7 +57,7 @@ Time & Space Complexity
         // 2. Capture surrounded regions ( change remaining 0s tro X ) 0 -> X
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                if (board[row][col] == '0') {
+                if (board[row][col] == '0') {//unsurrounded are marked T
                     board[row][col] = 'X';
                 }
             }

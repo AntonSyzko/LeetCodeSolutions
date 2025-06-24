@@ -75,11 +75,12 @@ public class TaskScheduler {
       Map<Character, Integer> taskTimesAppears = new HashMap<>();
 
       for (char task : tasks) {
+          //task: times it appered in [] tasks
           taskTimesAppears.put(task, taskTimesAppears.getOrDefault(task, 0) + 1);
       }
 
-        Queue<Integer> maxHip = new PriorityQueue<>((a,b) -> b -a);
-        maxHip.addAll(taskTimesAppears.values());//max hip of task appearances
+        Queue<Integer> maxHip = new PriorityQueue<>((a,b) -> b - a);
+        maxHip.addAll(taskTimesAppears.values());//max hip of ALL task appearances
 
        int cpuCyclesRes = 0;
 
@@ -87,26 +88,30 @@ public class TaskScheduler {
 
            List<Integer> processedTasks = new ArrayList<>();
 
-           for(int pause = 0; pause < cooldown + 1; pause++){//pick from max hip with interval
+           for(int pause = 0; pause <= cooldown ; pause++){//pick from max hip with interval of cooldown
 
                    if(!maxHip.isEmpty()){
-                      processedTasks.add(maxHip.remove());//this will finish 1 task at a time
-                   }
 
+                       int currentTaskFromMaxHip = maxHip.remove();
+                       //add to processed until cooldown is not exceeded
+                      processedTasks.add(currentTaskFromMaxHip);//this will finish 1 task at a time
+
+                   }
            }
 
-           for(int task : processedTasks){//for tasks that agrregated
-               if(--task  > 0){//-- means complete 1 task , but add back to max hip what is left
-                   maxHip.add(task);
-                  
+           for(int task : processedTasks){//for tasks that aggregated
+
+               task--;//-- means complete 1 task
+
+               if(task  > 0){// but add back to max hip what is left
+                   maxHip.add(task);//decremented task added back to Q
                }
            }
 
-           //if hip is empty add just processed tasks, otherwise cooldown period
+           //if hip is empty ADD just processed tasks, otherwise cooldown period + 1
            cpuCyclesRes += maxHip.isEmpty() ? processedTasks.size() :  cooldown + 1;
        }
 
        return cpuCyclesRes;
     }
-
 }

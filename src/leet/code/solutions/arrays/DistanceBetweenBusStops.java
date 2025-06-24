@@ -23,6 +23,14 @@ Output: 3
 Explanation: Distance between 0 and 2 is 3 or 7, minimum is 3.
  */
 public class DistanceBetweenBusStops {
+    public static void main(String[] args) {
+        // Test cases
+        int[] distance1 = {1, 2, 3, 4};
+        System.out.println(distanceBetweenBusStops(distance1, 0, 1)); // Expected: 1
+        System.out.println(distanceBetweenBusStops(distance1, 0, 2)); // Expected: 3
+        System.out.println(distanceBetweenBusStops(distance1, 0, 3)); // Expected: 4
+    }
+
 
     public static int distanceBetweenBusStops(int[] distance, int start, int destination) {
         // Step 1: Ensure start <= destination for easier calculation
@@ -35,13 +43,15 @@ public class DistanceBetweenBusStops {
 
         // Step 2: Calculate clockwise distance from start to destination
         int clockwise = 0;
-        for (int i = start; i < destination; i++) {
+
+        for (int i = start; i < destination; i++) {//start < destination
             clockwise += distance[i];
         }
 
         // Step 3: Calculate total circle distance
         int total = 0;
-        for (int dist : distance) {
+
+        for (int dist : distance) {//traverse all
             total += dist;
         }
 
@@ -51,20 +61,12 @@ public class DistanceBetweenBusStops {
         // Step 5: Return minimum distance
         return Math.min(clockwise, counterclockwise);
     }
-
-    public static void main(String[] args) {
-        // Test cases
-        int[] distance1 = {1, 2, 3, 4};
-        System.out.println(distanceBetweenBusStops(distance1, 0, 1)); // Expected: 1
-        System.out.println(distanceBetweenBusStops(distance1, 0, 2)); // Expected: 3
-        System.out.println(distanceBetweenBusStops(distance1, 0, 3)); // Expected: 4
-    }
 }
 
 /*
 ALGORITHM EXPLANATION:
 
-On a circular bus route, there are only 2 paths between any two stops:
+On a CIRCULAR bus route, there are only 2 paths between any two stops:
 1. Clockwise direction
 2. Counterclockwise direction
 

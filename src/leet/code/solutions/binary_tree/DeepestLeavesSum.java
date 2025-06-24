@@ -22,7 +22,7 @@ Constraints:
 The number of nodes in the tree is in the range [1, 104].
 1 <= Node.val <= 100
  */
-public class DeepestLEaveSum {
+public class DeepestLeavesSum {
 
     public static void main(String[] args) {
         TreeNode<Integer> root = new  TreeNode<Integer>(1);
@@ -54,7 +54,7 @@ public class DeepestLEaveSum {
 
         while (!queue.isEmpty()) {//keeps ONLY LEVEL nodes at a time
 
-            levelSum = 0;//reset level sum each time processing the NEW level
+            levelSum = 0;//reset level sum EACH time processing the NEW level
 
             //this must be BEFORE FOR loop, othervise polling inside for loop will decrease size each time and some nodes will be BYPASSED
             int levelNodesSize = queue.size();//currently all NODEs in Queue is a level
@@ -62,7 +62,7 @@ public class DeepestLEaveSum {
             for (int i = 0; i < levelNodesSize; i++) {//ONLY nodes of LEVEL
 
                 TreeNode<Integer> currentNode = queue.poll();
-                levelSum += currentNode.val;
+                levelSum += currentNode.val;//aggregate level nodes vals
 
                 if (currentNode.left != null) {
                     queue.offer(currentNode.left);//this will go for NEXT level and FOR loop will NOT take these into account
@@ -73,6 +73,7 @@ public class DeepestLEaveSum {
                 }
             }
         }
+
         return levelSum;
     }
 

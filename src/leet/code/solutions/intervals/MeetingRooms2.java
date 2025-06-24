@@ -1,8 +1,6 @@
 package leet.code.solutions.intervals;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /*
 https://neetcode.io/problems/meeting-schedule-ii
@@ -37,19 +35,18 @@ public class MeetingRooms2 {
 
     public static void main(String[] args) {
             List<Interval> intervals = List.of(new Interval(0, 40), new Interval(5, 10), new Interval(15, 20));
-            int numOfDaysRequired = minMeetingRooms(intervals);
+            int numOfDaysRequired = minMeetingRoomsHeap(intervals);
             System.out.println(numOfDaysRequired);
 
-        List<Interval> intervals2 = List.of(new Interval(7,10), new Interval(2,4));
-        int  numOfDaysRequired2 = minMeetingRooms(intervals2);
-        System.out.println(numOfDaysRequired2);
+            List<Interval> intervals2 = List.of(new Interval(7,10), new Interval(2,4));
+            int  numOfDaysRequired2 = minMeetingRoomsHeap(intervals2);
+            System.out.println(numOfDaysRequired2);
     }
 
     private static int minMeetingRooms2(List<Interval> intervals) {
         if(intervals.isEmpty()) return 0;
 
         if(intervals.size() == 1) return 1;
-
 
         int  numberOfDays = 0;
 
@@ -83,8 +80,7 @@ public class MeetingRooms2 {
         return numberOfDays;
     }
 
-
-        private static int minMeetingRooms(List<Interval> intervals) {
+    private static int minMeetingRooms(List<Interval> intervals) {
         if(intervals.isEmpty()) return 0;
 
         if(intervals.size() == 1) return 1;
@@ -133,32 +129,41 @@ public class MeetingRooms2 {
     //time O( n log N)
     //space O(n)
     private static int minMeetingRoomsHeap(List<Interval> intervals) {
-        intervals.sort((a, b) -> a.start - b.start);
 
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        if(intervals == null || intervals.isEmpty()) return 0;
 
-        for (Interval curr : intervals) {//mind on first iteration min heap will be empty
+        // Create a mutable copy
+        List<Interval> sortedIntervals = new ArrayList<>(intervals);
+        Collections.sort(sortedIntervals, (a,b) -> a.start - b.start);
 
-            if (!minHeap.isEmpty() // non empty check to avoid NPE
+        PriorityQueue<Integer> minHeapOfEnds = new PriorityQueue<>();//stores MIN END of intervals
+
+        for (Interval curr : sortedIntervals) {//mind on first iteration min heap will be empty
+
+            if (!minHeapOfEnds.isEmpty() // non empty check to avoid NPE
                     &&
-                    minHeap.peek() <= curr.start) {//most min time is BEFORE curr  start
+                    minHeapOfEnds.peek() <= curr.start) {//most min time is BEFORE curr  start
 
-                minHeap.poll();//delete as NON  overlapping, min most is not the most min
+                minHeapOfEnds.poll();//delete as NON  overlapping, min most is not the most min
 
             }
-//as no overlap occurred, most min will be current END
-            minHeap.offer(curr.end);
+            //as no overlap occurred, most min will be current END
+            minHeapOfEnds.offer(curr.end);
 
         }
-        return minHeap.size();//number of overlapping intervals left in HEAP - is the number of days needed
+
+        return minHeapOfEnds.size();//number of overlapping intervals left in HEAP - is the number of days needed
     }
 
 
     private static class Interval {
-      public int start, end;
+      public int start;
+      public int     end;
+
       public Interval(int start, int end) {
           this.start = start;
           this.end = end;
       }
+
   }
 }

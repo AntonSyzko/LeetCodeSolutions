@@ -45,4 +45,29 @@ public class FindPeakElement {
         }
         return left;
     }
+
+    public int findPeakElementNonBinarySearch(int[] nums) {
+        int peakIndex = 0;
+        int max = nums[0];
+
+        for(int i = 1; i <= nums.length - 2; i++){// till -2 as last index is treated separately
+
+            int prev = nums[i-1];
+            int curr = nums[i];
+            int next = nums[i +1];
+
+            if(curr > prev && curr > next && curr > max){
+                peakIndex = i;
+                max = curr;
+            }
+        }
+
+        //very last element treated separately
+        if(nums[nums.length -1] > max){
+            return  nums.length -1;
+        }
+
+        return peakIndex;
+
+    }
 }

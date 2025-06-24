@@ -39,6 +39,7 @@ public class BinTreePaths {
 
     private static List<String> binaryTreePaths(TreeNode root) {
         if(root==null) return new ArrayList<>();
+
         List<String> res = new ArrayList<>();
 
         dfs(root, res,"");
@@ -49,10 +50,13 @@ public class BinTreePaths {
     //Time O(n)
     //Space O(n)
     private static void dfs(TreeNode node, List<String> res, String path) {
-
+        //BASE
         if( node.left == null && node.right == null) {//reached leaf
-            path +=  node.val;
+
+            path +=  node.val;//also add the very current node to path
+
             res.add(path);
+
             return;
         }
 
