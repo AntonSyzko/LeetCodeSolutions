@@ -12,7 +12,6 @@ When studying DNA, it is useful to identify repeated sequences within the DNA.
 
 Given a string s that represents a DNA sequence, return all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule. You may return the answer in any order.
 
-
 Example 1:
 
 Input: s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
@@ -94,6 +93,7 @@ Space Complexity: O(n)
             start ++;
         }
 
+        //using just a list would contain duplicate entries, hence Set
         return new ArrayList<>(res);//convert Set to List
     }
 }

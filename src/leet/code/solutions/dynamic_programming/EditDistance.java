@@ -1,5 +1,8 @@
 package leet.code.solutions.dynamic_programming;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 https://neetcode.io/problems/edit-distance
 
@@ -39,82 +42,105 @@ word1 and word2 consist of lowercase English letters.
 public class EditDistance {
 
     public static void main(String[] args) {
+        String s1 = "monkeys";
+        String s2 = "money";
 
+        int stepsTaken = minDistanceDP(s1, s2);
+        System.out.println(stepsTaken);
     }
 
-
-    public int minDistance_DP(String word1, String word2) {
-        int w1Len = word1.length(), w2Len = word2.length();
-
-        int[][] dp = new int[w1Len][w2Len];
-        //fill dp
-        for (int i = 0; i < w1Len; i++) {
-            for (int j = 0; j < w2Len; j++) {
-                dp[i][j] = -1;
-            }
-        }
-        return dfs_DP(0, 0, word1, word2, w1Len, w2Len, dp);
-    }
-
-    private int dfs_DP(int w1Index, int w2Index, String word1, String word2, int w1Len, int w2Len, int[][] dp) {
-
-        if (w1Index == w1Len) return w2Len - w2Index;
-        if (w2Index == w2Len) return w1Len - w1Index;
-
-        if (dp[w1Index][w2Index] != -1) return dp[w1Index][w2Index];
-
-        if (word1.charAt(w1Index) == word2.charAt(w2Index)) {
-            dp[w1Index][w2Index] = dfs(w1Index + 1, w2Index + 1, word1, word2, w1Len, w2Len);
-        } else {
-            int res = Math.min(dfs(w1Index + 1, w2Index, word1, word2, w1Len, w2Len),
-                    dfs(w1Index, w2Index + 1, word1, word2, w1Len, w2Len));
-            res = Math.min(res, dfs(w1Index + 1, w2Index + 1, word1, word2, w1Len, w2Len));
-            dp[w1Index][w2Index] = res + 1;
-        }
-        return dp[w1Index][w2Index];
-    }
-
-    //--------------- recursive --------------
-    public int minDistance(String word1, String word2) {
-            int w1Len = word1.length();
-            int w2Len = word2.length();
-
-            return dfs(0, 0, word1, word2, w1Len, w2Len);
-    }
 
     /*
-    Time & Space Complexity
-            Time complexity:
-            O(3 m+n)
-
-            Space complexity:
-            O(m+n)
-
-            Where m is the length of word1 and n is the length of word2.
+    Time Complexity:
+         O(m × n) with memoization
+    Space Complexity:
+         O(m × n) for the memo table + O(m + n) for recursion stack
      */
-    private int dfs(int w1Index, int w2Index, String word1, String word2, int w1Len, int w2Len) {
-        if(w1Index == w1Len){
-            return w1Len -1;
+    private static int minDistanceRecursiveWIthMemo(String word1, String word2) {
+        Map<String, Integer> memo = new HashMap<>();
+        return dfs(0, 0, word1, word2, memo);
+    }
+
+    private static int dfs(int w1Index, int w2Index, String word1, String word2, Map<String, Integer> memo) {
+        // BASE
+        if (w1Index == word1.length()) {
+            // Need to insert remaining characters from word2
+            return word2.length() - w2Index;
         }
 
-        if(w2Index == w2Len){
-            return w2Len - 1;
+        if (w2Index == word2.length()) {
+            // Need to delete remaining characters from word1
+            return word1.length() - w1Index;
         }
 
-        //case 1: both chars are same at their idexes
-        if(word1.charAt(w1Index) == word2.charAt(w2Index)){
-            //just advance indexes
-            return dfs(w1Index + 1 , w2Index + 1, word1, word2, w1Len, w2Len);
+        // Check memoization
+        String key = w1Index + "," + w2Index;
+
+        if (memo.containsKey(key)) {
+            return memo.get(key);
         }
 
-        //min of advance either one at a time
-        int res = Math.min(
-                dfs(w1Index +1 ,w2Index,word1, word2,w1Len,w2Len),//insert operation
-                dfs(w1Index  ,w2Index,word1 +1 , word2,w1Len,w2Len)//delete operation
-        );
+        int result;
 
-        res = Math.min(res,    dfs(w1Index +1 ,w2Index +1,word1, word2,w1Len,w2Len));//replace operation
+        // If characters match, no operation needed
+        if (word1.charAt(w1Index) == word2.charAt(w2Index)) {
 
-        return res +1 ;//+1 took one more operation anyways
+            result = dfs(w1Index + 1, w2Index + 1, word1, word2, memo);
+
+        } else {
+            // Try all three operations and take minimum
+            int insert = dfs(w1Index, w2Index + 1, word1, word2, memo);     // Insert char from word2
+            int delete = dfs(w1Index + 1, w2Index, word1, word2, memo);     // Delete char from word1
+            int replace = dfs(w1Index + 1, w2Index + 1, word1, word2, memo); // Replace char in word1
+
+            result = 1 + Math.min(Math.min(insert, delete), replace);
+        }
+
+        memo.put(key, result);
+
+        return result;
+    }
+
+    private static int minDistanceDP(String word1, String word2) {
+        int [][] DP = new int[word1.length() + 1][word2.length() + 1];
+
+        for (int i = 0; i <= word1.length(); i++) {
+            for (int j = 0; j <= word2.length(); j++) {
+                DP[i][j] = -1;
+            }
+        }
+
+        return dfs_DP(0, 0, word1, word2, DP);
+    }
+
+    private static int dfs_DP(int w1Index, int w2Index, String word1, String word2, int[][] DP) {
+        //BASE
+        if (w1Index == word1.length()) {
+            return word2.length() - w2Index;
+        }
+
+        if(w2Index == word2.length()) {
+            return word1.length() - w1Index;
+        }
+
+        if(DP[w1Index][w2Index] != -1) {
+            return DP[w1Index][w2Index];
+        }
+
+        int result;
+
+        if(word1.charAt(w1Index) == word2.charAt(w2Index)) {
+            result = dfs_DP(w1Index + 1, w2Index + 1, word1, word2, DP);
+        } else{
+            int insert = dfs_DP(w1Index, w2Index + 1, word1, word2, DP);// Insert char from word2
+            int delete = dfs_DP(w1Index + 1, w2Index, word1, word2, DP);// Delete char from word1
+            int replace = dfs_DP(w1Index + 1, w2Index +1, word1, word2, DP);// Replace char in word1
+
+            result = 1 + Math.min(replace, Math.min(insert, delete));
+        }
+
+        DP[w1Index][w2Index] = result;
+
+        return result;
     }
 }

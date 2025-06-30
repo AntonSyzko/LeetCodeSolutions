@@ -1,10 +1,6 @@
 package leet.code.solutions.BFS;
 
-import java.beans.Introspector;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 /*
 Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:
@@ -23,20 +19,76 @@ Note: Return 0 if there is no such transformation sequence. All words have the s
 public class WordLadder {
 
     public static void main(String[] args) {
-      HashSet<String> dictionary = new HashSet<>();
-      dictionary.add("hot");
-      dictionary.add("dot");
-      dictionary.add("dog");
-      dictionary.add("lot");
-      dictionary.add("log");
+        String start = "hit";
+        String end = "cog";
+        List<String>  wordList= List.of("hot","dot","dog","lot","log","cog");
 
-      String start = "hit";
-      String end = "cog";
-
-        System.out.println("it takes " + ladderLength(start,end, dictionary));
+        int transformations = ladderLength(start, end, wordList);
+        System.out.println(transformations);
     }
 
-    public static int ladderLength(String start, String end, HashSet<String> dict) {
+    private static int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if(beginWord.equals(endWord)){
+            return 0;
+        }
+
+        Set<String> wordSet = new HashSet<>(wordList);
+        // Edge case: if endWord is not in wordList, no transformation possible
+        if(!wordSet.contains(endWord)){
+            return 0;
+        }
+
+        // BFS setup
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        wordSet.remove(beginWord); // Mark as visited (avoid cycles)
+
+        // Start with 1 (counting beginWord as first transformation)
+        int level = 1;
+
+        while(!queue.isEmpty()){
+
+            int levelSize = queue.size();
+
+            // Process all words at the current level
+            for (int i = 0; i < levelSize; i++) {
+
+                String word = queue.poll();
+
+                // Try changing each character position
+                for(int pos = 0; pos < word.length(); pos++){
+
+                    char[] wordArray = word.toCharArray();
+
+                    // Try all possible characters (a-z)
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+
+                        if(ch == wordArray[pos]) continue;//dont compare same - micro opt
+
+                        wordArray[pos] = ch;
+                        String wordAfterCharReplaced = new String(wordArray);
+
+                        // Found the target!
+                        if(wordAfterCharReplaced.equals(endWord)){
+                            return ++level;
+                        }
+
+                        // If this word is in dictionary and not visited
+                        if(wordSet.contains(wordAfterCharReplaced)){
+                            wordSet.remove(wordAfterCharReplaced);
+                            queue.offer(wordAfterCharReplaced);
+                        }
+                    }
+                }
+            }
+
+            level++;// Move to next level
+        }
+
+        return 0;// No transformation sequence found
+    }
+
+    private static int ladderLength(String start, String end, HashSet<String> dict) {
         if (dict.isEmpty()) return 0;
 
         dict.add(end);
@@ -77,6 +129,7 @@ public class WordLadder {
                 }
             }
         }
+
         if (res < Integer.MAX_VALUE) {
             return res;
         } else {

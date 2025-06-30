@@ -31,8 +31,38 @@ public class IsValidSudoku {
                      {'.','.','.','.','8','.','.','7','9'}};
   
   
-  boolean isValidSudoku = isValidSudoku(board);
+  boolean isValidSudoku = isValidSudokuConcise(board);
         System.out.println(isValidSudoku);
+    }
+
+    private static boolean isValidSudokuConcise(char[][] board) {
+
+        Set<String> seen = new HashSet<>();
+
+        for(int row = 0 ; row < board.length; row++){// 9 X 9 grid
+            for(int col = 0 ; col < board[0].length; col ++){
+
+                char currChar = board[row][col];
+
+                if(currChar != '.'){
+
+                    //crux here is Set's add() method rturn FALSE if the value is already present -> thus FALSE for duplicates
+
+                    if(!seen.add(currChar + " at row " + row)//string for detecting duplicate ROWs : i.e. '8 at row 2'
+                            ||
+                       !seen.add(currChar + " at col " + col)//string for detecting duplicate COLs : i.e. '3 at col 8'
+                            ||
+                       !seen.add(currChar + " at  box " + row/3 + "/" + col/3)){//string for detecting duplicate 3*3 boxes : i.e. '8 at box 2/3'
+
+                        return false;
+
+                    }
+
+                }
+            }
+        }
+
+        return true;
     }
 
     private static boolean isValidSudoku(char[][] board) {

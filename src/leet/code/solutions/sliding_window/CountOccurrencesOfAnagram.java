@@ -66,6 +66,7 @@ public class CountOccurrencesOfAnagram {
 
                 // Reduce count for the char at windowStart since we are sliding the window now
                 substrCharCount.put(text.charAt(windowStart), substrCharCount.get(text.charAt(windowStart)) - 1);
+
                 windowStart++; // Slide the window ahead
             }
         }
@@ -74,31 +75,31 @@ public class CountOccurrencesOfAnagram {
 
 
         private static int countOccurrenceOfAnagram(String text, String word) {
-        int res = 0;
-        int wordLen = word.length();
-        int textLen = text.length();
+            int res = 0;
+            int wordLen = word.length();
+            int textLen = text.length();
 
-        Map<Character, Integer> wordCharsCounts = new HashMap<>();
+            Map<Character, Integer> wordCharsCounts = new HashMap<>();
 
-        for (int i = 0; i < wordLen; i++) {
-            char ch = text.charAt(i);
-            wordCharsCounts.put(ch, wordCharsCounts.getOrDefault(ch,0)+1);
-        }
-
-        for (int i = 0; i <= textLen-wordLen; i++) {
-
-            Map<Character, Integer> textCharsCounts = new HashMap<>();
-
-            for (int j = i; j < wordLen+i; j++) {
-                char ch = text.charAt(j);
-                textCharsCounts.put(ch, textCharsCounts.getOrDefault(ch,0)+1);
+            for (int i = 0; i < wordLen; i++) {
+                char ch = text.charAt(i);
+                wordCharsCounts.put(ch, wordCharsCounts.getOrDefault(ch,0) +1 );
             }
 
-            if(isAnagram(textCharsCounts, wordCharsCounts)){
-                res++;
+            for (int i = 0; i <= textLen - wordLen; i++) {
+
+                Map<Character, Integer> textCharsCounts = new HashMap<>();
+
+                for (int j = i; j < wordLen+i; j++) {
+                    char ch = text.charAt(j);
+                    textCharsCounts.put(ch, textCharsCounts.getOrDefault(ch,0) + 1);
+                }
+
+                if(isAnagram(textCharsCounts, wordCharsCounts)){
+                    res++;
+                }
             }
-        }
-          return res;
+              return res;
     }
 
     private static int countOccurrencesMy(String str, String pattern) {
@@ -145,7 +146,4 @@ public class CountOccurrencesOfAnagram {
         }
         return true;
     }
-
-
-
     }

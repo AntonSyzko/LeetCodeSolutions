@@ -82,7 +82,8 @@ public class RobHouse2 {
    O(1)
     */
     private  static int helper(int[] nums) {
-        int rob1 = 0, rob2 = 0;
+        int rob1 = 0;
+        int rob2 = 0;
 
         for (int num : nums) {
             int newRob = Math.max(rob1 + num, rob2);

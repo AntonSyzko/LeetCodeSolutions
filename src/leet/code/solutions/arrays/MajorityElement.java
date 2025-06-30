@@ -71,7 +71,7 @@ public class MajorityElement {
         return -1;//not found
     }
 
-    static int find(int[] nums) {
+    private static int find(int[] nums) {
         Arrays.sort(nums);
         int count = 0;
         Map<Integer, Integer> counts = new HashMap<>();
@@ -94,6 +94,43 @@ public class MajorityElement {
             }
         }
 return ret;
+    }
+
+    private static int majorityElementBook(int[] num) {
+        if(num.length==1){
+            return num[0];
+        }
+
+        Arrays.sort(num);//!!!!!!!!!!!!!!!! SOOOOOOOOOOORT
+
+        int prev=num[0];
+        int count=1;//account for prev
+
+        for(int i=1; i<num.length; i++){
+
+            if(num[i] == prev){//same
+                count++;
+
+                if(count > num.length/2) {//majority is more than HALF
+                    return num[i];
+                }
+
+            }else{
+                count=1;//reset count
+                prev = num[i];
+            }
+        }
+
+        return 0;
+    }
+
+    private static int majorityElementBook2(int[] num) {
+        if (num.length == 1) {
+            return num[0];
+        }
+        Arrays.sort(num);//SOOORT !!!!!!!!
+
+        return num[num.length / 2];
     }
 
     //O(1) space

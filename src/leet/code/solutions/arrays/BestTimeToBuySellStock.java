@@ -48,6 +48,7 @@ public class BestTimeToBuySellStock {
         //if next bigger - set max if next smaller -set new min
         int minPrice = prices[0];
         int maxPrice = prices[0];
+
         for (int i = 1; i < prices.length; i++) {
             if (prices[i] < minPrice) {
                 minPrice = prices[i];

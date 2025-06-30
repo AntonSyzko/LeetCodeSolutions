@@ -22,10 +22,9 @@ public class MinimumSizeSUbarraySum {
             return -1;
         }
 
-
         int windowStart = 0;
 
-        int resMinSubarrayLen = nums.length;//the entire array len to start with
+        int resMinSubarrayLenRes = nums.length;//the entire array len to start with
 
         int ongoingSum = 0;
 
@@ -37,7 +36,7 @@ public class MinimumSizeSUbarraySum {
 
                 int slidingWindowSize = widnowEnd - windowStart + 1;
 
-                resMinSubarrayLen = Math.min(resMinSubarrayLen, slidingWindowSize);
+                resMinSubarrayLenRes = Math.min(resMinSubarrayLenRes, slidingWindowSize);
 
                 ongoingSum -= nums[windowStart];
 
@@ -45,6 +44,6 @@ public class MinimumSizeSUbarraySum {
             }
         }
 
-        return resMinSubarrayLen;
+        return resMinSubarrayLenRes;
     }
 }
