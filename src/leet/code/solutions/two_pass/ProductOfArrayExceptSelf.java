@@ -1,4 +1,4 @@
-package leet.code.solutions.arrays;
+package leet.code.solutions.two_pass;
 
 import java.util.Arrays;
 
@@ -11,8 +11,6 @@ The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit int
 
 You must write an algorithm that runs in O(n) time and without using the division operation.
 
-
-
 Example 1:
 
 Input: nums = [1,2,3,4]
@@ -22,13 +20,11 @@ Example 2:
 Input: nums = [-1,1,0,-3,3]
 Output: [0,0,9,0,0]
 
-
 Constraints:
 
 2 <= nums.length <= 105
 -30 <= nums[i] <= 30
 The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer.
-
 
 Follow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)
  */
@@ -38,10 +34,10 @@ public class ProductOfArrayExceptSelf {
         // Test case 1: Normal case
         int[] nums1 = {1, 2, 3, 4};
         System.out.println("=== TEST CASE 1 ===");
-        System.out.println("Input: " + java.util.Arrays.toString(nums1));
+        System.out.println("Input: " + Arrays.toString(nums1));
         System.out.println("Expected: [24, 12, 8, 6]");
-        System.out.println("Two Arrays: " + java.util.Arrays.toString(productExceptSelfTwoArrays(nums1)));
-        System.out.println("Optimized: " + java.util.Arrays.toString(productExceptSelfOptimized(nums1)));
+        System.out.println("Two Arrays: " + Arrays.toString(productExceptSelfTwoArrays(nums1)));
+        System.out.println("Optimized: " + Arrays.toString(productExceptSelfOptimized(nums1)));
         System.out.println();
     }
 
@@ -133,8 +129,9 @@ public class ProductOfArrayExceptSelf {
         }
 
 
-        for(int i = nums.length - 1; i >= 0;i--){
+        for(int i = nums.length -1; i >= 0;i--){
             result[i] = result[i] * postfix;
+
             postfix = postfix * nums[i];
         }
 

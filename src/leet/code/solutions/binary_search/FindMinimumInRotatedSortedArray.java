@@ -40,14 +40,16 @@ public class FindMinimumInRotatedSortedArray {
 
     public static void main(String[] args) {
 
-        int[] nums = {4,5,6,7};
+        int[] nums = {4,5,6,7,0,1,2,3};
 
-        int min = findMin(nums);
+        int min = findMinNik(nums);
         System.out.println(min);
-
     }
 
     private static int findMin(int[] nums) {
+        if(nums.length == 0) return -1;
+        if(nums.length == 1) return nums[0];
+
         int left = 0;
         int right = nums.length - 1;
 
@@ -64,8 +66,36 @@ public class FindMinimumInRotatedSortedArray {
         return nums[left];
     }
 
+    private static int findMinNik(int[] nums) {
+        if(nums.length==0) return -1;
+        if(nums.length == 1) return nums[0];
 
-    private static int findMinMy(int[] nums) {
+        int left = 0, right = nums.length-1;
+
+        while(left < right) {
+
+            int mid = left + (right - left) / 2;
+
+            if( mid > 0 && (nums[mid] < nums[mid - 1])) {
+
+                return nums[mid];
+
+            }else if (nums[left] <= nums[mid] && nums[mid] > nums[right] ) {
+
+                left = mid + 1;//look at right from mid
+
+            }else{
+
+                right = mid - 1;//look at left from mid
+
+            }
+        }
+
+        return nums[left];
+    }
+
+
+        private static int findMinMy(int[] nums) {
         if(nums.length==0) return -1;
 
         if(nums.length == 1) return nums[0];
@@ -78,12 +108,12 @@ public class FindMinimumInRotatedSortedArray {
 
             // Compare with next element (if within bounds)
 
-            if( mid < nums.length-1  && nums[mid] > nums[mid+1]){
+            if( mid < nums.length - 1  && nums[mid] > nums[mid+1]){
                 return nums[mid+1];
             }
 
             // Compare with previous element (if within bounds)
-            if( mid > 0 && nums[mid-1] > nums[mid] ){
+            if( mid > 0 && (nums[mid-1] > nums[mid])){
                 return nums[mid];
             }
 

@@ -2,6 +2,7 @@ package leet.code.solutions.intervals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /*
@@ -45,7 +46,7 @@ public class MergeIntervals {
         if (intervals.length <= 1) return intervals;
 
         // Sort by start time
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);//SOOORT !!!
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);//SOOORT !!! BY START TIME
 
         List<int[]> mergedIntervals = new ArrayList<>();
         mergedIntervals.add(intervals[0]);//add first to res
@@ -76,7 +77,7 @@ public class MergeIntervals {
         }
 
         // Sort by start time
-        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));// SOOOORT !!!
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));// SOOOORT !!! by start time
 
         List<int[]> merged = new ArrayList<>();//RES
         merged.add(intervals[0]);
@@ -97,6 +98,30 @@ public class MergeIntervals {
             }
         }
 
+        return merged.toArray(new int[merged.size()][]);
+    }
+
+    private static int[][] merge3(int[][] intervals) {
+        if (intervals.length <= 1) {
+            return intervals;
+        }
+
+        Arrays.sort(intervals, Comparator.comparingInt(pair -> pair[0]));//soort by start
+
+        List<int[]> merged = new ArrayList<>();
+
+        for(int[] interval : intervals) {
+
+            if(merged.isEmpty() || interval[0] > merged.get(merged.size() - 1)[1]) {
+
+                merged.add(interval);
+
+            }else{
+
+                merged.get(merged.size() - 1)[1] = Math.max(interval[1], merged.get(merged.size() - 1)[1]);
+
+            }
+        }
         return merged.toArray(new int[merged.size()][]);
     }
 }

@@ -45,9 +45,11 @@ Follow up: Can you come up with an algorithm that runs in O(m + n) time?
 public class MergeSortedArrays {
 
     public static void main(String[] args) {
-        int[] nums1 = new int[]{1, 3, 0, 0};
+        int[] nums1 = new int[]{1, 3, 0, 0};//seros are to fill , they are unset sort of
         int[] nums2 = new int[]{2, 4};
-        merge(nums1, 2, nums2, 2);
+        System.out.println(Arrays.toString(nums1));
+        mergeBook(nums1, 2, nums2, 2);
+        System.out.println(Arrays.toString(nums1));
 
 
 //        nums1 = new int[]{1, 2, 3, 0, 0, 0};
@@ -59,7 +61,40 @@ public class MergeSortedArrays {
 //        merge(nums1, 3, nums2, 3);
     }
 
-    // O (m + n )
+    public static void mergeBook(int[] nums1, int nums1Elements, int[] nums2, int nums2Elements) {
+
+        while (nums1Elements > 0 && nums2Elements > 0) {
+
+            int newNums1Index = (nums1Elements + nums2Elements ) - 1;
+
+            if(nums1[nums1Elements - 1] > nums2[nums2Elements - 1]){
+
+                nums1[newNums1Index] = nums1[nums1Elements - 1];
+
+                nums1Elements--;
+
+            }else{
+
+                nums1[newNums1Index] = nums2[nums2Elements - 1];
+
+                nums2Elements--;
+
+            }
+
+        }
+
+        while (nums2Elements > 0) {//left over from second array
+
+            int newNums1Index = (nums1Elements + nums2Elements) - 1;
+
+            nums1[newNums1Index] = nums2[nums2Elements - 1];
+
+            nums2Elements--;
+        }
+    }
+
+
+        // O (m + n )
     public static void merge(int[] nums1, int nums1Elements, int[] nums2, int nums2Elements) {
 
         nums1Elements--;//since indexes shifted, ( array starts from 0)

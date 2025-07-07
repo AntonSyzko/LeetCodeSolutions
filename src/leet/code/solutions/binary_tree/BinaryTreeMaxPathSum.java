@@ -1,6 +1,8 @@
 package leet.code.solutions.binary_tree;
 
 /*
+124
+
 https://leetcode.com/problems/binary-tree-maximum-path-sum/
 
 A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
@@ -10,10 +12,7 @@ The path sum of a path is the sum of the node's values in the path.
 
 Given the root of a binary tree, return the maximum path sum of any non-empty path.
 
-
-
 Example 1:
-
 
 Input: root = [1,2,3]
 Output: 6
@@ -24,10 +23,8 @@ Example 2:
 Input: root = [-10,9,20,null,null,15,7]
 Output: 42
 Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
-
  */
 public class BinaryTreeMaxPathSum {
-
 
     public static void main(String[] args) {
          TreeNode root = new TreeNode(1);
@@ -52,26 +49,26 @@ public class BinaryTreeMaxPathSum {
     private  static int maxPathSum(TreeNode root) {
       if(root==null) return 0;
 
-        maxGain2(root);
+        maxGain(root);
 
        return maxSUm;
     }
 
     private static int maxGain(TreeNode node) {
-        if(node==null) return 0;//BASE , as well no gain
+        if(node == null) return 0;//BASE , as well no gain
 
-        int leftGain = maxGain(node.left);//how much can we gain from adding nodes from left connected edges
-        int rightGain = maxGain(node.right);
+        int leftGain = Math.max(0, maxGain(node.left));//how much can we gain from adding nodes from left connected edges
+        int rightGain = Math.max(0,maxGain(node.right));//compare to 0 as we start with nothing
 
-        int priceNewPAth = node.val + leftGain + rightGain;//accumulated path as we recursively go
+        int priceNewPath = node.val + leftGain + rightGain;//accumulated path as we recursively go
 
-        maxSUm = Math.max(maxSUm, priceNewPAth);//update max as we go
+        maxSUm = Math.max(maxSUm, priceNewPath);//update max as we go
 
         return node.val + Math.max(leftGain, rightGain); //as we continue adding to  current node value whatever BIGGEST value LEFT or RIGHT gain can offer
     }
 
     private static int maxGain2(TreeNode node) {
-        if(node==null) return 0;//BASE , as well no gain
+        if(node == null) return 0;//BASE , as well no gain
 
         int leftGain = maxGain2(node.left);//how much can we gain from adding nodes from left connected edges
         int rightGain = maxGain2(node.right);
@@ -86,8 +83,6 @@ public class BinaryTreeMaxPathSum {
         return node.val + Math.max(nodeLeftVal, nodeRightVal); //as we continue adding to  current node value whatever BIGGEST value LEFT or RIGHT gain can offer
     }
 
-
-
     private static class TreeNode {
         int val;
         TreeNode left;
@@ -99,7 +94,6 @@ public class BinaryTreeMaxPathSum {
             this.left = left;
             this.right = right;
         }
-
 
         @Override
         public String toString() {
