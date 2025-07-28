@@ -27,6 +27,7 @@ public class AdvancingThroughArray {
 
     private static boolean canReachEnd(List<Integer> maxAdvanceSteps) {
         int furthestIndexWeCanReachSoFar = 0;
+
         int lastIndex = maxAdvanceSteps.size() - 1;
 
         //currentIndex <= furthestIndexWeCanReachSoFar - if heave valid  step at ALL ?
@@ -47,16 +48,21 @@ public class AdvancingThroughArray {
     }
 
     private static boolean canReachEndUsingWhile(List<Integer> maxAdvanceSteps) {
-        int currentIndex = 0;
-        int indexOfEnd = maxAdvanceSteps.size() -1;
+
+        int indexOfEnd = maxAdvanceSteps.size() - 1;
+
         int maxJumpSoFar = 0;
 
-         //currentIndex <= maxJumpSoFar - if bigger then we could not reach it from previous jump at all
-        // maxJumpSoFar < indexOfEnd - if bigger then result already reached - no need to itetrate
+        int currentIndex = 0;
+
+        //currentIndex <= maxJumpSoFar - if bigger than we could not reach it from previous jump at all
+        // maxJumpSoFar < indexOfEnd - if bigger than result already reached - no need to iterate
         while (currentIndex <= maxJumpSoFar && maxJumpSoFar < indexOfEnd){
 
             //currentIndex + maxAdvanceSteps.get(currentIndex) is the current possible jump size from current index
-            maxJumpSoFar = Math.max(maxJumpSoFar, currentIndex + maxAdvanceSteps.get(currentIndex));
+            int currentMaxJumpPossible = currentIndex + maxAdvanceSteps.get(currentIndex);
+
+            maxJumpSoFar = Math.max(maxJumpSoFar, currentMaxJumpPossible);
 
             currentIndex++;//iterate onward
         }
@@ -64,6 +70,4 @@ public class AdvancingThroughArray {
         return maxJumpSoFar >= indexOfEnd;//if overlap END - TRUE
 
     }
-
-
     }

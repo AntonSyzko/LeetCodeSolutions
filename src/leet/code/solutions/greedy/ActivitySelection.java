@@ -17,44 +17,73 @@ Output: (1, 4), (5, 7), (8, 11), (12, 14)
 public class ActivitySelection {
     public static void main(String[] args) {
         List<ActivityPair> activities = Arrays.asList(
-                new ActivityPair(1, 4),new ActivityPair(1, 4), new ActivityPair(3, 5),
+                new ActivityPair(3, 4),new ActivityPair(1, 4), new ActivityPair(3, 5),
                 new ActivityPair(0, 6), new ActivityPair(5, 7), new ActivityPair(3, 8),
                 new ActivityPair(5, 9), new ActivityPair(6, 10), new ActivityPair(8, 11),
                 new ActivityPair(8, 12), new ActivityPair(2, 13), new ActivityPair(12, 14));
 
-        List<ActivityPair> result = selectActivity2(activities);
+        List<ActivityPair> result = selectActivity(activities);
         System.out.println(result);
     }
 
-    public static List<ActivityPair> selectActivity(List<ActivityPair> activities) {
-        // `k` keeps track of the index of the last selected activity
-        int lastSelectedActivity = 0;
-
+    /*
+      Time Complexity: O(n log n) due to sorting
+      Space Complexity: O(1) additional space
+   */
+    private static List<ActivityPair> selectActivity(List<ActivityPair> activities) {
         // set to store the selected activities index
         Set<Integer> result = new HashSet<>();
 
-        // select 0 as the first activity
-        if (activities.size() > 0) {
-            result.add(0);
-        }
-
-        // sort the activities according to their finishing time
+        // sort the activities according to their FINISH time
         Collections.sort(activities, Comparator.comparingInt(ActivityPair::getFinish));
 
-        // start iterating from the second element of the
-        // list up to its last element
+        // select 0 as the first activity
+            result.add(0);//0 here is the index
+
+        //  keeps track of the index of the last selected activity
+        int lastSelectedActivity = 0;
+
+        // start iterating from the second element of the list up to its last element
         for (int i = 1; i < activities.size(); i++) {
-            // if the start time of the i'th activity is greater or equal
-            // to the finish time of the last selected activity, it
+            // if the START time of the i'th activity is greater or equal
+            // to the FINISH time of the last selected activity, it
             // can be included in the activities list
 
             if (activities.get(i).getStart() >= activities.get(lastSelectedActivity).getFinish()) {
                 result.add(i);
-                lastSelectedActivity = i;            // update `i` as the last selected activity
+                lastSelectedActivity = i;// update `i` as the last selected activity
             }
         }
 
         return result.stream().map(activities::get).collect(Collectors.toList());
+    }
+
+    private static List<ActivityPair> selectActivity22(List<ActivityPair> activities) {
+        if (activities.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Sort by finish time first
+        List<ActivityPair> sortedActivities = activities.stream() // creates copy to avoid changing original list
+                .sorted(Comparator.comparingInt(ActivityPair::getFinish))
+                .collect(Collectors.toList());
+
+        List<ActivityPair> result = new ArrayList<>();
+        result.add(sortedActivities.get(0)); // Add first activity
+
+        int lastFinishTime = sortedActivities.get(0).getFinish();
+
+        for (int i = 1; i < sortedActivities.size(); i++) {
+
+            if (sortedActivities.get(i).getStart() >= lastFinishTime) {
+
+                result.add(sortedActivities.get(i));
+                lastFinishTime = sortedActivities.get(i).getFinish();
+
+            }
+        }
+
+        return result;
     }
 
     public static List<ActivityPair> selectActivity2(List<ActivityPair> activities){
@@ -79,7 +108,7 @@ public class ActivitySelection {
     }
 
 
-    static class ActivityPair {
+    private static class ActivityPair {
         int start;
         int finish;
 

@@ -1,7 +1,6 @@
 package leet.code.solutions.greedy;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /*
 The Activity Selection Problem involves selecting the maximum number of activities
@@ -26,6 +25,10 @@ public class ActivitySelection2 {
         System.out.println("Maximum number of activities: " + maxActivities);
     }
 
+    /*
+        Time Complexity: O(n log n) due to sorting
+        Space Complexity: O(1) additional space
+     */
     private static int maxActivities(Activity[] activities) {
 
         int maxActivitiesPossible = 1;//always 1 activity possible
@@ -33,19 +36,18 @@ public class ActivitySelection2 {
         //sort by END time
         Arrays.sort(activities,(a, b) -> a.finish - b.finish);
 
-        //picj first activity as a start
-        int prevActivityFinish = activities[0].finish;
+        //pick first activity as a start
+        Activity prevActivity = activities[0];
 
-        for (int act = 1; act < activities.length ; act++) {//start from 1 ( second activity)
-            int currActivityStart = activities[act].start;
+        for (int i = 1; i < activities.length ; i++) {//start from 1 ( second activity)
 
-            if(currActivityStart > prevActivityFinish){//curr start > prev END
+           Activity currentActivity = activities[i];//by index
+
+            if(currentActivity.start > prevActivity.finish){//curr start > prev END
 
                 maxActivitiesPossible++;
 
-                int currActivityFinish = activities[act].finish;
-
-                prevActivityFinish = currActivityFinish;//reset prev END to curr's END
+                prevActivity = currentActivity;//reset prev  to curr
             }
         }
 
@@ -53,8 +55,9 @@ public class ActivitySelection2 {
     }
 
     // Activity class to store start and finish times
-    static class Activity {
-        int start, finish;
+    private static class Activity {
+        int start;
+        int finish;
 
         public Activity(int start, int finish) {
             this.start = start;

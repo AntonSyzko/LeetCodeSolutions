@@ -42,10 +42,60 @@ public class FindKSmallestElementInSortedMatrix {
 
         int k = 6;
 
-        System.out.println(findkthSmallestElement(mat, k));
+        System.out.println(kthSmallest(mat, k));
     }
 
-    //The time complexity of the above solution is O(N^2) for an N × N matrix
+    /*
+    Time complexity: O(k log k) - we process k elements, each heap operation is O(log k)
+
+    Space complexity: O(n²) for visited array + O(k) for heap
+     */
+    private static int kthSmallest(int[][] matrix, int k) {
+        int len = matrix.length;
+
+        PriorityQueue<int[]> minHip = new PriorityQueue<>(Comparator.comparingInt(a -> matrix[a[0]][a[1]]));
+        // Start with top-left element
+        minHip.offer(new int[]{0,0});
+
+        boolean[][] visited = new boolean[len][len];
+        visited[0][0] = true;
+
+        for (int i = 0; i <  k - 1; i++) {//  i < k - 1 is a CRUX
+
+            int[] current = minHip.poll();
+
+            int currRow = current[0];
+            int currCol = current[1];
+
+            // Add right neighbor if valid and not visited ( right = COL +1)
+            if(currCol + 1 < len && !visited[currRow][currCol + 1]){
+                visited[currRow][currCol + 1] = true;
+                minHip.offer(new int[]{currRow, currCol + 1});
+            }
+
+            // Add bottom neighbor if valid and not visited ( bottom = ROW + 1)
+            if(currRow + 1 < len && !visited[currRow + 1][currCol]){
+                visited[currRow + 1][currCol] = true;
+                minHip.offer(new int[]{currRow + 1, currCol});
+            }
+        }
+
+        int[] res = minHip.poll();//top of the min hip is the Kth smallest
+
+        return matrix[res[0]][res[1]];
+    }
+
+    /**
+            Why this works for sorted matrices:
+
+                Row-wise sorted: elements increase left to right
+
+                Column-wise sorted: elements increase top to bottom
+
+                Therefore: if we're at position (r,c), the next smallest candidates are only at (r,c+1) and (r+1,c)
+    **/
+
+        //The time complexity of the above solution is O(N^2) for an N × N matrix
     // and requires O(k) extra space for heap data structure.
     public static int findkthSmallestElement(int[][] mat, int minPosition){
         // invalid input

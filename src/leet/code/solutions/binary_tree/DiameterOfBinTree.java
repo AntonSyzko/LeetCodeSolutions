@@ -34,11 +34,7 @@ public class DiameterOfBinTree {
 
         int diameter = diameterOfBinaryTree(root);
         System.out.println(diameter);
-
     }
-
-
-
 
     private static int diameterOfBinaryTree(TreeNode root) {
         if(root==null){
@@ -61,8 +57,6 @@ public class DiameterOfBinTree {
          return maxOverallDIameter;
     }
 
-
-
     private static int maxHeight(TreeNode node) {
         if(node==null){
             return 0;
@@ -77,7 +71,7 @@ public class DiameterOfBinTree {
     //-------------- DFS -----------------
 
     public int diameterOfBinaryTreeDFS(TreeNode root) {
-        int[] res = new int[1];
+        int[] res = new int[1];//pass by value
 
         dfs(root, res);
 

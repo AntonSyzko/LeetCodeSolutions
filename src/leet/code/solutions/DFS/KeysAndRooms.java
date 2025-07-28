@@ -93,7 +93,8 @@ public class KeysAndRooms {
 
 
     /*
-      The time and space complexity of your solution are both O(n + k), where n is the number of rooms and k is the total number of keys, which is optimal for this problem.
+      The time and space complexity of your solution are both O(n + k),
+      where n is the number of rooms and k is the total number of keys, which is optimal for this problem.
      */
 
     private static boolean canVisitAllRooms(List<List<Integer>> rooms) {
@@ -108,7 +109,9 @@ public class KeysAndRooms {
 
              int currentRoomIndex = stack.pop();
 
-             for(int room : rooms.get(currentRoomIndex)) {
+             List<Integer> currentRoomAllKeys = rooms.get(currentRoomIndex);
+
+             for(int room : currentRoomAllKeys) {
 
                  if(!visited.contains(room)){
                      visited.add(room);

@@ -52,7 +52,7 @@ public class BinaryTreeRightSideView {
 
         root.left.left.left = new TreeNode(7);
 
-        List<Integer> list =  rightSideViewMy(root);
+        List<Integer> list =  rightSideViewOptimal(root);
         System.out.println(list);
     }
 
@@ -112,13 +112,13 @@ public class BinaryTreeRightSideView {
                       }
 
                       if(currentNodeFromBFS.right != null){
-                          bfsQ.add(currentNodeFromBFS.right);
+                          bfsQ.add(currentNodeFromBFS.right);//goes LAST
                       }
                   }
              }
 
              if(!levelNodes.isEmpty()){
-                 res.add(levelNodes.getLast());//last is the rightmost visible in the current level
+                 res.add(levelNodes.getLast());//LAST is the rightmost visible in the current level
              }
 
              //after retrieving LAST - drop everything else

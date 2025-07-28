@@ -46,7 +46,7 @@ public class SortLinkedList {
             return head;
         }
 
-        // Find the middle of the linked list
+        //1. Find the middle of the linked list
         ListNode middle = findMiddle(head);
         ListNode secondHalf = middle.next;
 
@@ -60,6 +60,22 @@ public class SortLinkedList {
 
         // Merge the sorted halves
         return merge(left, right);
+    }
+
+    private static ListNode findMiddle(ListNode head) {
+        if (head == null) return null;
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Fast pointer moves twice as fast as slow pointer
+        // When fast reaches the end, slow will be at the middle
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
     }
 
     private static ListNode merge(ListNode left, ListNode right) {
@@ -90,23 +106,6 @@ public class SortLinkedList {
 
         return dummy.next;
     }
-
-    private static ListNode findMiddle(ListNode head) {
-        if (head == null) return null;
-
-        ListNode slow = head;
-        ListNode fast = head;
-
-        // Fast pointer moves twice as fast as slow pointer
-        // When fast reaches the end, slow will be at the middle
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        return slow;
-    }
-
 
     private static class ListNode {
       int val;

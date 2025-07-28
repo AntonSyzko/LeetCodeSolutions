@@ -12,11 +12,15 @@ public class IntToRoman {
 
     private static String intToRoman(int N) {
         StringBuilder ans = new StringBuilder();
-        for (int i = 0; N > 0; i++)
+
+        for (int i = 0; N > 0; i++) {
+
             while (N >= val[i]) {
                 ans.append(rom[i]);
                 N -= val[i];
             }
+        }
+
         return ans.toString();
     }
 }

@@ -39,10 +39,10 @@ public class SubsetsWithoutDuplicates {
 
         List<Integer> ongoingSubset = new ArrayList<>();
 
-        Arrays.sort(nums);
+        Arrays.sort(nums);//SOOORT fro skip duplicates
 
-       // subsetsWithDupHelper(nums, 0, res, ongoingSubset);
-        backtrackPickNotPick(nums, 0, res, ongoingSubset);
+       subsetsWithDupHelper(nums, 0, res, ongoingSubset);
+        //backtrackPickNotPick(nums, 0, res, ongoingSubset);
 
         return res;
     }
@@ -52,6 +52,7 @@ public class SubsetsWithoutDuplicates {
     private  static void subsetsWithDupHelper(int[] nums, int startNumber,  List<List<Integer>> res, List<Integer> ongoingSubset) {
 
         res.add(new ArrayList<>(ongoingSubset));
+        //no return !!!
 
         for (int currentNum = startNumber; currentNum < nums.length; currentNum++) {
 

@@ -3,6 +3,7 @@ package leet.code.solutions.stack;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Stack;
 
 /*
 https://leetcode.com/problems/simplify-path/
@@ -42,14 +43,31 @@ path is a valid absolute Unix path.
  */
 public class SimplifyPath {
     public static void main(String[] args) {
-       String path = "/home//foo/";
-       String converted = shortestEquivalentPath(path);
+       String path = "/home/kek/../foo/";
+       String converted = simplifyPath(path);
         System.out.println(converted);
     }
 
-//    private static String simplifyPath(String path) {
-//
-//    }
+    private static String simplifyPath(String path) {
+        String[] DIRS = path.split("/");
+        Stack<String> stack = new Stack<>();
+
+        for(String dir : DIRS) {
+            if(dir.isEmpty() || dir.equals(".")){//ignore dot .
+                continue;
+            }
+
+            if(dir.equals("..")){//two dots scrapes what is before it
+                if(!stack.isEmpty()){
+                    stack.pop();
+                }
+            }else {
+                stack.push(dir);
+            }
+        }
+
+        return "/"  + String.join("/", stack);
+    }
 
     public static String shortestEquivalentPath(String path) {
         if (path.equals("")) {

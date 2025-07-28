@@ -1,5 +1,8 @@
 package leet.code.solutions.arrays;
 
+/*
+shortest distance between words in array of words
+ */
 public class ShortestWordDistance {
 
     public static void main(String[] args) {

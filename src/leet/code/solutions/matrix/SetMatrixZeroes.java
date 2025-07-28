@@ -1,5 +1,6 @@
 package leet.code.solutions.matrix;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +10,6 @@ https://leetcode.com/problems/set-matrix-zeroes/
 Given an m x n integer matrix , if an element is 0, set its entire row and column to 0's.
 
 You must do it in place.
-
-
 
 Example 1:
 
@@ -35,7 +34,14 @@ This problem can solve by following 4 steps:
 public class SetMatrixZeroes {
 
     public static void main(String[] args) {
+        int[][] matrix = {
+                {1,1,0,0},
+                {0,1,1,0},
+                {1,0,0,1},
+        };
 
+        setZeroesHashSet(matrix);
+        System.out.println(Arrays.deepToString(matrix));
     }
 
     private static void setZeroes(int[][] matrix) {
@@ -45,7 +51,7 @@ public class SetMatrixZeroes {
         boolean firstRowZero = false;
         boolean firstColumnZero = false;
 
-            //set first  column zeroes or not
+            //1. set first  column zeroes or not
         for(int row = 0; row < ROWS; row++){
 
             if(matrix[row][0] == 0){//zero column here
@@ -55,7 +61,7 @@ public class SetMatrixZeroes {
 
         }
 
-        //set first row  zeroes or not
+        //2. set first row  zeroes or not
         for(int i = 0; i < COLS; i++){
 
             if(matrix[0][i] == 0){//zero row here
@@ -65,7 +71,7 @@ public class SetMatrixZeroes {
 
         }
 
-       //mark zeros on first row and column
+       //3. mark zeros on first row and column
         for(int row = 1; row < ROWS; row++){//starting from 1 row and col !!!!!!!!!!!!
             for(int col = 1; col < COLS; col++){
 
@@ -77,16 +83,16 @@ public class SetMatrixZeroes {
             }
         }
 
-       //use mark to set elements
+       //4. use mark to set elements
         for(int row = 1; row < ROWS; row++){
             for(int col = 1; col < COLS; col++){
-                if(matrix[row][0] == 0 || matrix[0][col] == 0){
+                if(matrix[row][0] == 0 || matrix[0][col] == 0){//these were previously marked 0 at step 3
                     matrix[row][col] = 0;
                 }
             }
         }
 
-        //set first column and row
+        //5. set first column and row
         if(firstColumnZero){
             for(int i=0; i<ROWS; i++)
                 matrix[i][0] = 0;
@@ -97,7 +103,7 @@ public class SetMatrixZeroes {
         }
     }
 
-    //time O(m*n).
+    //time O(m * n).
     //space O(m * n )
     private static void setZeroesHashSet(int[][] matrix) {
         int ROWS = matrix.length;
@@ -108,26 +114,29 @@ public class SetMatrixZeroes {
         Set<Integer> zeroCols = new HashSet<>();
 
         // First pass: Mark rows and columns that contain zeros
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                if (matrix[i][j] == 0) {
-                    zeroRows.add(i);
-                    zeroCols.add(j);
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+
+                if (matrix[row][col] == 0) {
+
+                    zeroRows.add(row);
+                    zeroCols.add(col);
+
                 }
             }
         }
 
         // Second pass: Set rows to zero
         for (int row : zeroRows) {//itrerate ROS set
-            for (int j = 0; j < COLS; j++) {//for each column of that row
-                matrix[row][j] = 0;
+            for (int col = 0; col < COLS; col++) {//for each column of that row
+                matrix[row][col] = 0;
             }
         }
 
         // Third pass: Set columns to zero
         for (int col : zeroCols) {//iterate set of cols
-            for (int i = 0; i < ROWS; i++) {//for each row of that column
-                matrix[i][col] = 0;
+            for (int row = 0; row < ROWS; row++) {//for each row of that column
+                matrix[row][col] = 0;
             }
         }
     }

@@ -43,8 +43,14 @@ fromi != toi
 public class CheapestFlightsWithinKStops {
 
     public static void main(String[] args) {
-        int[][] flights = {{0,1,200}, {1,2,100}, {1,3,300}, {2,3,100}};
+
+        int[][] flights = {{0,1,200},
+                           {1,2,100},
+                           {1,3,300},
+                           {2,3,100}};
+
         System.out.println(findCheapestPrice(4, flights, 0, 3, 1)); // Expected: 500
+
     }
 
     /*
@@ -61,6 +67,7 @@ public class CheapestFlightsWithinKStops {
     public static int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
         // Step 1: Build adjacency list using array of lists for efficiency
         List<int[]>[] adjacencyList = new ArrayList[n];
+
         for (int i = 0; i < n; i++) {
             adjacencyList[i] = new ArrayList<>();
         }
@@ -72,6 +79,7 @@ public class CheapestFlightsWithinKStops {
         // Step 2: Initialize 2D distance array
         // dist[airport][stops] = minimum cost to reach airport with exactly 'stops' stops
         int[][] dist = new int[n][k + 2];
+
         for (int i = 0; i < n; i++) {
             Arrays.fill(dist[i], Integer.MAX_VALUE);
         }
@@ -79,7 +87,7 @@ public class CheapestFlightsWithinKStops {
 
         // Step 3: Priority queue stores [cost, airport, stops] - ordered by cost
         PriorityQueue<int[]> minHip = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
-        minHip.offer(new int[]{0, src, 0});//cost 0 -> from src0 to dest 0
+        minHip.offer(new int[]{0, src, 0});//cost 0 -> from src 0 to dest 0
 
         // Step 4: Dijkstra's algorithm with state tracking
         while (!minHip.isEmpty()) {

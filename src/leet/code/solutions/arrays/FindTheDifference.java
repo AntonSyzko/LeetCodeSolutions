@@ -61,8 +61,25 @@ public class FindTheDifference {
         }
 
         return map.entrySet().iterator().next().getKey();
+    }
 
 
+    private static char findTheDifferenceAlphabet(String s, String t) {
+        int[] alph = new int[26];
+        for (char c : s.toCharArray()) {
+            alph[c - 'a']++;
+        }
+
+        for (char c : t.toCharArray()) {
+            alph[c - 'a']--;
+        }
+
+        for (int i = 0; i < alph.length; i++) {
+            if(alph[i] != 0){
+                return (char) (i + 'a');
+            }
+        }
+        return 0;
     }
 
 

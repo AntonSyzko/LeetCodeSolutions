@@ -26,7 +26,7 @@ public class ArrayElementsToRanks {
 
     //O(n.log(n))
     private static void transformArrayToRanks(int[] nums) {
-        Map<Integer, Integer> sortedNumsMap = new TreeMap<>();//tree mpa - sorted !!!
+        SortedMap<Integer, Integer> sortedNumsMap = new TreeMap<>();//tree map - sorted !!!
 
         // store (element, index) pair in `TreeMap`
         for (int i = 0; i < nums.length; i++) {
@@ -44,7 +44,7 @@ public class ArrayElementsToRanks {
     // Function to replace each array element by its rank in the array
     private static void transformArrayToRanksHeap(int[] nums) {
         // create a max-heap of `Pair` using the `PriorityQueue` class
-        PriorityQueue<Pair<Integer, Integer>> maxHeap = new PriorityQueue<>((a, b) -> b.first - a.first);
+        PriorityQueue<Pair<Integer, Integer>> maxHeap = new PriorityQueue<>((a, b) -> b.number - a.number);
 
         // push all input elements with their corresponding index in the priority queue
         for (int i = 0; i < nums.length; i++) {
@@ -57,7 +57,7 @@ public class ArrayElementsToRanks {
         while (!maxHeap.isEmpty()) {
             // take the next maximum element from the heap and replace its value
             // in the input array with its corresponding rank
-            nums[maxHeap.poll().second] = rank;
+            nums[maxHeap.poll().index] = rank;
 
             // decrement rank for the next maximum element
             rank--;
@@ -65,7 +65,7 @@ public class ArrayElementsToRanks {
     }
 
     private static void transformArrayToRanksMinHeap(int[] nums) {
-        PriorityQueue<Pair<Integer, Integer>> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a.first));
+        PriorityQueue<Pair<Integer, Integer>> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a.number));
 
         for (int i = 0; i < nums.length ; i++) {
             minHeap.add( Pair.of(nums[i], i));//pair of Number to it Index
@@ -74,21 +74,21 @@ public class ArrayElementsToRanks {
         int rank = 1;//[4, 3, 6, 5, 2, 7, 1]
 
         while (!minHeap.isEmpty()) {
-            nums[minHeap.poll().second] = rank;
+            nums[minHeap.poll().index] = rank;
             rank++;
         }
 
     }
 
         // A Pair class
-    static class Pair<U, V> {
-        public final U first;       // first field of a pair
-        public final V second;      // second field of a pair
+   private static class Pair<U, V> {
+        public final U number;       // first field of a pair
+        public final V index;      // second field of a pair
 
         // Constructs a new Pair with specified values
         private Pair(U first, V second) {
-            this.first = first;
-            this.second = second;
+            this.number = first;
+            this.index = second;
         }
 
         // Factory method for creating a Typed Pair immutable instance

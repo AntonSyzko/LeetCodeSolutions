@@ -25,16 +25,19 @@ public class SumOfLeftLeeaves {
 
         if(node.left != null){
 
-            if(node.left.left == null && node.left.right == null){//is leaf
+            if(node.left.left == null && node.left.right == null){//is LEAF
+
                 sumOfLeft += node.left.getVal();
-            }else{
-                sumOfLeft+=  sumOfLeftLeaves(node.left);
+
+            }else{//not a LEAF yet
+
+                sumOfLeft +=  sumOfLeftLeaves(node.left);
             }
         }
 
 
         if(node.right != null){
-            if(node.right.left != null || node.right.right != null){
+            if(node.right.left != null || node.right.right != null){//not a LEAF,smth to still process on this branch
                 sumOfLeft +=  sumOfLeftLeaves(node.right);
             }
         }

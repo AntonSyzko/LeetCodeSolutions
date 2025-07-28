@@ -85,7 +85,7 @@ public class EditDistance {
         // If characters match, no operation needed
         if (word1.charAt(w1Index) == word2.charAt(w2Index)) {
 
-            result = dfs(w1Index + 1, w2Index + 1, word1, word2, memo);
+            result = dfs(w1Index + 1, w2Index + 1, word1, word2, memo);//advance both
 
         } else {
             // Try all three operations and take minimum
@@ -93,7 +93,8 @@ public class EditDistance {
             int delete = dfs(w1Index + 1, w2Index, word1, word2, memo);     // Delete char from word1
             int replace = dfs(w1Index + 1, w2Index + 1, word1, word2, memo); // Replace char in word1
 
-            result = 1 + Math.min(Math.min(insert, delete), replace);
+            result = 1 + Math.min(replace,
+                         Math.min(insert, delete));
         }
 
         memo.put(key, result);
@@ -130,13 +131,17 @@ public class EditDistance {
         int result;
 
         if(word1.charAt(w1Index) == word2.charAt(w2Index)) {
+
             result = dfs_DP(w1Index + 1, w2Index + 1, word1, word2, DP);
+
         } else{
+
             int insert = dfs_DP(w1Index, w2Index + 1, word1, word2, DP);// Insert char from word2
             int delete = dfs_DP(w1Index + 1, w2Index, word1, word2, DP);// Delete char from word1
             int replace = dfs_DP(w1Index + 1, w2Index +1, word1, word2, DP);// Replace char in word1
 
-            result = 1 + Math.min(replace, Math.min(insert, delete));
+            result = 1 + Math.min(replace,
+                         Math.min(insert, delete));
         }
 
         DP[w1Index][w2Index] = result;

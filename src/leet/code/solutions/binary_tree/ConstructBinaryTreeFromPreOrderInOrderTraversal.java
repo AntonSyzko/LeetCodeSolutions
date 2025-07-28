@@ -42,6 +42,7 @@ public class ConstructBinaryTreeFromPreOrderInOrderTraversal {
 
 
     private  static Map<Integer, Integer> inOrderIndexMap = new HashMap<>();
+
     private  static int  preOrderIndex = 0;
 
     // O(N) both
@@ -64,10 +65,10 @@ public class ConstructBinaryTreeFromPreOrderInOrderTraversal {
         preOrderIndex++;
 
         //build entire LEFT subtree
-        root.left = arrayToTree(preorder, left, inOrderIndexMap.get(root.val)-1);//get(root.val)-1 cause in in-order left vals are at left of ROOT
+        root.left = arrayToTree(preorder, left, inOrderIndexMap.get(root.val) - 1);//get(root.val)-1 cause in in-order left vals are at left of ROOT
 
         //build entire RIGHT subtree
-        root.right = arrayToTree(preorder, inOrderIndexMap.get(root.val) +1, right);//inOrderIndexMap.get(root.val) +1  cause in in-order right vals are to the RIGH or root
+        root.right = arrayToTree(preorder, inOrderIndexMap.get(root.val) + 1, right);//inOrderIndexMap.get(root.val) +1  cause in in-order right vals are to the RIGH or root
 
         return root;
     }

@@ -31,6 +31,8 @@ public class PartitionList {
 
         int pivot = 3;
 
+        System.out.println(head);
+
         ListNode partitioned =  partition(head, pivot);
         System.out.println(partitioned);
     }
@@ -44,7 +46,7 @@ public class PartitionList {
 
         while (head != null) {
 
-            if (head.val < pivot) {
+            if (head.val < pivot) {//< PIVOT is CRUX
                  beforeList.next = head;
                  beforeList = beforeList.next;//move before
             }else{

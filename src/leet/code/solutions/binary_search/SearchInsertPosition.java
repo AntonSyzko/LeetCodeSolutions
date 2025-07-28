@@ -28,10 +28,10 @@ public class SearchInsertPosition {
     The time complexity is O(log n) because we're using binary search. The space complexity is O(1) since we only use a constant amount of extra space.
      */
     private static int searchInsertBinSearch(int[] array, int target) {
-       int start = 0, end = array.length - 1;
+       int left = 0, right = array.length - 1;
 
-       while (start <= end) {
-           int mid = start + (end - start) / 2;
+       while (left <= right) {
+           int mid = left + (right - left) / 2;
 
            if (array[mid] == target) {
 
@@ -39,18 +39,18 @@ public class SearchInsertPosition {
 
            } else if (target < array[mid]) {
 
-               end = mid -1;
+               right = mid - 1;
 
            }else{
 
-               start = mid + 1;
+               left = mid + 1;
 
            }
        }
 
         // If we exit the loop, target wasn't found
-        // 'start' will be the position where target should be inserted
-       return start;
+        // 'left' will be the position where target should be inserted
+       return left;
 
     }
 

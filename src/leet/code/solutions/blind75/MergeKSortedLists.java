@@ -1,8 +1,5 @@
 package leet.code.solutions.blind75;
 
-import leet.code.solutions.backtracking.PrintAllCOmbinationsFromNToZero;
-
-import java.util.List;
 import java.util.PriorityQueue;
 
 /*
@@ -78,14 +75,16 @@ public class MergeKSortedLists {
 
         PriorityQueue<ListNode> minHeap = new PriorityQueue<>((node1, node2) -> node1.val - node2.val);
 
-        for (ListNode node : lists) {
-            while (node != null) {
+        for (ListNode node : lists) {//iterating over all nodes in array
+
+            while (node != null) {//iterating over nodes in one linked list of nodes
                 minHeap.offer(node);
                 node = node.next;
             }
 
         }
 
+        //now minHip contains ALL nodes of ALL lists dorted from samllest to biggest
         while (!minHeap.isEmpty()) {
             ListNode node = minHeap.poll();
             newHead.next = node;

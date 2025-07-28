@@ -31,6 +31,8 @@ public class DeleteNodeInLinkedList {
 
         System.out.println(node1);
 
+        System.out.println("delete node " + node1.next);
+
         deleteNode(node1.next);
 
         System.out.println(node1);

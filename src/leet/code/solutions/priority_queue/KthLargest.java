@@ -41,8 +41,6 @@ public class KthLargest {
         System.out.println(kthLargest.add(6));
         System.out.println(kthLargest.add(7));
         System.out.println(kthLargest.add(8));
-
-
     }
 
     private  final Queue<Integer> minHip;
@@ -55,9 +53,11 @@ public class KthLargest {
 
         for (int num : nums) {
             minHip.add(num);
+
             if (minHip.size() > hipSize) {
                 minHip.remove();
             }
+
         }
     }
 
@@ -69,6 +69,6 @@ public class KthLargest {
             minHip.remove();
         }
 
-        return minHip.peek();
+        return minHip.peek();//don't poll - keep it
     }
 }

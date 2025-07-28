@@ -72,7 +72,7 @@ public class CheckCompletenessOfBinaryTree {
 
                 if(isEndNode) { // but there was a NULL currentNode before
 
-//if there was a NULL currentNode BEFORE and  current currentNode is NOT null - TREE is INCOMPLETE by default, since we visit LEFT nodes before IRGHT ones and if LEFT was NULL - having right as NULL - incomplete
+//if there was a NULL currentNode BEFORE and  current currentNode is NOT null - TREE is INCOMPLETE by default, since we visit LEFT nodes before RIGHT ones and if LEFT was NULL - having right as NULL - incomplete
                     return false;
 
                 }

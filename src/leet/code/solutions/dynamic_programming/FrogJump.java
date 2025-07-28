@@ -1,9 +1,7 @@
-package leet.code.solutions.stack;
+package leet.code.solutions.dynamic_programming;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /*
 https://leetcode.com/problems/frog-jump/
@@ -57,46 +55,52 @@ public class FrogJump {
         In the worst case, each stone can be reached by O(n) different jump distances.
         Therefore, the total space required is O(n * n) = O(n²).
 
+     Time: O(n × k) where n = number of stones, k = max possible jump size
+     Space: O(n × k) for memoization + O(n) for stone mapping
+
      **/
     private static boolean canCross(int[] stones) {
-        // Create a hashmap to store each stone's position and possible jump distances
-        Map<Integer, Set<Integer>> DP = new HashMap<>();
-
-        // Initialize the hashmap with empty sets for each stone
-        for (int stone : stones) {
-            DP.put(stone, new HashSet<>());
+        Map<Integer, Integer> stoneToIndex = new HashMap<>();
+        for (int i = 0; i < stones.length; i++) {
+            stoneToIndex.put(stones[i], i);
         }
 
-        // The first stone can be reached with 0 jump (starting position)
-        DP.get(0).add(0);
+        Map<String, Boolean> memo = new HashMap<>();
+        return dfs(stones, stoneToIndex, memo, 0, 1); // Start at index 0 with jump size 1
+    }
 
-        // For each stone position
-        for (int currentStone : stones) {
+    private  static boolean dfs(int[] stones, Map<Integer, Integer> stoneToIndex, Map<String, Boolean> memo, int currentIndex, int lastJump) {
 
-            // Create a copy of the set to avoid ConcurrentModificationException
-            HashSet<Integer> possibleJumps = new HashSet<>(DP.get(currentStone));
+        // Base case: reached the last stone
+        if (currentIndex == stones.length - 1) {
+            return true;
+        }
 
-            // Check all possible jumps that can reach this stone
-            for (int jumpDistance : possibleJumps) {
+        // Memoization key
+        String key = currentIndex + "," + lastJump;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
 
-                // Try the three possible next jumps: k-1, k, k+1
-                for (int nextJump = jumpDistance - 1; nextJump <= jumpDistance + 1; nextJump++) {
+        // Try all three possible jump sizes: k-1, k, k+1
+        for (int jump = lastJump - 1; jump <= lastJump + 1; jump++) {
+            if (jump <= 0){
+                continue; // Can't jump backwards or stay
+            }
 
-                    // Skip if nextJump <= 0 (can't jump backwards or stay in place)
-                    if (nextJump <= 0) continue;
+            int nextPosition = stones[currentIndex] + jump;
 
-                    // Calculate the position after the jump
-                    int nextPosition = currentStone + nextJump;
-
-                    // If this position has a stone, add this jump to the possibilities
-                    if (DP.containsKey(nextPosition)) {
-                        DP.get(nextPosition).add(nextJump);
-                    }
+            // Check if there's a stone at this position
+            if (stoneToIndex.containsKey(nextPosition)) {
+                int nextIndex = stoneToIndex.get(nextPosition);
+                if (dfs(stones, stoneToIndex, memo, nextIndex, jump)) {
+                    memo.put(key, true);
+                    return true;
                 }
             }
         }
 
-        // If the last stone has any possible jumps that can reach it, return true
-        return !DP.get(stones[stones.length - 1]).isEmpty();
+        memo.put(key, false);//false if reached here
+        return false;
     }
 }

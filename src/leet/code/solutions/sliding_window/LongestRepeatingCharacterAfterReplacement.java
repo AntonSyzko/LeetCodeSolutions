@@ -78,18 +78,16 @@ Time and Space Complexity
             // Current window size is (windowEnd - windowStart + 1)
             // Number of characters to be replaced = window size - frequency of most frequent character
             // If characters to be replaced > k, shrink the window
-            if (windowEnd - windowStart + 1 - maxFrequency > k) {
+            if ((windowEnd - windowStart + 1 ) - maxFrequency > k) {
                 // Decrease the frequency of the character at windowStart
                 charFrequency[s.charAt(windowStart) - 'A']--;
                 windowStart++; // Shrink the window
             }
 
             // Calculate the current max length
-            maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
+            maxLength = Math.max(maxLength, (windowEnd - windowStart + 1));
         }
 
         return maxLength;
     }
-
-
 }

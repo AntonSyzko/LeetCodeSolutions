@@ -65,7 +65,57 @@ public class RomanToInteger {
         System.out.println(integer);
     }
 
-    public static int romanToInt(String s) {
+    private static int romanToInt(String s) {
+        int res = 0;
+        int prev = 0;
+
+        for (int right = s.length() - 1; right >= 0 ; right--) {
+
+            int current = getValue(s.charAt(right));
+
+            //If current value < previous value, it's a subtraction case (like IV, IX)
+            if(current < prev){
+
+                res -= current;//IV, IX
+
+            }else{
+
+                res += current;
+
+            }
+
+            prev = current;
+        }
+
+        return res;
+    }
+
+    private static int getValue(char c) {
+        switch (c) {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+            default: return 0;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public static int romanToInt2(String s) {
         int res = 0;
 
         Map<Character, Integer> romansToIntegers = new HashMap<>();
@@ -91,7 +141,7 @@ public class RomanToInteger {
         return res;
     }
 
-        public static int romanToInt2(String s) {
+        public static int romanToInt3(String s) {
         int res = 0;
         Map<Character, Integer> mapa = new HashMap<>();
         mapa.put('I', 1);

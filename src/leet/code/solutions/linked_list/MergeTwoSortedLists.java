@@ -28,7 +28,7 @@ public class MergeTwoSortedLists {
 
     public static void main(String[] args) {
         ListNode<Integer> list1 = new ListNode<>(1, new ListNode<>(3, null));
-        ListNode<Integer> list2 = new ListNode<>(2, new ListNode<>(-4, null));
+        ListNode<Integer> list2 = new ListNode<>(2, new ListNode<>(6, null));
 
     //    ListNode<Integer> skippedNegatives = skipNegatives( list2);
 
@@ -41,8 +41,12 @@ public class MergeTwoSortedLists {
 
 
 
-        private static ListNode<Integer> mergeTwoSortedLists(ListNode<Integer> list1, ListNode<Integer> list2) {
-        ListNode<Integer> dummyHead = new ListNode(0, null);//future answer holder
+    /*
+          Time Complexity: O(m + n) where m and n are the lengths of the lists
+        Space Complexity: O(1) - only using a few pointer variables
+     */
+    private static ListNode<Integer> mergeTwoSortedLists(ListNode<Integer> list1, ListNode<Integer> list2) {
+        ListNode<Integer> dummyHead = new ListNode<>(0, null);//future answer holder
 
         //so we are creating HEAD straight away 
         ListNode<Integer> currentResultNode = dummyHead;//result aggregator , dummyNode will hold it's head
@@ -50,7 +54,7 @@ public class MergeTwoSortedLists {
         ListNode<Integer> list1Pointer = list1;//copies pointers
         ListNode<Integer> list2Pointer = list2;// not to change original list nodes
 
-        while (list1Pointer != null && list2Pointer != null) {
+        while (list1Pointer != null && list2Pointer != null) {//AND
 
             if (list1Pointer.val < list2Pointer.val) {
 
@@ -103,6 +107,7 @@ public class MergeTwoSortedLists {
             resultNode = resultNode.next;
         }
 
+        //left overs
         if (list1Copy != null) {
             if (list1Copy.val < 0) {
                 list1Copy = list1Copy.next;

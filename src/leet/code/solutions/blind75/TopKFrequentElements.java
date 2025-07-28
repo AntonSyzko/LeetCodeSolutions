@@ -54,7 +54,6 @@ Overall space complexity: O(m)
      */
     private static int[] topKFrequent(int[] nums, int k) {
 
-
         Map<Integer, Integer> frequencyMap = new HashMap<>();
 
         for(int each : nums){
@@ -62,9 +61,10 @@ Overall space complexity: O(m)
         }
 
         //min heap will keep SMALLEST elements on top
-        Queue<Integer> minHeap = new PriorityQueue<>((a,b) -> frequencyMap.get(a)-frequencyMap.get(b));
+        Queue<Integer> minHeap = new PriorityQueue<>((a,b) -> frequencyMap.get(a) - frequencyMap.get(b));
 
         for(int each : frequencyMap.keySet()){
+
             minHeap.offer(each);
 
             //dropping is limited to K, thus polling from q is (log K)
@@ -74,8 +74,7 @@ Overall space complexity: O(m)
         }
 
         //so now BIGGEST left
-
-        return minHeap.stream().mapToInt(i->i).toArray();
+        return minHeap.stream().mapToInt(i -> i).toArray();
     }
 
     // O (N log N ) -- less efficient than min heap limited to K polling
@@ -89,7 +88,7 @@ Overall space complexity: O(m)
          frequencyMap.put(each, frequencyMap.getOrDefault(each, 0) + 1);
      }
 
-     Queue<Integer> maxHeap = new PriorityQueue<>((a,b) -> frequencyMap.get(b)-frequencyMap.get(a));
+     Queue<Integer> maxHeap = new PriorityQueue<>((a,b) -> frequencyMap.get(b) - frequencyMap.get(a));
      maxHeap.addAll(frequencyMap.keySet());
 
 

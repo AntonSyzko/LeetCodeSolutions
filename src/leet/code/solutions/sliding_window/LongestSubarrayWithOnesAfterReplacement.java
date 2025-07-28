@@ -38,21 +38,22 @@ public class LongestSubarrayWithOnesAfterReplacement {
        int windowStart = 0;
 
         for (int windowEnd = 0; windowEnd < nums.length; windowEnd++) {
+
             if(nums[windowEnd] == 0){
                 zeroCount++;
             }
 
-            while(zeroCount > k){//if zeros count exceeded limit
+            while(zeroCount > k){//WHILE zeros count exceeded limit
 
                 int numberAtWindowStart = nums[windowStart];
 
-                if(numberAtWindowStart ==0){//at start of the window is zero
+                if(numberAtWindowStart == 0){//at start of the window is zero
                     zeroCount--;//decrease count
                 }
                 windowStart++; //shrink window
             }
 
-            res = Math.max(res, windowEnd - windowStart + 1);//update res
+            res = Math.max(res, (windowEnd - windowStart + 1));//update res
         }
         return res;
     }

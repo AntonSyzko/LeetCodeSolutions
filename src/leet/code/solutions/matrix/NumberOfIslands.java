@@ -59,9 +59,12 @@ public class NumberOfIslands {
         for (int row = 0; row < grid.length; row++) {
             for (int col = 0; col < grid[row].length; col++) {
 
-                if(grid[row][col]=='1'){//until first island met -> after it will be met only when completely new isolated island is met again
+                if(grid[row][col] == '1'){//until first island met -> after it will be met only when completely new isolated island is met again
+
                     islandsCount++;//no matter how many '1' - it is one island ,and it is already counted in
+
                     traverseGridBFS(grid, row, col);//traversal will stop at boundaries of the grid or meeting '0'
+
                 }
             }
         }
@@ -69,10 +72,12 @@ public class NumberOfIslands {
     }
 
     private static void traverseGridBFS(char[][] grid, int row, int col) {
+        int ROWS = grid.length;
+        int COLS = grid[0].length;
 
-        //base case
-        if(row  < 0 || row >= grid.length //row boundaries
-                || col < 0 || col >= grid[row].length //  col boundaries
+        //BASE case
+        if(row  < 0 || row >= ROWS //row boundaries
+                || col < 0 || col >= COLS //  col boundaries
                 || grid[row][col] == '0'){// reached end of island - dont proceed
             return;
         }

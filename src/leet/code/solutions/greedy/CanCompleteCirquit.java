@@ -27,36 +27,40 @@ Travel to station 0. Your tank = 4 - 1 + 1 = 3
 Travel to station 1. Your tank = 3 - 2 + 2 = 3
 Travel to station 2. Your tank = 3 - 2 + 3 = 4
 Travel to station 3. Your tank = 2 - 4 + 4 = 2
-
-
  */
 public class CanCompleteCirquit {
 
     public static void main(String[] args) {
+        int[] gas = {1,2,3,4,5};
+        int[] cost = {1,3,2,4,5};
 
+        int can = canCompleteCircuit(gas, cost);
+        System.out.println(can);
     }
 
+    private static int canCompleteCircuit(int[] gas, int[] cost) {
 
-    public int canCompleteCircuit(int[] gas, int[] cost) {
-       if(Arrays.stream(gas).sum() < Arrays.stream(cost).sum()){//if sum of gass is LESs than sum of cost - no way there is macth
-           return -1;
-       }
+        int gasSum = Arrays.stream(gas).sum();
+        int costSum = Arrays.stream(cost).sum();
+
+        if(gasSum < costSum){//if sum of gas is LESS than sum of cost - no way there is match
+            return -1;
+        }
 
        int totalGas = 0;
+
        int resIndex = 0;
 
         for (int i = 0; i < gas.length; i++) {
 
             totalGas += (gas[i] - cost[i]);
 
-            if(totalGas < 0){
-                totalGas = 0;
+            if(totalGas < 0){//total gas dropped below 0 -> we'll have to start over from i
+                totalGas = 0;//reset
                 resIndex = i + 1;//move next , this one is negative and negative does not give us way to move forward
             }
-
         }
 
         return resIndex;//result is guaranteed since the task says there is one result
     }
-
     }

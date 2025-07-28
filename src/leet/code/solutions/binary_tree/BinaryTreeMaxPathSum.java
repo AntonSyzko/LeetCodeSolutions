@@ -44,14 +44,14 @@ public class BinaryTreeMaxPathSum {
     }
 
 
-    private static int maxSUm = Integer.MIN_VALUE;
+    private static int MAX_SUM = Integer.MIN_VALUE;//global val
 
     private  static int maxPathSum(TreeNode root) {
       if(root==null) return 0;
 
         maxGain(root);
 
-       return maxSUm;
+       return MAX_SUM;
     }
 
     private static int maxGain(TreeNode node) {
@@ -62,7 +62,7 @@ public class BinaryTreeMaxPathSum {
 
         int priceNewPath = node.val + leftGain + rightGain;//accumulated path as we recursively go
 
-        maxSUm = Math.max(maxSUm, priceNewPath);//update max as we go
+        MAX_SUM = Math.max(MAX_SUM, priceNewPath);//update max as we go
 
         return node.val + Math.max(leftGain, rightGain); //as we continue adding to  current node value whatever BIGGEST value LEFT or RIGHT gain can offer
     }
@@ -75,7 +75,7 @@ public class BinaryTreeMaxPathSum {
 
         int priceNewPAth = node.val + leftGain + rightGain;//recursively accumulated path as we recursively go ( will stop only at BASE)
 
-        maxSUm = Math.max(maxSUm, priceNewPAth);//update max as we go
+        MAX_SUM = Math.max(MAX_SUM, priceNewPAth);//update max as we go
 
         int nodeLeftVal = node.left == null ? 0 : node.left.val;
         int nodeRightVal = node.right == null ? 0 : node.right.val;

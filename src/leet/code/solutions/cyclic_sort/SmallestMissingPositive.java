@@ -31,7 +31,7 @@ public class SmallestMissingPositive {
 
     public static void main(String[] args) {
       int[] arr = {2, -3, 4, 1, 1, 7};
-      int smallestMissing = missingNumberArray(arr);
+      int smallestMissing = missingNumber(arr);
         System.out.println(smallestMissing);
     }
 

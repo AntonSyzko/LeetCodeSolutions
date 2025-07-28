@@ -39,7 +39,7 @@ public class SortColors {
         int[] nums = {2,0,2,1,1,0};
         System.out.println(Arrays.toString(nums));
 
-        sortColors(nums);
+        sortColors2(nums);
         System.out.println(Arrays.toString(nums));
     }
 
@@ -67,5 +67,29 @@ public class SortColors {
                 index++;
             }
         }
+    }
+
+    private static void sortColors2(int[] nums) {
+        int zero = 0;//pre set all as -1
+        int one =  0;
+        int two =  0;
+
+        for (final int num : nums)
+
+            if (num == 0) {
+
+                nums[two++] = 2;
+                nums[one++] = 1;
+                nums[zero++] = 0;
+
+            } else if (num == 1) {
+
+                nums[two++] = 2;
+                nums[one++] = 1;
+
+            } else if (num == 2) {
+
+                nums[two++] = 2;
+            }
     }
 }

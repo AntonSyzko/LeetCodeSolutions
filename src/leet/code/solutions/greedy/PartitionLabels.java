@@ -59,7 +59,8 @@ public class PartitionLabels {
                 }
             }
 
-            res.add((charLastIndex - i) +1);//+1 cause zero based
+            int partitionLength = (charLastIndex - i) + 1;
+            res.add(partitionLength);//+1 cause zero based
 
             i = charLastIndex;//start new substring from last char index onwards
 

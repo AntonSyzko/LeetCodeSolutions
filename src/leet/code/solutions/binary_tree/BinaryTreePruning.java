@@ -3,6 +3,7 @@ package leet.code.solutions.binary_tree;
 https://leetcode.com/problems/binary-tree-pruning/
 
 Given the root of a binary tree, return the same tree where every subtree (of the given tree) not containing a 1 has been removed.
+Tree can contain 0 or 1 only
 A subtree of a node node is node plus every node that is a descendant of node.
 
 Example 1:

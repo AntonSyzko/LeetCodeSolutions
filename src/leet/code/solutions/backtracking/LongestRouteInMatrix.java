@@ -36,12 +36,12 @@ public class LongestRouteInMatrix {
         int endRow = 5;
         int endCol = 7;
 
-        int longestPath = Integer.MIN_VALUE;
+        int maxDist = Integer.MIN_VALUE;
         int currentDistance = 0;
 
         boolean[][] visited = new boolean[rows][cols];
 
-        int longestPathRes = findLongestPath(matrix,visited,startRow, startCol,  endRow, endCol,  longestPath, currentDistance);
+        int longestPathRes = findLongestPath(matrix,startRow, startCol,  endRow, endCol, visited, maxDist, currentDistance);
 
         if(longestPathRes==Integer.MIN_VALUE){
             System.out.println("no path");
@@ -50,7 +50,7 @@ public class LongestRouteInMatrix {
         }
     }
 
-    public static int findLongestPath(int[][] mat, boolean[][] visitedCells, int startRow, int startCol, int endRow, int endCol, int maxDist, int currentDistance){
+    public static int findLongestPath(int[][] mat, int startRow, int startCol, int endRow, int endCol, boolean[][] visitedCells, int maxDist, int currentDistance){
         if(mat == null || mat.length == 0 || mat[0].length == 0){//invalid input
             return -1;
         }
@@ -64,26 +64,26 @@ public class LongestRouteInMatrix {
             return Math.max(maxDist,  currentDistance);
         }
 
-        visitedCells[startRow][startCol] = true;//mark as visisted
+        visitedCells[startRow][startCol] = true;//mark as visited
 
         //UP
         if(isSafe(mat,visitedCells,startRow - 1 ,startCol)){
-            maxDist = findLongestPath(mat,visitedCells,startRow - 1 ,startCol,endRow, endCol, maxDist, currentDistance + 1);
+            maxDist = findLongestPath(mat,startRow - 1 ,startCol,endRow, endCol,visitedCells, maxDist, currentDistance + 1);//curr distcnae + 1 !!!!!!!!!!
         }
 
         //DOWN
         if(isSafe(mat,visitedCells,startRow + 1 ,startCol)){
-            maxDist = findLongestPath(mat,visitedCells,startRow + 1 ,startCol,endRow, endCol, maxDist, currentDistance + 1);
+            maxDist = findLongestPath(mat,startRow + 1 ,startCol,endRow, endCol, visitedCells,maxDist, currentDistance + 1);
         }
 
         //LEFT
         if(isSafe(mat,visitedCells,startRow  ,startCol - 1 )){
-            maxDist = findLongestPath(mat,visitedCells,startRow ,startCol - 1 ,endRow, endCol, maxDist, currentDistance + 1);
+            maxDist = findLongestPath(mat,startRow ,startCol - 1 ,endRow, endCol,visitedCells, maxDist, currentDistance + 1);
         }
 
        //RIGHT
         if(isSafe(mat,visitedCells,startRow ,startCol + 1 )){
-            maxDist = findLongestPath(mat,visitedCells,startRow  ,startCol +  1 ,endRow, endCol, maxDist, currentDistance + 1);
+            maxDist = findLongestPath(mat,startRow  ,startCol +  1 ,endRow, endCol, visitedCells,maxDist, currentDistance + 1);
         }
 
         visitedCells[startRow][startCol] = false;//BACKTRACK

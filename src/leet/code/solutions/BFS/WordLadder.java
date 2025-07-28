@@ -32,7 +32,7 @@ public class WordLadder {
             return 0;
         }
 
-        Set<String> wordSet = new HashSet<>(wordList);
+        Set<String> wordSet = new HashSet<>(wordList);//O(1) access
         // Edge case: if endWord is not in wordList, no transformation possible
         if(!wordSet.contains(endWord)){
             return 0;

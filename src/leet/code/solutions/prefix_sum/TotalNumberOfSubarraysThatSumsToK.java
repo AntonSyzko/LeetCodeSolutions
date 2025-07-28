@@ -36,10 +36,12 @@ public class TotalNumberOfSubarraysThatSumsToK {
             int complement = ongoingSum - target;
 
             if(prefixSumToIndex.containsKey(complement)){
+
                 numberOfSubarraysWithSumEqualToK += prefixSumToIndex.get(complement);
+
             }
 
-            prefixSumToIndex.put(ongoingSum,prefixSumToIndex.getOrDefault(ongoingSum,0)+1);
+            prefixSumToIndex.put(ongoingSum,prefixSumToIndex.getOrDefault(ongoingSum,0) + 1);
         }
 
         return numberOfSubarraysWithSumEqualToK;

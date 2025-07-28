@@ -39,15 +39,16 @@ public class Subsets {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> ongoingSubset = new ArrayList<>();//list cause can contain diplicates
 
-      //  subsetHelper(nums, 0 , ongoingSubset, res);
+        subsetHelper(nums, 0 , ongoingSubset, res);
 
-        subsetPickNotPick(nums,0, ongoingSubset, res);
+       // subsetPickNotPick(nums,0, ongoingSubset, res);
 
         return res;
     }
 
     private static void subsetHelper(int[] nums, int start, List<Integer> ongoingSubset, List<List<Integer>> res) {
          res.add(new ArrayList<>(ongoingSubset));
+         //no return !!!
 
          for (int i = start; i < nums.length; i++) {
              ongoingSubset.add(nums[i]);

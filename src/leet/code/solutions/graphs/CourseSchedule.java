@@ -51,6 +51,13 @@ public class CourseSchedule {
         boolean canFinish2 =  canFinish(numCourses2, prerequisites2);
 
         System.out.println(canFinish2);
+
+        int[][] prerequisites3 = {{0,1},{1,0}};//cycle
+        int numCourses3 = 2;
+
+        boolean canFinish3 =  canFinish(numCourses3, prerequisites3);
+
+        System.out.println(canFinish3);
     }
 
     private static boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -67,7 +74,9 @@ public class CourseSchedule {
 
         // Check each course for cycles using DFS
         for(int course = 0; course < numCourses; course++){
+
             Set<Integer> seen = new HashSet<>();
+
             if(!dfs(course, seen, adjacencyMap)){
                 return false;// Cycle found, impossible to finish all courses
             }
@@ -94,7 +103,7 @@ public class CourseSchedule {
         }
 
         // OPTIMIZATION: If course has no prerequisites, it can definitely be taken
-        if(adjacencyMap.get(course).isEmpty()){
+        if(adjacencyMap.get(course) == null || adjacencyMap.get(course).isEmpty()){
             return true;
         }
 
@@ -109,6 +118,7 @@ public class CourseSchedule {
             if(!dfs(adjacent, seen, adjacencyMap)){
                 return false;
             }
+
         }
 
         // CRITICAL: Remove current course from path (backtrack) This allows the course to be visited again in different paths

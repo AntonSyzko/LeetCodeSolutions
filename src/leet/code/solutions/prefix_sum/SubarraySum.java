@@ -32,10 +32,7 @@ public class SubarraySum {
         System.out.println(subarraySum);
     }
 
-
-
     public static List<Integer> subarraySum(List<Integer> arr, int target) {
-
 
          Map<Integer, Integer> prefixSumsMap = new HashMap<>();
         // prefix_sum 0 happens when we have an empty array

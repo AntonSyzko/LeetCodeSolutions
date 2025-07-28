@@ -40,11 +40,11 @@ public class GroupAnagrams {
     /*
             Time Complexity: O(n * k log k), where:
 
-        n is the number of strings in the input array
+                n is the number of strings in the input array
 
-        k is the maximum length of a string
+                k is the maximum length of a string
 
-        The sorting operation for each string takes O(k log k) time
+                The sorting operation for each string takes O(k log k) time
 
 
         Space Complexity: O(n * k) for storing all n strings of max len k  in the HashMap
@@ -62,6 +62,8 @@ public class GroupAnagrams {
 
             String sortedCurrentWord = new String(currentWordChars);
 
+          //  wordToAnagrams.computeIfAbsent(sortedCurrentWord, k -> new ArrayList<>()).add(current);
+
             //of NOT in map
             if(!wordToAnagrams.containsKey(sortedCurrentWord)) {
                 wordToAnagrams.put(sortedCurrentWord, new ArrayList<>());//put to map with empty array so far
@@ -70,6 +72,7 @@ public class GroupAnagrams {
             wordToAnagrams.get(sortedCurrentWord).add(current);//add to existing array
         }
 
+        //post for
         groupedAnagrams.addAll(wordToAnagrams.values());
 
         return groupedAnagrams;

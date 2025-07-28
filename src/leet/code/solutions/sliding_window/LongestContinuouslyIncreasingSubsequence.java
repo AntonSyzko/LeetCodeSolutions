@@ -47,7 +47,7 @@ public class LongestContinuouslyIncreasingSubsequence {
 
         for(int right = 1 ; right < nums.length; right++){
 
-            if(nums[right] > nums[right-1]){//increasing subsequence is GROWING
+            if(nums[right] > nums[right - 1]){//increasing subsequence is GROWING
 
                 lcis = Math.max(lcis, (right - left) + 1);
 
@@ -59,5 +59,23 @@ public class LongestContinuouslyIncreasingSubsequence {
         }
 
         return lcis;
+    }
+
+
+    private static int lengthOfLCIS(int[] nums) {
+        int max = Integer.MIN_VALUE;
+
+        int currIncreasingLen = 1;
+
+        for (int i = 1; i < nums.length ; i++) {
+            if(nums[i] > nums[i-1]){
+                currIncreasingLen++;
+            }else{
+                max = Math.max(max, currIncreasingLen);
+                currIncreasingLen = 1;
+            }
+        }
+
+        return Math.max(max, currIncreasingLen);
     }
 }

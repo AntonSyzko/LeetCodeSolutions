@@ -59,6 +59,6 @@ public class UniquePaths {
            }
        }
 
-       return dp[bottomRightRow - 1][bottomRightCol - 1];//lasr cell contains result of how many ways is to get there
+       return dp[bottomRightRow - 1][bottomRightCol - 1];//last cell contains result of how many ways is to get there
     }
 }

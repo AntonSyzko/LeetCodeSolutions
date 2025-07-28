@@ -43,7 +43,7 @@ public class PathsFromLeafToRoot {
     }
 
     private static void printLeafToRootPath(Node node, Deque<Node> stack) {
-        if(node==null){//BASE
+        if(node == null){//BASE
             return;
         }
 
@@ -60,11 +60,14 @@ public class PathsFromLeafToRoot {
     }
 
     private static void printPath(Deque<Node> stack) {
+
         Iterator<Node> iterator = stack.descendingIterator();//remove reverse from root to leaf
+
         while(iterator.hasNext()){
             Node node = iterator.next();
             System.out.print(node.data+" -> ");
         }
+
         System.out.println();
     }
 

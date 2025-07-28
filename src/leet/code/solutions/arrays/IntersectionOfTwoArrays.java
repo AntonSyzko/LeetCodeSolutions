@@ -30,7 +30,6 @@ What if elements of nums2 are stored on disk, and the memory is limited such tha
  */
 public class IntersectionOfTwoArrays {
 
-
     public static void main(String[] args) {
         int[] nums1 = new int[]{4, 9, 5};
         int[] nums2 = new int[]{9, 4, 9, 8, 4};
@@ -53,24 +52,27 @@ public class IntersectionOfTwoArrays {
     }
 
     public static int[] intersect(int[] nums1, int[] nums2) {
-        int i = 0;
-        int j = 0;
-        // int [] res = new int[Math.max(nums1.length, nums2.length)];
-        List<Integer> res = new ArrayList<>();
 
         Arrays.sort(nums1);//sorting will allow to compare one by one
         Arrays.sort(nums2);//we don't need the order - we need jus common numbers ( intersection)
 
-        while (i < nums1.length && j < nums2.length) {
-            if (nums1[i] < nums2[j]) {//since sorted we just compare
-                i++;// i was too low, raise it
-            } else if (nums1[i] > nums2[j]) {
-                j++;// i was too high - raise j
+        int firstIndex = 0;
+        int secondIndex = 0;
+        // int [] res = new int[Math.max(nums1.length, nums2.length)];
+        List<Integer> res = new ArrayList<>();
+
+        while (firstIndex < nums1.length && secondIndex < nums2.length) {//AND
+
+            if (nums1[firstIndex] < nums2[secondIndex]) {//since sorted we just compare
+                firstIndex++;// i was too low, raise it
+            } else if (nums1[firstIndex] > nums2[secondIndex]) {
+                secondIndex++;// i was too high - raise j
             } else {//equal i and j - so intersected number
-                res.add(nums1[i]);//add to reuslt
-                i++;//still raise both to move on
-                j++;
+                res.add(nums1[firstIndex]);//add to reuslt
+                firstIndex++;//still raise both to move on
+                secondIndex++;
             }
+
         }
         return res.stream().mapToInt(Integer::intValue).toArray();
     }
@@ -78,13 +80,16 @@ public class IntersectionOfTwoArrays {
     public static int[] intersectArraysOnly(int[] nums1, int[] nums2) {
         int i = 0;
         int j = 0;
-        int resIndex = 0;
         int[] res = new int[Math.max(nums1.length, nums2.length)];
 
         Arrays.sort(nums1);
         Arrays.sort(nums2);
 
-        while (i < nums1.length && j < nums2.length) {
+        int resIndex = 0;
+
+
+        while (i < nums1.length && j < nums2.length) {//AND
+
             if (nums1[i] < nums2[j]) {
                 i++;
             } else if (nums1[i] > nums2[j]) {
@@ -106,7 +111,8 @@ public class IntersectionOfTwoArrays {
         Arrays.sort(nums1);
         Arrays.sort(nums2);
 
-        while (i < nums1.length && j < nums2.length) {
+        while (i < nums1.length && j < nums2.length) {//AND
+
             if (nums1[i] < nums2[j]) {
                 i++;
             } else if (nums1[i] > nums2[j]) {
@@ -118,6 +124,42 @@ public class IntersectionOfTwoArrays {
             }
         }
         return Arrays.copyOfRange(nums1, 0, resIndex);//eliminate from nums1 everything till the res index
+    }
+
+    private static int[] intersection(int[] nums1, int[] nums2) {
+
+        if (nums1.length > nums2.length) {
+            return intersection(nums2, nums1);//keep smallest first
+        }
+
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        List<Integer> res = new ArrayList<>();
+
+        for(int i = 0; i < nums1.length; i++){
+
+            // Skip duplicates: only process if it's first element OR different from previous
+            if(i == 0 ||  nums1[i] != nums1[i-1]){
+
+                int numberFromNums1 = nums1[i];
+
+                if(Arrays.binarySearch(nums2, numberFromNums1) >= 0){//if num1 number found in num2
+                    res.add(nums1[i]);//add to res as it's intersected
+                }
+            }
+        }
+
+        int[] result = new int[res.size()];
+
+        int resIndex = 0;
+
+        for(int each: res){
+            result[resIndex] = each;
+            resIndex++;
+        }
+
+        return result;
     }
 
     public static int[] intersectUniquesOnly(int[] nums1, int[] nums2) {

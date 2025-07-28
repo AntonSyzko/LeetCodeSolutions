@@ -3,8 +3,24 @@ package leet.code.solutions.linked_list;
 public class RemoveDuplicates {
     public static void main(String[] args) {
     ListNode<Integer> list = new ListNode<>(1, new ListNode<>(1, new ListNode<>(2)));
-    ListNode<Integer> noDupliates = removeDuplicates(list);
+    ListNode<Integer> noDupliates = deleteDuplicates(list);
         System.out.println(noDupliates);
+    }
+    private  static ListNode<Integer> deleteDuplicates(ListNode<Integer> head) {
+
+        ListNode<Integer> rez = head;
+
+        while (head != null && head.next != null) {
+
+            if (head.val == head.next.val) {
+                head.next = head.next.next;//skip over duplicate
+            } else {
+                head = head.next;//just move on
+            }
+
+        }
+
+        return rez;
     }
 
     private static ListNode<Integer> removeDuplicates(ListNode<Integer> list) {
@@ -25,17 +41,4 @@ public class RemoveDuplicates {
         return list;
     }
 
-    public ListNode<Integer> deleteDuplicates(ListNode<Integer> head) {
-        ListNode<Integer> rez = head;
-        while (head != null && head.next != null) {
-            if (head.val == head.next.val) {
-                head.next = head.next.next;
-            } else {
-                head = head.next;
-            }
-        }
-        return rez;
-
-
-    }
 }

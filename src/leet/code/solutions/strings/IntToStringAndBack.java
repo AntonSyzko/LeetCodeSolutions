@@ -15,10 +15,13 @@ public class IntToStringAndBack {
         boolean isNegative = num < 0;
         StringBuilder res = new StringBuilder();
 
-        do {
+        while (num  != 0) {
+
             res.append((char) ('0' + Math.abs(num % 10)));
+
             num = num / 10;
-        } while (num != 0);
+
+        }
 
         if (isNegative) res.append('-');
 
@@ -28,12 +31,15 @@ public class IntToStringAndBack {
     private static int stringToInt(String numStr) {
         int res = 0;
 
-        for (int i = numStr.charAt(0) == '-' ? 1 : 0; i < numStr.length(); i++) {
+        boolean negative = numStr.charAt(0) == '-';
+        int startingIndex = negative ? 1 : 0;
+
+        for (int i = startingIndex; i < numStr.length(); i++) {
             final int digit = numStr.charAt(i) - '0';
-            res = res * 10 + digit;
+            res = (res * 10) + digit;
         }
 
-        return numStr.charAt(0) == '-' ? -res : res;
+        return negative ? -res : res;
     }
 
 }

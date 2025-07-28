@@ -30,13 +30,22 @@ Constraints:
 public class TopKFrequent {
 
     public static void main(String[] args) {
-   int[] nums = {1,2,2,3,3,3};
-   int k = 2;
+       int[] nums = {1,2,2,3,3,3};
+       int k = 2;
 
-   int[] topMostK =  topKFrequentHeap(nums, k);
-        System.out.println(Arrays.toString(topMostK));
+       int[] topMostK =  topKFrequentHeap(nums, k);
+            System.out.println(Arrays.toString(topMostK));
     }
 
+    /*
+    Time Complexity: O(n log k) where n is array length
+
+        Building frequency map: O(n)
+        Heap operations: O(unique_elements × log k) ≈ O(n log k) in worst case
+
+        Space Complexity:
+            O(n) for the frequency map + O(k) for heap = O(n)
+     */
     private static int[] topKFrequentHeap(int[] nums, int k) {
 
         Map<Integer, Integer> mapKeyToFrequency = new HashMap<>();
@@ -45,7 +54,7 @@ public class TopKFrequent {
             mapKeyToFrequency.put(num, mapKeyToFrequency.getOrDefault(num, 0) + 1);
         }
 
-        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[0] - b[0]);//min heap by values, as a[0] contains keys 
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[1] - b[1]);//min heap by values a[1], as a[0] contains keys
 
         for (Map.Entry<Integer, Integer> entry : mapKeyToFrequency.entrySet()) {
 
@@ -60,7 +69,7 @@ public class TopKFrequent {
 
         for (int i = 0; i < k; i++) {
 
-            res[i] = minHeap.poll()[0];
+            res[i] = minHeap.poll()[0];//add keys, not values
 
         }
 
@@ -69,7 +78,7 @@ public class TopKFrequent {
     }
 
 
-        private static int[] topKFrequent(int[] nums, int k) {
+    private static int[] topKFrequent(int[] nums, int k) {
 
         int[] res = new int[k];
 

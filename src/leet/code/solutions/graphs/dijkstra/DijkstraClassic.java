@@ -20,6 +20,7 @@ public class DijkstraClassic {
 
         // Test classic Dijkstra
         int[] distances = dijkstraClassic(graph, 0);
+
         System.out.println("Classic Dijkstra from vertex 0:");
         for (int i = 0; i < distances.length; i++) {
             System.out.println("Distance to " + i + ": " + distances[i]);
@@ -28,17 +29,17 @@ public class DijkstraClassic {
 
     // Classic Dijkstra with adjacency matrix - O(V²)
     public static int[] dijkstraClassic(int[][] graph, int source) {
-        int n = graph.length;
+        int len = graph.length;
 
         // Step 1: Initialize distances and visited array
-        int[] distances = new int[n];
-        boolean[] visited = new boolean[n];
-
+        int[] distances = new int[len];
         Arrays.fill(distances, Integer.MAX_VALUE);
         distances[source] = 0;
 
+        boolean[] visited = new boolean[len];
+
         // Step 2: Process each vertex
-        for (int count = 0; count < n - 1; count++) {
+        for (int count = 0; count < len - 1; count++) {
 
             // Step 2a: Find vertex with minimum distance among unvisited
             int u = findMinDistance(distances, visited);
@@ -47,7 +48,8 @@ public class DijkstraClassic {
             visited[u] = true;
 
             // Step 2c: Update distances of adjacent vertices
-            for (int v = 0; v < n; v++) {
+            for (int v = 0; v < len; v++) {
+
                 // Update if: not visited, edge exists, and shorter path found
                 if (!visited[v] && graph[u][v] != 0 &&
                         distances[u] != Integer.MAX_VALUE &&
@@ -67,6 +69,7 @@ public class DijkstraClassic {
         int minIndex = -1;
 
         for (int v = 0; v < distances.length; v++) {
+
             if (!visited[v] && distances[v] <= min) {
                 min = distances[v];
                 minIndex = v;

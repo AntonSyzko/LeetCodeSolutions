@@ -2,6 +2,7 @@ package leet.code.solutions.sliding_window;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /*
@@ -32,6 +33,7 @@ Explanation : Anagrams of the word aaba - aaba, abaa each appear twice in the te
 count is 4.
  */
 public class CountOccurrencesOfAnagram {
+
     public static void main(String[] args) {
         String str = "aabaabaa";
         String pattern = "aaba";
@@ -45,10 +47,10 @@ public class CountOccurrencesOfAnagram {
         int count = 0;
 
         // Calculate the count of each character for the given word
-        Map<Character, Integer> wordCharCount = new HashMap<>();
+        Map<Character, Integer> patternCharCount = new HashMap<>();
         for(int i = 0; i < patternLen; i++) {
             char c = pattern.charAt(i);
-            wordCharCount.put(c, wordCharCount.getOrDefault(c, 0)+1);
+            patternCharCount.put(c, patternCharCount.getOrDefault(c, 0) + 1);
         }
 
         // Stores the characrer count for the current substring (current window)
@@ -56,11 +58,13 @@ public class CountOccurrencesOfAnagram {
         int windowStart = 0;
 
         for(int windowEnd = 0; windowEnd < textLen; windowEnd++) {
+
             char c = text.charAt(windowEnd);
             substrCharCount.put(c, substrCharCount.getOrDefault(c, 0) + 1); // Include the next char in the window
 
-            if(windowEnd - windowStart + 1 == patternLen) { // We've hit the window size. Calculate result and Slide the window
-                if(isAnagram(wordCharCount, substrCharCount)) {
+            if((windowEnd - windowStart + 1) == patternLen) { // We've hit the window size. Calculate result and Slide the window
+
+                if(isAnagram(patternCharCount, substrCharCount)) {
                     count++;
                 }
 
@@ -71,6 +75,16 @@ public class CountOccurrencesOfAnagram {
             }
         }
         return count;
+    }
+
+    private static boolean isAnagram(Map<Character, Integer> word1CharCount, Map<Character, Integer> word2CharCount) {
+
+        for (char each : word1CharCount.keySet()) {
+            if(!Objects.equals(word1CharCount.get(each), word2CharCount.get(each))){
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -90,7 +104,7 @@ public class CountOccurrencesOfAnagram {
 
                 Map<Character, Integer> textCharsCounts = new HashMap<>();
 
-                for (int j = i; j < wordLen+i; j++) {
+                for (int j = i; j < wordLen + i; j++) {
                     char ch = text.charAt(j);
                     textCharsCounts.put(ch, textCharsCounts.getOrDefault(ch,0) + 1);
                 }
@@ -137,13 +151,5 @@ public class CountOccurrencesOfAnagram {
     }
 
 
-        private static boolean isAnagram(Map<Character, Integer> word1CharCount, Map<Character, Integer> word2CharCount) {
 
-        for (char each : word1CharCount.keySet()) {
-            if(word1CharCount.get(each) != word2CharCount.get(each) ){
-                return false;
-            }
-        }
-        return true;
-    }
     }

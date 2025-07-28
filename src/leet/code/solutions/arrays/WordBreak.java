@@ -37,7 +37,7 @@ public class WordBreak {
         String word = "leetcode";
         List<String> dictionary = List.of("leet", "code");
 
-        boolean res = wordBreak(word, dictionary);
+        boolean res = wordBreakDP(word, dictionary);
         System.out.println(res);
 //
 //        word = "applepenapple";
@@ -55,10 +55,9 @@ public class WordBreak {
     private static boolean wordBreak(String s, List<String> wordDict) {
         boolean res = false;
 
-        Set<String> setOfUniques = new HashSet<>(wordDict);
-        StringBuilder currentWord = new StringBuilder();
+        Set<String> setOfUniques = new HashSet<>(wordDict);//for O(1) access
 
-        System.out.println(setOfUniques);
+        StringBuilder currentWord = new StringBuilder();
 
         for (int i = 0; i < s.length(); i++) {
 
@@ -66,7 +65,7 @@ public class WordBreak {
 
             if (setOfUniques.contains(currentWord.toString())) {
                 res = true;
-                currentWord = new StringBuilder();//reset current ongoing
+                currentWord = new StringBuilder();//reset current ongoing//basically scrap the previously built string as such
             } else {
                 res = false;//res will be alternating as we go but what's matter is the RES at the very END of iteration
             }
@@ -74,14 +73,37 @@ public class WordBreak {
         return res;
     }
 
-    private static boolean wordBreakDynamic(String s, List<String> wordDict) {
-        boolean[] dp = new boolean[s.length() + 1];
-        Set<String> set = new HashSet<>(wordDict);
+    private static boolean wordBreakDP(String s, List<String> wordDict) {
+        boolean[] DP = new boolean[s.length() + 1];
+        DP[0] = true;
 
+        Set<String> dict = new HashSet<>(wordDict);//O(1) lookup
+
+        for(int inWordIndex = 1; inWordIndex <= s.length(); inWordIndex++){
+            for(int fromStart = 0; fromStart < inWordIndex; fromStart++){
+
+                if(DP[fromStart] && dict.contains(s.substring(fromStart,inWordIndex))){
+                    DP[inWordIndex] = true;
+                    break;//one true entry is anough
+                }
+            }
+        }
+        return DP[s.length()];
+    }
+
+    private static boolean wordBreakDynamic(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>(wordDict);//for O(1) access
+
+        boolean[] dp = new boolean[s.length() + 1];
         dp[0] = true;
-        for (int i = 1; i < dp.length; i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (dp[j] && set.contains(s.substring(j, i))) {
+
+        for (int i = 1; i < dp.length; i++) {//start from 1 as 0 set to true
+
+            for (int j = i - 1; j >= 0; j--) {//iterate backwards from  i -1 to 0
+
+                String currentSubstr  = s.substring(j, i);
+
+                if (dp[j] && set.contains(currentSubstr)) {
                     dp[i] = true;
                     break;
                 }

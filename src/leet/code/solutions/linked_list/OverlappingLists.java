@@ -8,6 +8,7 @@ once the lists converge at a node, they cannot diverge at a later node.
 Therefore, checking for overlap amounts to finding the tail nodes for each list.
  */
 public class OverlappingLists {
+
     public static void main(String[] args) {
         ListNode<Integer> l11 = new ListNode<>(1);
         ListNode<Integer> l12 = new ListNode<>(2);

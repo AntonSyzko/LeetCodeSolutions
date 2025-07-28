@@ -36,21 +36,21 @@ public class LevelOrderTraversal {
         root.left = rootL;
         root.right = rootR;
         rootL.left = rootLL;
-        List<List<Integer>> depthOrderedVals = binaryTreeDepthOrderBFSBottomUp(root);
+        List<List<Integer>> depthOrderedVals = binaryTreeDepthOrderBFS(root);
         System.out.println(depthOrderedVals);
     }
 
-    public static List<List<Integer>> binaryTreeDepthOrderBFS(TreeNode<Integer> tree) {
-        Queue<TreeNode<Integer>> BFS_QUEUE = new LinkedList<>();
-        BFS_QUEUE.add(tree);//insert root to BFS queue to start
-
+    public static List<List<Integer>> binaryTreeDepthOrderBFS(TreeNode<Integer> root) {
         List<List<Integer>> result = new ArrayList<>();
+
+        Queue<TreeNode<Integer>> BFS_QUEUE = new LinkedList<>();
+        BFS_QUEUE.add(root);//insert root to BFS queue to start
 
         while (!BFS_QUEUE.isEmpty()) {//if smth in BFS Queue
 
+            List<Integer> currentLevelNodesVals = new ArrayList<>();
             //setup for current level - needs re-initialisation each time
             Queue<TreeNode<Integer>> nextLevelNodes = new LinkedList<>();
-            List<Integer> currentLevelNodesVals = new ArrayList<>();
 
             while (!BFS_QUEUE.isEmpty()) {
                 TreeNode<Integer> currentNode = BFS_QUEUE.poll();
@@ -70,23 +70,6 @@ public class LevelOrderTraversal {
             BFS_QUEUE = nextLevelNodes;//override BFS queue for next levels
         }
 
-        return result;
-    }
-
-    public static List<List<Integer>> binaryTreeDepthOrderBFSBottomUp(TreeNode<Integer> tree) {
-        LinkedList<List<Integer>> result = new LinkedList<>();
-
-        Stack<TreeNode<Integer>> stack = new Stack<>();
-        stack.add(tree);//insert root to BFS queue to start
-
-        while (tree.left != null || tree.right != null){
-            if(tree.left != null){
-                stack.push(tree.left);
-            }
-            if(tree.right != null){
-                stack.push(tree.right);
-            }
-        }
         return result;
     }
 }

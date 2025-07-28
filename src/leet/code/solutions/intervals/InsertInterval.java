@@ -48,8 +48,37 @@ public class InsertInterval {
       };
        int [] newInterval = {2,5};
 
-       int[][] inserted = insert(intervals,newInterval);
+       int[][] inserted = insertSinglePAss(intervals,newInterval);
         System.out.println(Arrays.deepToString(inserted));
+    }
+
+    private static int[][] insertSinglePAss(int[][] intervals, int[] newInterval) {
+        List<int[]> result = new ArrayList<>();
+
+        //remember we are sorted already
+        for(int[] curr : intervals) {
+
+            if(curr[1] < newInterval[0]) {//BEFORE
+                // No overlap - BEFORE
+                result.add(curr);
+
+            } else if(curr[0] > newInterval[1]) {//AFTER
+                // No overlap - after
+                result.add(newInterval);
+                newInterval = curr; // Role switch!
+
+            } else {
+                // Overlap - merge
+                newInterval = new int[]{
+                        Math.min(curr[0], newInterval[0]),
+                        Math.max(newInterval[1], curr[1])
+                };
+            }
+        }
+
+        result.add(newInterval);
+
+        return result.toArray(new int[result.size()][]);
     }
 
     // O(N)

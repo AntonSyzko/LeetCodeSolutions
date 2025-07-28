@@ -77,7 +77,7 @@ public class DecodeWays {
             char currentDigit = s.charAt(i - 1);
             // If the current digit is not 0, we can use it as a single digit
             if (currentDigit != '0') {
-                dp[i] = dp[i] +  dp[i - 1];// fill with previous
+                dp[i] = dp[i] +  dp[i - 1];// fill +  with previous
             }
 
             // Check if the last two digits form a valid code (10-26)
@@ -106,7 +106,8 @@ public class DecodeWays {
         int curr = 1;  // dp[i-1]
 
         for (int i = 1; i < len; i++) {
-            int temp = 0;
+
+            int temp = 0;//is set 0 for every loop iteration
 
             // If current digit is not 0, we can use it as a single digit
             if (s.charAt(i) != '0') {
@@ -114,7 +115,8 @@ public class DecodeWays {
             }
 
             // Check if the last two digits form a valid code (10-26)
-            int twoDigit = Integer.parseInt(s.substring(i - 1, i + 1));
+            int twoDigit = Integer.parseInt(s.substring(i - 1, i + 1));// i + 1 excluding hence 2 chars
+
             if (twoDigit >= 10 && twoDigit <= 26) {
                 temp += prev;
             }

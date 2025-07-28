@@ -47,28 +47,33 @@ public class TopKFrequentWords {
             wordsToOccurrences.put(word, wordsToOccurrences.getOrDefault(word, 0) + 1);//this makes O(N)
         }
 
-        PriorityQueue<String> priorityQueue = new PriorityQueue<>((word1, word2) -> {
+        PriorityQueue<String> minHip = new PriorityQueue<>((word1, word2) -> {
             int frequency1 = wordsToOccurrences.get(word1);
             int frequency2 = wordsToOccurrences.get(word2);
 
             if (frequency1 == frequency2) {//if same length
                 return word2.compareTo(word1); //alphabetical order then
             }
-            return frequency1 - frequency2;//by length
+            return frequency1 - frequency2;//by actual frequency
         });
 
 
-        for (Map.Entry<String, Integer> each : wordsToOccurrences.entrySet()) {//add all to priority Q
-            priorityQueue.add(each.getKey());
+        for (Map.Entry<String, Integer> each : wordsToOccurrences.entrySet()) {
+
+            minHip.add(each.getKey());//add  to priority Q
+
             //this makes Log K
-            if (priorityQueue.size() > k) {// if more than K
-                priorityQueue.poll();//delete
+            if (minHip.size() > k) {// if more than K
+                minHip.poll();//delete
             }
         }
-        while (!priorityQueue.isEmpty()) {// whats is in Q
-            result.add(priorityQueue.poll());//add to result
+
+        while (!minHip.isEmpty()) {// whats is in Q
+            result.add(minHip.poll());//add to result
         }
+
         Collections.reverse(result);//reverse since we need the order from highest to lowest and in QUEUE is stored from lowest to highest
+
         return result;
     }
 
@@ -83,27 +88,35 @@ public class TopKFrequentWords {
             wordsToOccurrences.put(word, wordsToOccurrences.getOrDefault(word, 0) + 1);//this makes O(N)
         }
 
-        PriorityQueue<String> priorityQueue = new PriorityQueue<>((word1, word2) -> {
+        PriorityQueue<String> maxHip = new PriorityQueue<>((word1, word2) -> {
             int frequency1 = wordsToOccurrences.get(word1);
             int frequency2 = wordsToOccurrences.get(word2);
 
-            if (frequency1 == frequency2) {//if same length
+            if (frequency1 == frequency2) {//if same frequency
+
                 return word2.compareTo(word1); //alphabetical order then
+
             }
-            return frequency2 - frequency1;//by length reverse order from highest to lowest
+
+            return frequency2 - frequency1;//by frequency  reverse order from highest to lowest
         });
 
 
-        for (Map.Entry<String, Integer> each : wordsToOccurrences.entrySet()) {//add all to priority Q
-            priorityQueue.add(each.getKey());
+        for (Map.Entry<String, Integer> each : wordsToOccurrences.entrySet()) {
+
+            maxHip.add(each.getKey());//add  to priority Q
+
             //this makes Log K
-            if (priorityQueue.size() > k) {// if more than K
-                priorityQueue.poll();//delete
+            if (maxHip.size() > k) {// if more than K
+                maxHip.poll();//delete
             }
+
         }
-        while (!priorityQueue.isEmpty()) {// whats is in Q
-            result.add(priorityQueue.poll());//add to result
+
+        while (!maxHip.isEmpty()) {// whats is in Q
+            result.add(maxHip.poll());//add to result
         }
+
         return result;
     }
 }

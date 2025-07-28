@@ -23,10 +23,40 @@ public class FindIncreasingSubsequences {
         System.out.println(findSubsequences2(nums));
     }
 
+    public static List<List<Integer>> findSubsequences2(int[] nums){
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> combo = new ArrayList<>();
+
+        findIncreasing(nums, 0,combo, res);
+
+        return res;
+    }
+
+    private static void findIncreasing(int[] nums, int index, List<Integer> currCombo, List<List<Integer>> res){
+        if(currCombo.size() >= 2){//sort of BASE to have result
+            res.add(new ArrayList<>(currCombo));
+            // return; // mind NO return here - otherwise only length 2 will be in res
+        }
+
+        for(int i = index; i < nums.length; i++){
+
+            if(currCombo.isEmpty() || nums[i] > currCombo.getLast()){//if combo is EMPTY OR curr element is BIGGER that last in combo
+
+                currCombo.addLast(nums[i]);
+
+                findIncreasing(nums, i + 1, currCombo, res);//recur
+
+                currCombo.removeLast();//BACKTRACK
+            }
+        }
+    }
+
     public static List<List<Integer>> findSubsequences(int[] nums) {
         List<List<Integer>> result = new LinkedList<>();
         Stack<Integer> currCombo = new Stack<>();
+
         findSubsequencesWithoutDuplicates(nums, result, currCombo, 0);//using stack to keep last elements on top
+
         return result;
     }
 
@@ -37,7 +67,7 @@ public class FindIncreasingSubsequences {
         // if the current sequence has length of two or more, push it to the result
         if (currCombo.size() >= 2) {
             result.add(new ArrayList<>(currCombo));
-            //mind no return for not to have combos of size 2 only
+            //mind NOOOO return for not to have combos of size 2 only
         }
 
         // take a seen to keep track of the processed elements
@@ -64,34 +94,6 @@ public class FindIncreasingSubsequences {
 
                 currCombo.removeLast(); //BACKTRACK  exclude current element from the sequence
             }
-        }
-    }
-
-    public static List<List<Integer>> findSubsequences2(int[] nums){
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> combo = new ArrayList<>();
-
-        findIncreasing(nums, 0,combo, res);
-        return res;
-    }
-
-    private static void findIncreasing(int[] nums, int index, List<Integer> currCombo, List<List<Integer>> res){
-        if(currCombo.size() >=2){//sort of BASE to have result
-            res.add(new ArrayList<>(currCombo));
-            // return; // mind no return here - oherwise only length 2 will be in res
-        }
-
-        for(int i = index; i < nums.length; i++){
-
-            if(currCombo.isEmpty() || nums[i] > currCombo.getLast()){//if combo is EMPTY OR curr element is BIGGER that last in combo
-
-                currCombo.addLast(nums[i]);
-
-                findIncreasing(nums, i + 1, currCombo, res);//recur
-
-                currCombo.removeLast();//BACKTRACK
-            }
-
         }
     }
 }

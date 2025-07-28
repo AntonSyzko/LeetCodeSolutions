@@ -2,6 +2,7 @@ package leet.code.solutions.priority_queue;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /*
 
@@ -96,6 +97,32 @@ public class MergeKSortedLists {
         }
 
         return headHolder.next;
+    }
+
+    private static ListNode mergeKLists2(ListNode[] lists) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+
+        Queue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a.val));
+
+        for (final ListNode list : lists){
+            if (list != null){
+                minHeap.offer(list);//adds only heads to Q
+            }
+        }
+
+        while (!minHeap.isEmpty()) {
+            ListNode minNode = minHeap.poll();
+
+            if (minNode.next != null){
+                minHeap.offer(minNode.next);//adds next from curr to Q
+            }
+
+            curr.next = minNode;
+            curr = curr.next;
+        }
+
+        return dummy.next;
     }
     
     

@@ -16,7 +16,6 @@ return true if you can visit all the rooms, or false otherwise.
  */
 public class FindKeysForRooms {
 
-
     public static void main(String[] args) {
         List<List<Integer>> rooms = Arrays.asList(List.of(1), List.of(2), List.of(3), List.of(0));
         boolean canVisit = canVisitAllRooms(rooms);
@@ -27,12 +26,10 @@ public class FindKeysForRooms {
         System.out.println(canVisit2);
 
 
-        List<List<Integer>> rooms3 = Arrays.asList(List.of(1), List.of(2), List.of(2), List.of(0));
+        List<List<Integer>> rooms3 = Arrays.asList(List.of(1), List.of(2), List.of(2,3), List.of(0));
         boolean canVisit3 = canVisitAllRooms(rooms3);
         System.out.println(canVisit3);
     }
-
-
 
         public static boolean canVisitAllRooms(List<List<Integer>> rooms) {
                 Set<Integer> visitedRoomsBacktracking = new HashSet<>();//backtrack what has been visited
@@ -43,34 +40,40 @@ public class FindKeysForRooms {
 
                 while (!dfsStack.isEmpty()){ //while in DFS stack something
 
-                    List<Integer> keysFoundInCurrentRoom = rooms.get(dfsStack.pop());//get keys stored in the room we are currently visiting
+                    int keyOnTopOfStack = dfsStack.pop();
+                    List<Integer> keysFoundInCurrentRoom = rooms.get(keyOnTopOfStack);//get keys stored in the room we are currently visiting
                     //keys ARE for the other room !!!
                     for (int key : keysFoundInCurrentRoom){ //for each key check
+
                         if(!visitedRoomsBacktracking.contains(key)) { // if NOT YET visited
                             visitedRoomsBacktracking.add(key); //add to visit
                             dfsStack.add(key);// add to DFS as back track where we are
                         }
+
                     }
                 }
+
                 return visitedRoomsBacktracking.size() == rooms.size(); //if size of visited = size of all romms - we  have successfully traversed all romms
     }
 
         public boolean canVisitAllRoomsArray(List<List<Integer>> rooms) {
             boolean [] roomsChecked = new boolean[rooms.size()];
-            roomsChecked[0] = true;
+            roomsChecked[0] = true;// 0 is TRUE room as we are in it at the very start
 
-            Stack<Integer> currentCellRooms = new Stack<>();
-            currentCellRooms.add(0);
+            Stack<Integer> stak = new Stack<>();
+            stak.add(0);//start with 0 room as we are in it at the very start
 
-            while(!currentCellRooms.isEmpty()){
+            while(!stak.isEmpty()){
 
-                int keyForRoom = currentCellRooms.pop();
+                int keyForRoom = stak.pop();
 
-                for(int key : rooms.get(keyForRoom))   {
+                for(int key : rooms.get(keyForRoom)) {//there might be multiple keys in one room
 
-                    if(!roomsChecked[key]){
+                    if(!roomsChecked[key]){//if not yet visited
+
                         roomsChecked[key] = true;
-                        currentCellRooms.push(key);
+                        stak.push(key);
+
                     }
                 }
 
@@ -78,8 +81,8 @@ public class FindKeysForRooms {
 
 
             for(boolean visited : roomsChecked){
-                if(!visited){
-                    return false;
+                if(!visited){//any missed
+                    return false;//fail fast
                 }
             }
             return true;

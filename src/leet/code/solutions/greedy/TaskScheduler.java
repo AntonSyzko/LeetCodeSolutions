@@ -104,14 +104,18 @@ public class TaskScheduler {
                task--;//-- means complete 1 task
 
                if(task  > 0){// but add back to max hip what is left
-                   maxHip.add(task);//decremented task added back to Q
+
+                   maxHip.add(task);//decremented task added BACK to Q
+
                }
            }
 
            //if hip is empty ADD just processed tasks, otherwise cooldown period + 1
            cpuCyclesRes += maxHip.isEmpty() ? processedTasks.size() :  cooldown + 1;
+
        }
 
        return cpuCyclesRes;
+
     }
 }

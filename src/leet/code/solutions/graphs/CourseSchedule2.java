@@ -50,9 +50,10 @@ public class CourseSchedule2 {
     }
 
     private static int[] findOrder(int numCourses, int[][] prerequisites) {
-       Map<Integer, List<Integer>> coursePrerequisites = new HashMap<>();
         Set<Integer> seenCourses = new HashSet<>();
         Set<Integer> cycleCourses = new HashSet<>();
+
+        Map<Integer, List<Integer>> coursePrerequisites = new HashMap<>();
 
         for (int[] pair : prerequisites) {
             int course = pair[0];
@@ -62,8 +63,8 @@ public class CourseSchedule2 {
 
         List<Integer> result = new ArrayList<>();
 
-        for(int i = 0; i < numCourses;i++){
-            if(!validCOurse(i, seenCourses,  cycleCourses, coursePrerequisites, result)){
+        for(int course = 0; course < numCourses;course++){
+            if(!validCOurse(course, seenCourses,  cycleCourses, coursePrerequisites, result)){
                 return new int[0];
             }
         }
@@ -81,27 +82,27 @@ public class CourseSchedule2 {
                  O(V+E)
         Where V is the number of courses and  E is the number of prerequisites.
      */
-    private static boolean validCOurse(int i, Set<Integer> seenCourses, Set<Integer> cycleCourses,  Map<Integer, List<Integer>> coursePrerequisites, List<Integer> result) {
+    private static boolean validCOurse(int course, Set<Integer> seenCourses, Set<Integer> cycleCourses,  Map<Integer, List<Integer>> coursePrerequisites, List<Integer> result) {
 
-        if(cycleCourses.contains(i)) return false;
+        if(cycleCourses.contains(course)) return false;
 
-        if(seenCourses.contains(i)) return true;
+        if(seenCourses.contains(course)) return true;
 
-        cycleCourses.add(i);
+        cycleCourses.add(course);
 
-        for(Integer prerequisite : coursePrerequisites.getOrDefault(i,Collections.emptyList())){
+        for(Integer prerequisite : coursePrerequisites.getOrDefault(course,Collections.emptyList())){
 
             if(!validCOurse(prerequisite, seenCourses, cycleCourses, coursePrerequisites, result)){
                 return false;
             }
         }
 
-        cycleCourses.remove(i);//backtrack
+        cycleCourses.remove(course);//backtrack
 
-        seenCourses.add(i);//mark as visited
+        seenCourses.add(course);//mark as visited
 
         //recursion DFS will make sure that ALL the courses this current was depend on are processed BEFORE and already in RES prior to curr
-        result.add(i);
+        result.add(course);
 
         return true;
     }

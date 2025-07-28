@@ -87,10 +87,11 @@ public class RottingOranges {
 
         int minutesRes = 0;
 
-        int[][]  fourDirections = {{-1,0},{1,0},{0,-1},{0,1}};
+        int[][] fourDirections = {{-1,0},{1,0},{0,-1},{0,1}};
 
         // BFS to rot oranges
-        while(!queue.isEmpty() && freshOranges >0) {
+        while(!queue.isEmpty() && freshOranges > 0) {
+
             int levelSize = queue.size();
 
             // Process all oranges at the current level
@@ -107,7 +108,8 @@ public class RottingOranges {
                     int newCol = currentCol + direction[1];
 
                     // If adjacent cell is in bounds and has a fresh orange
-                    if(newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS && grid[newRow][newCol] == 1 ) {
+                    if(newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS
+                            && grid[newRow][newCol] == 1 ) {
                         // Make it rotten
                         queue.add(new int[]{newRow, newCol});
                         grid[newRow][newCol] = 2;
@@ -121,5 +123,73 @@ public class RottingOranges {
 
         // If there are still fresh oranges, it's impossible
         return freshOranges == 0 ?  minutesRes : -1 ;
+    }
+
+
+    private static int orangesRotting2(int[][] grid) {
+        int ROWS = grid.length;
+        int COLS = grid[0].length;
+
+        int minutes = 0;
+
+        Queue<int[]> queue = new LinkedList<>();
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                if (grid[row][col] == 2) {//rotten cell
+                    queue.add(new int[]{row, col});
+                }
+            }
+        }
+
+        int[][] dirs = {{-1,0},{1,0},{0,1},{0,-1}};
+
+        while (!queue.isEmpty()) {
+
+            int qSize = queue.size();
+
+            boolean isRotten = false;
+
+            for (int i = 0; i < qSize; i++) {
+
+                int[] rottenCell = queue.poll();
+
+                int row = rottenCell[0];
+                int col = rottenCell[1];
+
+                for (int[] dir : dirs) {
+
+                    int newRow = row + dir[0];
+                    int newCol = col + dir[1];
+
+                    if(newRow >=0 && newRow < ROWS && newCol >=0 && newCol < COLS//within boundaries
+                            && grid[newRow][newCol] == 1) {//and fresh orange in this new cell
+
+                        grid[newRow][newCol] = 2;//mark as rotten
+
+                        isRotten = true;//set flag
+
+                        queue.add(new int[]{newRow, newCol});
+
+                    }
+                }
+            }
+
+            if(isRotten){
+                minutes++;
+            }
+
+        }
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+
+                if (grid[row][col] == 1) {//some cell STILL has FRESH orange
+                    return -1;//fail fast
+                }
+
+            }
+        }
+        return minutes ;
     }
 }

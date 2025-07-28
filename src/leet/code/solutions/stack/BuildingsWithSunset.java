@@ -6,31 +6,33 @@ import java.util.*;
 houses with taller height can see sunset, houses to the ease ( smaller cannot )
  */
 public class BuildingsWithSunset {
+
     public static void main(String[] args) {
-        Deque<BuildingWithHeight> housesWithSunset = examineBuildingsWithSunset(List.of(1,2,6,4).listIterator());
+        Stack<BuildingWithHeight> housesWithSunset = examineBuildingsWithSunset(List.of(1,2,6,4));
         System.out.println(housesWithSunset);
     }
 
+    public static Stack<BuildingWithHeight> examineBuildingsWithSunset(List<Integer> buildings) {
 
-    public static Deque<BuildingWithHeight> examineBuildingsWithSunset(Iterator<Integer> sequence){
+        Stack<BuildingWithHeight> stack = new Stack<>();//stack res
+
         int buildingIdx = 0;
 
-        Deque<BuildingWithHeight> buildingsWithSunset = new ArrayDeque<>();//stack
-
-        while (sequence.hasNext()) {
-            int currentBuildingHeight = sequence.next();
+        for(int currBuilding: buildings){
 
             //if current is taller
-            if(!buildingsWithSunset.isEmpty() &&
-                currentBuildingHeight >= buildingsWithSunset.peek().height){//get last
+            if(!stack.isEmpty() &&
+                    currBuilding >= stack.peek().height){//get last from stak
                 //found taller, remove last ( it cannot see sunset anymore )
-                buildingsWithSunset.pop();//remove last
+                stack.pop();//remove last from stak
             }
+
             //not taller just add
-            buildingsWithSunset.addLast(new BuildingWithHeight(buildingIdx++,currentBuildingHeight));
+            stack.addLast(new BuildingWithHeight(buildingIdx, currBuilding));
+            buildingIdx++;
         }
 
-        return buildingsWithSunset;
+        return stack;
     }
 
     private static class BuildingWithHeight {

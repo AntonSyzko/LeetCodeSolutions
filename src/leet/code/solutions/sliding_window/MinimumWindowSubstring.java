@@ -59,23 +59,24 @@ public class MinimumWindowSubstring {
 
         int[] patternFrequencies = new int[128];//ASCII
         for(char c : pattern.toCharArray()) {
-            patternFrequencies[c]++;//frequencies of chars occured in pattern
+            patternFrequencies[c]++;//frequencies of chars occurred in pattern
         }
-
-        int[] strFrequenceis = new int[128];//ASCII frequencies of chars occurred in string
 
         int minSubstringLengthSoFar = Integer.MAX_VALUE;
         int resultStringStartIndex = 0;
 
+        int[] strFrequenceis = new int[128];//ASCII frequencies of chars occurred in string
+
         int windowStart = 0;
 
         for (int windowEnd = 0; windowEnd < str.length(); windowEnd++) {
+
             char c = str.charAt(windowEnd);
             strFrequenceis[c]++;
 
-            while(compareFrequenceis(strFrequenceis, patternFrequencies)){//while character occurrences in both strings match
+            while(compareFrequenceis(strFrequenceis, patternFrequencies)){//WHILE character occurrences in both strings match
 
-                int currWindowLength = windowEnd - windowStart + 1;
+                int currWindowLength = (windowEnd - windowStart) + 1;
 
                 if(currWindowLength < minSubstringLengthSoFar){
 

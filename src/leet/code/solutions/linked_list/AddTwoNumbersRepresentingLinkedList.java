@@ -1,7 +1,5 @@
 package leet.code.solutions.linked_list;
 
-import leet.code.solutions.sandbox.Sandbox1;
-
 /*
 Add Two Numbers problem statement
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
@@ -24,7 +22,7 @@ public class AddTwoNumbersRepresentingLinkedList {
         ListNode b = new ListNode(9);
         b.next = new ListNode(9);
 
-        ListNode res =  addTwoNumbers(a, b);
+        ListNode res =  addTwoNumbers2(a, b);
         System.out.println(res);
 
 
@@ -36,9 +34,49 @@ public class AddTwoNumbersRepresentingLinkedList {
         b1.next = new ListNode(6);
         b1.next.next = new ListNode(4);
 
-        ListNode res1 =  addTwoNumbers(a1, b1);
+        ListNode res1 =  addTwoNumbers2(a1, b1);
         System.out.println(res1);
+    }
 
+    // O(max(l1.size, l2.size))
+    private  static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+
+        ListNode result = new ListNode(0);
+        ListNode head = result;
+
+        int tenthCarry = 0;//outside while - hence changes after every while loop iteration
+
+        while(l1 != null || l2 != null) {// OR !!!
+
+            int sum = 0;//get reset at every iteration back to 0
+
+            if(l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+
+            if(l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+
+            sum += tenthCarry;
+
+            int value  = sum % 10;
+            tenthCarry = sum/10;
+
+            ListNode node = new ListNode(value);
+
+            head.next = node;
+            head = head.next;
+        }
+
+        //after while loop
+        if(tenthCarry > 0) {//but IF !!!
+            head.next = new ListNode(tenthCarry);//last tenth carry
+        }
+
+        return result.next;
     }
 
     private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -49,7 +87,7 @@ public class AddTwoNumbersRepresentingLinkedList {
 
         while (l1 != null || l2 != null) {// OR !!!
 
-            int newL1Value = l1 == null ? 0 : l1.val;//if null node we use FAKE zero value , since add0 is doing nothing
+            int newL1Value = l1 == null ? 0 : l1.val;//if null node we use FAKE zero value , since add 0 is doing nothing
             int newL2Value = l2 == null ? 0 : l2.val;
 
             int newNodeValue = newL1Value + newL2Value + carry;
@@ -75,51 +113,6 @@ public class AddTwoNumbersRepresentingLinkedList {
 
         return head.next;
     }
-
-
-    // O(max(l1.size, l2.size))
-    private  static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
-
-        ListNode result = null, head = null;
-        
-        int tenthCarry = 0;
-
-        while(l1 != null || l2 != null) {
-            int sum = 0;
-
-            if(l1 != null) {
-                sum += l1.val;
-                l1 = l1.next;
-            }
-
-            if(l2 != null) {
-                sum += l2.val;
-                l2 = l2.next;
-            }
-
-            sum += tenthCarry;
-
-            int value  = sum % 10;
-            tenthCarry = sum/10;
-
-            ListNode node = new ListNode(value);
-
-            if(result != null) {
-                result.next = node;
-                result = result.next;
-            } else {
-                result = head = node;
-            }
-        }
-
-        if(tenthCarry > 0) {
-            result.next = new ListNode(tenthCarry);//last tenth carry
-        }
-
-        return head;
-    }
-
-
 
     private static  int addTwoNumsWithReversion(ListNode list1, ListNode list2) {
         ListNode reversed1 = reverseList(list1);

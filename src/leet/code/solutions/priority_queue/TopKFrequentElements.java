@@ -43,7 +43,9 @@ public class TopKFrequentElements {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>(Comparator.comparingInt(mapOfOccurences::get));
 
         for (Map.Entry<Integer, Integer> entry : mapOfOccurences.entrySet()) {
+
             minHeap.add(entry.getKey());
+
             if (minHeap.size() > k) {
                 minHeap.poll();
             }
@@ -63,13 +65,16 @@ public class TopKFrequentElements {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>((first, second) -> map.get(second) - map.get(first));
 
         for (Map.Entry<Integer, Integer> each : map.entrySet()) {
+
             maxHeap.add(each.getKey());
+
             if (maxHeap.size() > k) {
                 maxHeap.poll();
             }
+
         }
+
         return maxHeap.stream().mapToInt(i -> i).toArray();
 
     }
-
 }

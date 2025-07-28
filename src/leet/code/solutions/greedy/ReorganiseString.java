@@ -77,9 +77,10 @@ Space Complexity:
         }
         // If any character appears more than half the length of the string (rounded up),
         // it's impossible to reorganize
-        if(maxFreq > (str.length() +1)/2){
+        if(maxFreq > (str.length() + 1)/2){
             return "";
         }
+
         // Create max heap based on character frequencies
         Queue<Character> maxHip = new PriorityQueue<>((a, b)-> occurrenceMAp.get(b)-occurrenceMAp.get(a));
         maxHip.addAll(occurrenceMAp.keySet());
@@ -93,18 +94,18 @@ Space Complexity:
             sb.append(secondMostOccurred);
 
             // Decrement frequencies and add back if needed
-            occurrenceMAp.put(firstMostOccurred,occurrenceMAp.getOrDefault(firstMostOccurred,0)  -1);
-            if(occurrenceMAp.get(firstMostOccurred)>0){
+            occurrenceMAp.put(firstMostOccurred,occurrenceMAp.getOrDefault(firstMostOccurred,0)  - 1);
+            if(occurrenceMAp.get(firstMostOccurred) > 0){
                 maxHip.add(firstMostOccurred);
             }
-            occurrenceMAp.put(secondMostOccurred,occurrenceMAp.getOrDefault(secondMostOccurred,0)  -1);
-            if(occurrenceMAp.get(secondMostOccurred)>0){
+            occurrenceMAp.put(secondMostOccurred,occurrenceMAp.getOrDefault(secondMostOccurred,0)  - 1);
+            if(occurrenceMAp.get(secondMostOccurred) > 0){
                 maxHip.add(secondMostOccurred);
             }
         }
 
         // Handle the last character if there is one
-        if(maxHip.size() ==1){
+        if(maxHip.size() == 1){
             char remainingChar = maxHip.poll();
 
             sb.append(remainingChar);

@@ -47,14 +47,9 @@ public class DistributeCoinsInBST {
     private static int dfs(TreeNode node) {
         if (node == null) return 0;
 
-        System.out.println("\r\n\t current node " + node.val);
-
         // Calculate excess/deficit in left and right subtrees
         int leftDeficit = dfs(node.left);
         int rightDeficit = dfs(node.right);
-
-        System.out.println(" left deficit " + leftDeficit);
-        System.out.println(" right deficit " + rightDeficit);
 
         // Update the total moves needed
         NUM_MOVES += Math.abs(leftDeficit) + Math.abs(rightDeficit);

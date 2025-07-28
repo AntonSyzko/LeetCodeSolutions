@@ -1,9 +1,6 @@
 package leet.code.solutions.binary_tree;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /*
 https://leetcode.com/problems/binary-tree-level-order-traversal/
@@ -45,7 +42,7 @@ public class BinaryTreeLevelOrderTraversal {
 //
 //        root.left.right.left = new TreeNode(8);
 
-        List<List<Integer>> result = levelOrderRecursive(root);
+        List<List<Integer>> result = levelOrder(root);
         System.out.println(result);
     }
 
@@ -91,28 +88,30 @@ public class BinaryTreeLevelOrderTraversal {
 
        List<List<Integer>> res = new ArrayList<>();
 
-       Queue<TreeNode> levelNodes = new ArrayDeque<>();
-       levelNodes.add(root);
+       Queue<TreeNode> que = new LinkedList<>();//level nodes
+        que.add(root);
 
-       while (!levelNodes.isEmpty()){
+       while (!que.isEmpty()){
 
            List<Integer> currentLevelNodeVals = new ArrayList<>();
-           int levelNodesSize = levelNodes.size();
+
+           int levelNodesSize = que.size();
 
            for (int i = 0; i < levelNodesSize; i++) {
-               TreeNode levelNode = levelNodes.poll();
+               TreeNode levelNode = que.poll();
 
                if(levelNode != null){
                    currentLevelNodeVals.add(levelNode.val);
 
                    if(levelNode.left != null){
-                       levelNodes.add(levelNode.left);
+                       que.add(levelNode.left);//it's children are NEXT level and go to the QUE
                    }
                    if(levelNode.right!=null){
-                       levelNodes.add(levelNode.right);
+                       que.add(levelNode.right);
                    }
                }
            }
+           //after for
            res.add(currentLevelNodeVals);
        }
 

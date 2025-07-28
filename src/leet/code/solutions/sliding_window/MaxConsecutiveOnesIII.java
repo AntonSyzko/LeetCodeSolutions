@@ -53,13 +53,13 @@ public class MaxConsecutiveOnesIII {
 
      int windowStart = 0;
 
-        for (int windowEnd = 0; windowEnd < nums.length; windowEnd++) {
+     for (int windowEnd = 0; windowEnd < nums.length; windowEnd++) {
 
             if (nums[windowEnd] == 0) {
                  zerosCount++;
             }
 
-            while (zerosCount > maxAllowedZeros){
+            while (zerosCount > maxAllowedZeros){//WHILE
 
                 int leftmostElement = nums[windowStart];
 

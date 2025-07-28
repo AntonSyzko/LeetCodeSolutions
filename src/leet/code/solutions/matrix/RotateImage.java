@@ -33,6 +33,8 @@ public class RotateImage {
                        {4,5,6},
                        {7,8,9}};
 
+        System.out.println(Arrays.deepToString(grid));
+
         rotate(grid);
 
         System.out.println(Arrays.deepToString(grid));
