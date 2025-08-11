@@ -130,6 +130,17 @@ public class LRUCacheWithLinkedList {
         head.next = newNode;
     }
 
+
+     private void addNodeToHeadMy(Node newNode){
+        Node currFirstNode = head.next;
+
+        head.next = newNode;
+         newNode.prev = head;
+
+         newNode.next = currFirstNode;
+        currFirstNode.prev = newNode;
+    }
+
     // Helper method to remove a node from the list
     private void removeNodeFromLinkedList(Node nodeToRemove) {
         Node prev = nodeToRemove.prev;

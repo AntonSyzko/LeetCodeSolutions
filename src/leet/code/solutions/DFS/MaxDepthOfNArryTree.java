@@ -49,33 +49,31 @@ public class MaxDepthOfNArryTree {
     private static int maxDepthDFS(Node root) {
         if(root==null) return 0;
 
-        int[] maxDepth = new int[1];//pass by value
+        int[] maxDepthRes = new int[1];//pass by value , defaulted to zero 0 at initialisation
+
         int currDepth = 0;
 
-        dfs(root,currDepth, maxDepth);
+        dfs(root,currDepth, maxDepthRes);
 
-        return maxDepth[0];
+        return maxDepthRes[0];
     }
 
-
-    private static void dfs(Node node,int currDepth, int[] maxDepth) {
+    private static void dfs(Node node,int currDepth, int[] maxDepthRes) {
 
         if(node==null) return;
 
         currDepth++;//level increased
 
-        maxDepth[0]= Math.max(maxDepth[0],currDepth);
+        maxDepthRes[0]= Math.max(maxDepthRes[0],currDepth);
 
         if(node.children == null){
             return;
         }
 
         for(Node child : node.children){
-            dfs(child, currDepth, maxDepth);
+            dfs(child, currDepth, maxDepthRes);
         }
     }
-
-
 
    private static   class Node {
         public int val;

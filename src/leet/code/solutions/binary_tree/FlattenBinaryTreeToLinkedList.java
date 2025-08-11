@@ -43,7 +43,7 @@ public class FlattenBinaryTreeToLinkedList {
 
         System.out.println(root);
 
-        flattenRecursive(root);
+        flatten(root);
 
 
         System.out.println(root);

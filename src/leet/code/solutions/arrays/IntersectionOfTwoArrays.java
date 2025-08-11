@@ -53,6 +53,7 @@ public class IntersectionOfTwoArrays {
 
     public static int[] intersect(int[] nums1, int[] nums2) {
 
+        //SOOOOOOOOOOOORT !!!!
         Arrays.sort(nums1);//sorting will allow to compare one by one
         Arrays.sort(nums2);//we don't need the order - we need jus common numbers ( intersection)
 
@@ -64,13 +65,19 @@ public class IntersectionOfTwoArrays {
         while (firstIndex < nums1.length && secondIndex < nums2.length) {//AND
 
             if (nums1[firstIndex] < nums2[secondIndex]) {//since sorted we just compare
+
                 firstIndex++;// i was too low, raise it
+
             } else if (nums1[firstIndex] > nums2[secondIndex]) {
+
                 secondIndex++;// i was too high - raise j
+
             } else {//equal i and j - so intersected number
-                res.add(nums1[firstIndex]);//add to reuslt
+
+                res.add(nums1[firstIndex]);//add to result, no matter first or second here - SAME
                 firstIndex++;//still raise both to move on
                 secondIndex++;
+
             }
 
         }
@@ -91,15 +98,21 @@ public class IntersectionOfTwoArrays {
         while (i < nums1.length && j < nums2.length) {//AND
 
             if (nums1[i] < nums2[j]) {
+
                 i++;
+
             } else if (nums1[i] > nums2[j]) {
+
                 j++;
+
             } else {
+
                 res[resIndex++] = nums1[i];
                 i++;
                 j++;
             }
         }
+        
         return Arrays.copyOfRange(res, 0, resIndex);//to eliminate ending zeros from res array
     }
 

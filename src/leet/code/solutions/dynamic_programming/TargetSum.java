@@ -1,6 +1,5 @@
 package leet.code.solutions.dynamic_programming;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,9 +41,9 @@ public class TargetSum {
     }
 
     private static int findTargetSumWays(int[] nums, int target) {
-        int startingNumberIndex = 0;
+        int index = 0;
         int currentSum = 0;
-        return  dfs(nums, startingNumberIndex , currentSum, target);
+        return  dfs(nums, index , currentSum, target);
     }
 
     private static int dfs(int[] nums, int index, int currentSum, int target) {
@@ -54,25 +53,25 @@ public class TargetSum {
 
         }
 
-        int sumWithPlusSign =   dfs(nums, index+1,  currentSum + nums[index], target);
+        int sumWithPlusSign =   dfs(nums, index + 1,  currentSum + nums[index], target);
 
-        int sumWithMinusSign =   dfs(nums, index+1, currentSum -  nums[index], target);
+        int sumWithMinusSign =   dfs(nums, index + 1, currentSum -  nums[index], target);
 
         return sumWithPlusSign + sumWithMinusSign;
     }
 
-    private static int findTargetSumWays_DP(int[] nums, int target) {
-        int startingNumberIndex = 0;
+    private static int findTargetSumWays_DP(int[] nums, int targetSUm) {
+        int index = 0;
         int currentSum = 0;
         Map<String, Integer> DP = new HashMap<>();
 
-        return  dfs_DP(nums, startingNumberIndex , currentSum, target, DP);
+        return  dfs_DP(nums, index , currentSum, targetSUm, DP);
     }
 
-    private static int dfs_DP(int[] nums, int index, int currentSum, int target,  Map<String, Integer> DP) {
+    private static int dfs_DP(int[] nums, int index, int currentSum, int targetSUm,  Map<String, Integer> DP) {
         //BASE
         if(index == nums.length){
-            return currentSum == target ? 1 : 0;
+            return currentSum == targetSUm ? 1 : 0;
         }
 
         String memoKey = index + "|" + currentSum;
@@ -81,8 +80,8 @@ public class TargetSum {
             return DP.get(memoKey);
         }
 
-        int sumWithPlusSign = dfs_DP(nums, index+1, currentSum + nums[index], target, DP);
-        int sumWithMinusSign = dfs_DP(nums, index+1, currentSum - nums[index], target, DP);
+        int sumWithPlusSign = dfs_DP(nums, index + 1, currentSum + nums[index], targetSUm, DP);
+        int sumWithMinusSign = dfs_DP(nums, index + 1, currentSum - nums[index], targetSUm, DP);
 
         int bothWaysResultsCombined = sumWithPlusSign + sumWithMinusSign;
 
@@ -90,5 +89,4 @@ public class TargetSum {
 
         return bothWaysResultsCombined;
     }
-
 }

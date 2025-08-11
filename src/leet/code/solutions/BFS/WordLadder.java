@@ -80,7 +80,7 @@ public class WordLadder {
                         }
                     }
                 }
-            }
+            }//outer for end
 
             level++;// Move to next level
         }

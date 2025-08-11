@@ -50,12 +50,12 @@ public class MaxProductSubarray {
                  O(1)
      */
     private static int maxProduct(int[] nums) {
-        int maxSoFar = nums[0];
+        int maxRes = nums[0];
 
         int maxEndingHere = nums[0];
         int minEndingHere = nums[0];
 
-        for (int i = 1; i < nums.length; i++) {
+        for (int i = 1; i < nums.length; i++) {//start from 1
 
             int curr = nums[i];
             // Store maxEndingHere temporarily since we'll modify it
@@ -65,11 +65,11 @@ public class MaxProductSubarray {
 
             maxEndingHere  = tempMax;
 
-            maxSoFar = Math.max(maxSoFar, maxEndingHere);
+            maxRes = Math.max(maxRes, maxEndingHere);
 
         }
 
-        return maxSoFar;
+        return maxRes;
     }
 
     /**

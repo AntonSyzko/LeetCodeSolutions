@@ -37,29 +37,29 @@ public class PlusOne {
 
     public static void main(String[] args) {
         int[] digit = new int[]{1, 2, 3};
-        System.out.println(Arrays.toString(plusOne(digit)));
+        System.out.println(Arrays.toString(plusOne2(digit)));
 
         digit = new int[]{4, 3, 2, 1};
-        System.out.println(Arrays.toString(plusOne(digit)));
+        System.out.println(Arrays.toString(plusOne2(digit)));
 
         digit = new int[]{1, 0};
-        System.out.println(Arrays.toString(plusOne(digit)));
+        System.out.println(Arrays.toString(plusOne2(digit)));
 
         digit = new int[]{3, 2, 9};
-        System.out.println(Arrays.toString(plusOne(digit)));
+        System.out.println(Arrays.toString(plusOne2(digit)));
 
         digit = new int[]{9};
-        System.out.println(Arrays.toString(plusOne(digit)));
+        System.out.println(Arrays.toString(plusOne2(digit)));
 
         digit = new int[]{9, 9};
-        System.out.println(Arrays.toString(plusOne(digit)));
+        System.out.println(Arrays.toString(plusOne2(digit)));
 
         digit = new int[]{8, 9, 9, 9};
-        System.out.println(Arrays.toString(plusOne(digit)));
+        System.out.println(Arrays.toString(plusOne2(digit)));
     }
 
 
-    public static int[] plusOne(int[] digits) {
+    private static int[] plusOne(int[] digits) {
 
         for (int i = digits.length - 1; i >= 0; i--) {
 
@@ -81,4 +81,32 @@ public class PlusOne {
 
         return resizedResult;
     }
-}
+
+
+    private static int[] plusOne2(int[] digits) {
+
+        boolean allNines = true;
+        for(int dig: digits){
+            if(dig != 9){
+               allNines = false;
+            }
+        }
+
+        if(allNines){
+            digits = new int[digits.length + 1];
+            Arrays.fill(digits, 0);
+            digits[0] = 1;
+        }else{
+            for (int i = digits.length -1; i >= 0 ; i--) {
+                digits[i]++;
+                if(digits[i] == 10){
+                    digits[i] = 0;
+                }else{
+                    break;
+                }
+            }
+        }
+
+        return digits;
+    }
+    }

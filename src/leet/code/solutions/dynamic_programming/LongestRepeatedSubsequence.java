@@ -4,7 +4,6 @@ package leet.code.solutions.dynamic_programming;
 
 https://www.techiedelight.com/longest-repeated-subsequence-problem/
 
-
 The Longest Repeating Subsequence (LRS) problem is finding the longest subsequences of a string that occurs at least twice.
 
 The problem differs from the problem of finding the longest repeating substring. Unlike substrings, subsequences are not required to occupy consecutive positions within the original string.
@@ -23,10 +22,11 @@ Note that repeated characters holds a different index in the input string.
 public class LongestRepeatedSubsequence {
 
     public static void main(String[] args) {
-     String str = "ATACTCGGA";
+         String str = "ATACTCGGA";
 
-     int longestRepeatedSubseq = LRSLength(str,str.length()  , str.length()  );
-     System.out.println(longestRepeatedSubseq);
+         int longestRepeatedSubseq = LRSLength(str,str.length() , str.length());
+
+         System.out.println(longestRepeatedSubseq);
     }
 
     public static int LRSLength(String str, int index1, int index2){
@@ -34,8 +34,12 @@ public class LongestRepeatedSubsequence {
             return 0;
         }
 
-        if(index1 !=  index2 && str.charAt(index1 - 1 ) == str.charAt(index2 - 1) ){
-            return LRSLength(str, index1 - 1, index2-1) + 1;
+        if(index1 !=  index2//indexes DIFF
+                &&
+                str.charAt(index1 - 1 ) == str.charAt(index2 - 1) ){//indexes DIFF but chars at indexes SAME
+
+            return LRSLength(str, index1 - 1, index2 - 1) + 1;
+
         }
 
         int withoutLastCharIndex1 = LRSLength(str, index1 - 1, index2);
@@ -71,7 +75,4 @@ public class LongestRepeatedSubsequence {
         // LRS will be the last entry in the lookup table
         return lookup[n][n];
     }
-
-
-
 }

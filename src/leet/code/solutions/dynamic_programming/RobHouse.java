@@ -10,8 +10,6 @@ You are a professional robber planning to rob houses along a street. Each house 
 
 Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
-
-
 Example 1:
 
 Input: nums = [1,2,3,1]
@@ -45,9 +43,11 @@ public class RobHouse {
 
     private static int rob(int[] nums) {
         int[] DP = new int[nums.length];
-        Arrays.fill(DP, -1);
+        Arrays.fill(DP, -1);//filled with -1 fake value
 
-        return robHelper(nums, 0 , DP);
+        int houseIndex = 0;//start at 0
+
+        return robHelper(nums, houseIndex , DP);
 
     }
 
@@ -56,12 +56,15 @@ public class RobHouse {
             return 0;
         }
 
-        if(DP[houseIndex] != -1){
+        if(DP[houseIndex] != -1){//memo hit
             return DP[houseIndex];
         }
 
-        int robThisAndNextNext = houses[houseIndex] + robHelper(houses, houseIndex + 2, DP);
-        int robOnlyNext = robHelper(houses, houseIndex + 1 , DP);
+        int robThisAndNextNext = houses[houseIndex] //money of current house
+                + //plus
+                robHelper(houses, houseIndex + 2, DP);//next next +2
+
+        int robOnlyNext = robHelper(houses, houseIndex + 1 , DP);//not robbing this - just next +1
 
         int currMaxGain = Math.max(robThisAndNextNext,robOnlyNext );
 

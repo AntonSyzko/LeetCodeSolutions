@@ -34,9 +34,9 @@ public class PalindromePartitioning {
     private static List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();
         List<String> combo = new ArrayList<>();
-        int start = 0;
+        int index = 0;
 
-        dfsPartition(s,start, combo, res);
+        dfsPartition(s,index, combo, res);
 
         return res;
     }
@@ -58,16 +58,16 @@ public class PalindromePartitioning {
 
         Your solution has an additional O(n) space for the StringBuilder.
      */
-    private static void dfsPartition(String s, int start, List<String> combo, List<List<String>> res) {
+    private static void dfsPartition(String s, int index, List<String> combo, List<List<String>> res) {
         //BASE
-        if(start == s.length()){//string is over
+        if(index == s.length()){//string is over
             res.add(new ArrayList<>(combo));
             return;
         }
 
         StringBuilder sb = new StringBuilder();
 
-        for(int i = start; i < s.length(); i++){
+        for(int i = index; i < s.length(); i++){
             sb.append(s.charAt(i));
 
             if(isPalindrome(sb.toString())){//main check

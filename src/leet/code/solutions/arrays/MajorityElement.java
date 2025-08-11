@@ -35,7 +35,27 @@ public class MajorityElement {
 //        System.out.println(res);
     }
 
-    public static int majorityElement(int[] nums) {
+    private static int majorityElement23(int[] nums) {
+
+        Integer maj = null;
+        int count = 0;
+
+        for(int num : nums){
+            if(count == 0){
+                maj = num;
+            }
+
+            if(num == maj){
+                count++;
+            }else{
+                count--;
+            }
+        }
+
+        return maj;
+    }
+
+        public static int majorityElement(int[] nums) {
         if (nums.length == 1) {
             return nums[0];
         }
@@ -137,19 +157,20 @@ return ret;
     //https://blog.devgenius.io/leetcode-169-majority-element-solution-with-images-7abab996e95e
     private static int majorityElement2(int[] nums) {
 
-        int majorityOccurenceCount = 0, res = 0;
+        int count = 0;
+        int maj = 0;
 
         for (int currentNum : nums) {
-            if (majorityOccurenceCount == 0) {
-                res = currentNum;
+            if (count == 0) {
+                maj = currentNum;
             }
-            if (currentNum != res) {
-                majorityOccurenceCount--;//decrease current mjority
+            if (currentNum != maj) {
+                count--;//decrease current mjority
             } else {
-                majorityOccurenceCount++;//increase
+                count++;//increase
             }
         }
-        return res;
+        return maj;
     }
 
     private static int majorityElementList2(List<Integer> nums) {

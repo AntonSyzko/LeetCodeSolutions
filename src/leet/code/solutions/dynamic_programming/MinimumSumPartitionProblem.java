@@ -25,7 +25,9 @@ public class MinimumSumPartitionProblem {
 
     public static void main(String[] args) {
         int[] items = { 10, 20, 15, 5, 25 };
+
         int lastIndex = items.length -1;
+
         int subsetOneSUm = 0;
         int subsetTwoSum = 0;
 
@@ -34,7 +36,7 @@ public class MinimumSumPartitionProblem {
 
         System.out.println("DP The minimum difference is " + findMinAbsDiff_DP(items, lastIndex, subsetOneSUm, subsetTwoSum, dp));
 
-        System.out.println("The minimum difference is " + findMinAbsDiff(items, lastIndex, subsetOneSUm, subsetTwoSum));
+      //  System.out.println("The minimum difference is " + findMinAbsDiff(items, lastIndex, subsetOneSUm, subsetTwoSum));
     }
 
     /*
@@ -76,7 +78,7 @@ public class MinimumSumPartitionProblem {
     //The time complexity of the  solution is exponential and occupies space in the call stack.
     private static int findMinAbsDiff(int[] items, int index, int subsetOneSum, int subsetTwoSum) {
         //BASE
-        if(index ==0){//items exhausted
+        if(index == 0){//items exhausted
             return Math.abs(subsetOneSum - subsetTwoSum);//return final ABS diff
         }
 

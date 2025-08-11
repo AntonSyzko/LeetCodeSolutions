@@ -95,11 +95,33 @@ public class CloneGraph {
 
         for(Node neighbor : node.neighbors){//process all neighbors
 
-            copy.neighbors.add(dfsClone(neighbor, copiesMap));//clone each neighbor
+            copy.neighbors.add(
+                    dfsClone(neighbor, copiesMap)//clone each neighbor
+            );
 
         }
 
         return copy;
+    }
+
+    private static Map<Node, Node> map = new HashMap<>();
+
+    private static Node cloneGraph2(Node node) {
+        if (node == null)
+            return null;
+
+        if (map.containsKey(node))
+            return map.get(node);
+
+        Node newNode = new Node(node.val);
+        map.put(node, newNode);
+
+        for (Node neighbor : node.neighbors)
+            newNode.neighbors.add(
+                    cloneGraph2(neighbor)//recur
+            );
+
+        return newNode;
     }
 
     private  static class Node {
@@ -118,4 +140,5 @@ public class CloneGraph {
             neighbors = _neighbors;
         }
     }
+
 }

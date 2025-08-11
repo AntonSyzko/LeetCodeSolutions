@@ -11,36 +11,40 @@ Space Complexity: O(m) where m is the bit array size
 
 public class BloomFilter {
 
-    private final boolean[] bitArray;
-    private final int bitArraySize;
-    private final int numHashFunctions;
+    private final boolean[] BIT_ARRAY;
+    private final int BIT_ARRAY_SIZE;
+    private final int NUMBER_OF_HASH_FUNCTIONS;
 
     public BloomFilter(int bitArraySize, int numHashFunctions) {
-        this.bitArraySize = bitArraySize;
-        this.numHashFunctions = numHashFunctions;
-        this.bitArray = new boolean[bitArraySize];
+        this.BIT_ARRAY_SIZE = bitArraySize;
+        this.BIT_ARRAY = new boolean[bitArraySize];
+        this.NUMBER_OF_HASH_FUNCTIONS = numHashFunctions;
     }
 
     // Add element to the filter
     public void add(String element) {
 
-        for (int i = 0; i < numHashFunctions; i++) {//hashing times hash function
-            int hash = hash(element, i);
-            int index = Math.abs(hash) % bitArraySize;
-            bitArray[index] = true;
-        }
+        for (int i = 0; i < NUMBER_OF_HASH_FUNCTIONS; i++) {//hashing times hash function
 
+            int hash = hash(element, i);
+            int index = Math.abs(hash) % BIT_ARRAY_SIZE;
+            BIT_ARRAY[index] = true;
+
+        }
     }
 
     // Check if element might be in the set
     public boolean contains(String element) {
 
-        for (int i = 0; i < numHashFunctions; i++) {//time hash functions
-            int hash = hash(element, i);
-            int index = Math.abs(hash) % bitArraySize;
+        for (int i = 0; i < NUMBER_OF_HASH_FUNCTIONS; i++) {//time hash functions
 
-            if (!bitArray[index]) {
+            int hash = hash(element, i);
+            int index = Math.abs(hash) % BIT_ARRAY_SIZE;
+
+            if (!BIT_ARRAY[index]) {//not int bit array by this index ?
+
                 return false; // Definitely not in set, fail fast
+
             }
         }
 
@@ -53,8 +57,6 @@ public class BloomFilter {
         // Simple way to create different hash functions
         return hash ^ (seed * 31);
     }
-
-
 
     public static void main(String[] args) {
         // Create bloom filter: 1000 bits, 3 hash functions

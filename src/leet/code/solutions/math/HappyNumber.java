@@ -25,8 +25,8 @@ Constraints:  1 <= n <= 231 - 1
 public class HappyNumber {
 
     public static void main(String[] args) {
-        int n = 18;
-        boolean isHappyNumber = isHappy(n);
+        int n = 19;
+        boolean isHappyNumber = isHappy2(n);
         System.out.println(isHappyNumber);
     }
 
@@ -52,11 +52,41 @@ public class HappyNumber {
 
             alreadySeenMemoization.add(sum);//add to memoization set
 
-            n = sum;//update N to newli generated sum
+            n = sum;//update N to newly generated sum
 
         }
 
         return true;//got here - happy number
 
+    }
+
+    private static boolean isHappy2(int n) {
+
+        Set<Integer> seen = new HashSet<>();
+
+        while(n != 1){
+
+            int sum = 0;
+
+            while(n > 0){
+                int rightMostDigit = n % 10;
+                sum += ( rightMostDigit * rightMostDigit);
+                n = n /10;
+            }
+
+            if(sum == 1){
+                return true;
+            }
+
+            if(seen.contains(sum)){
+                return false;
+            }
+
+            seen.add(sum);
+            n = sum;
+
+        }
+
+        return false;
     }
 }

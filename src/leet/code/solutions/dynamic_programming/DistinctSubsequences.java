@@ -47,6 +47,7 @@ public class DistinctSubsequences {
         // Fill the dp table
         for (int secondIndex = 1; secondIndex <= second.length(); secondIndex++) {
             for (int firstIndex = 1; firstIndex <= first.length(); firstIndex++) {
+
                 // If current characters match, we have two options:
 
                 // 1. Use the current character of first -> dp[secondIndex][firstIndex-1]
@@ -86,7 +87,7 @@ public class DistinctSubsequences {
     }
 
     private static int countSubsequencesMemo(String first, String second, int firstLen, int secondLen, int[][] memo) {
-        // Base cases
+        // Base cases, order matter
         if (secondLen < 0) return 1; // We've matched all characters in second
         if (firstLen < 0) return 0; // We've exhausted first but still have characters in second
 
@@ -99,9 +100,10 @@ public class DistinctSubsequences {
         if (first.charAt(firstLen) == second.charAt(secondLen)) {
             // 1. Use current character of first: match it with current character of second
             // 2. Skip current character of first
-            memo[secondLen][firstLen] = countSubsequencesMemo(first, second, firstLen - 1, secondLen - 1, memo)
-                                        +
-                                        countSubsequencesMemo(first, second, firstLen - 1, secondLen, memo);
+            memo[secondLen][firstLen] = countSubsequencesMemo(first, second, firstLen - 1, secondLen, memo)
+                                          +
+                                         countSubsequencesMemo(first, second, firstLen - 1, secondLen - 1, memo);
+
         } else {
             // If characters don't match, we can only skip current character of first
             memo[secondLen][firstLen] = countSubsequencesMemo(first, second, firstLen - 1, secondLen, memo);

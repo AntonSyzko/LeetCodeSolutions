@@ -20,6 +20,7 @@ Note: A board does not need to be full or be solvable to be valid.
 public class IsValidSudoku {
 
     public static void main(String[] args) {
+
   char[][] board = {{'1','2','.','.','3','.','.','.','.'},
                      {'4','.','.','5','.','.','.','.','.'},
                      {'.','9','8','.','.','.','.','.','3'},
@@ -32,19 +33,23 @@ public class IsValidSudoku {
   
   
   boolean isValidSudoku = isValidSudokuConcise(board);
+
         System.out.println(isValidSudoku);
     }
 
     private static boolean isValidSudokuConcise(char[][] board) {
 
+        int ROWS = board.length;
+        int COLS = board[0].length;
+
         Set<String> seen = new HashSet<>();
 
-        for(int row = 0 ; row < board.length; row++){// 9 X 9 grid
-            for(int col = 0 ; col < board[0].length; col ++){
+        for(int row = 0 ; row < ROWS; row++){// 9 X 9 grid
+            for(int col = 0 ; col < COLS; col ++){
 
                 char currChar = board[row][col];
 
-                if(currChar != '.'){
+                if(currChar != '.'){//check only numbers and not the dots
 
                     //crux here is Set's add() method rturn FALSE if the value is already present -> thus FALSE for duplicates
 
@@ -57,7 +62,6 @@ public class IsValidSudoku {
                         return false;
 
                     }
-
                 }
             }
         }
@@ -66,8 +70,9 @@ public class IsValidSudoku {
     }
 
     private static boolean isValidSudoku(char[][] board) {
-        Map<Integer, Set<Character>> cols = new HashMap<>();//to store all values in row to check if duplicates exist
         Map<Integer, Set<Character>> rows = new HashMap<>();//to store all values in cols to check if duplicates exist
+
+        Map<Integer, Set<Character>> cols = new HashMap<>();//to store all values in row to check if duplicates exist
 
         Map<String, Set<Character>> squares = new HashMap<>();//to store all values in 3 * 3 row col squares  to check if duplicates exist
 
@@ -83,11 +88,14 @@ public class IsValidSudoku {
                     continue;
                 }
 
-                String squareKey = row/3 + "," + col/3;
+                String squareKey = row/3 + "/" + col/3;
 
-                if (rows.computeIfAbsent(row, k -> new HashSet<>()).contains(currentCell) ||
-                        cols.computeIfAbsent(col, k -> new HashSet<>()).contains(currentCell) ||
+                if (rows.computeIfAbsent(row, k -> new HashSet<>()).contains(currentCell)
+                        ||
+                        cols.computeIfAbsent(col, k -> new HashSet<>()).contains(currentCell)
+                        ||
                         squares.computeIfAbsent(squareKey, k -> new HashSet<>()).contains(currentCell)) {
+
                     return false;
                 }
 

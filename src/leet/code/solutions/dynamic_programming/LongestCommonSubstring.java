@@ -28,17 +28,23 @@ public class LongestCommonSubstring {
        System.out.println(longestCommonSubstring);
 }
 
+/*
+
+Time Complexity: O(m × n)
+Space Complexity: O(m × n)
+ */
+
 private static String LCSLength(String firstString, String secondString, int firstLen, int secLen){
 
        int maxLength = 0;// stores the max length of LCS
 
-       int endingIndex =  firstLen; // stores the ending index of LCS in `firstString`
+       int endingIndex =  0; // stores the ending index of LCS in `firstString`
 
     // `lookup[i][j]` stores the length of LCS of substring `firstString[0…i-1]`, `secondString[0…j-1]`
        int[][] lookup = new int[firstLen + 1][secLen + 1];
 
         // fill the lookup table in a bottom-up manner
-        for(int i = 1; i <= firstLen; i++){
+        for(int i = 1; i <= firstLen; i++){//start from 1
            for(int j = 1; j <= secLen; j++){
 
                // if the current ( previous)  character of `firstString` and `secondString` matches

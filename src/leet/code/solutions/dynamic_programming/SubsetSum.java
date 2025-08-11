@@ -1,6 +1,5 @@
 package leet.code.solutions.dynamic_programming;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +31,6 @@ public class SubsetSum {
 
        System.out.println(exists);
 
-//
         int [] nums2 = {3, 34, 4, 12, 5, 2};
         targetSum = 30;
         exists = hasSubsetSumBottomUp(nums2, targetSum);
@@ -87,7 +85,7 @@ Space: O(n × T) for the memoization table + O(n) for the recursion stack
 
         if(nums[index] > targetSum){//number itself is bigger than target sum
             boolean result = findSubsetSum(nums, index + 1, targetSum, DP);
-            DP.put(key, result);//store in DP in case smae num occurs later in recursive calls
+            DP.put(key, result);//store in DP in case same num occurs later in recursive calls
             return result;
         }
 

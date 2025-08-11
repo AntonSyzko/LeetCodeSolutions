@@ -1,7 +1,5 @@
 package leet.code.solutions.linked_list;
 
-import leet.code.solutions.sandbox.Sandbox1;
-
 import java.util.HashSet;
 import java.util.Set;
 

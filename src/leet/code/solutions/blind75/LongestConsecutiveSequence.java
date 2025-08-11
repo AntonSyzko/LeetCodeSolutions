@@ -1,9 +1,7 @@
 package leet.code.solutions.blind75;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /*
 https://leetcode.com/problems/longest-consecutive-sequence/
@@ -43,7 +41,7 @@ public class LongestConsecutiveSequence {
     private static int longestConsecutiveSeq(int[] nums) {
 
         int longestSubseq = 0;
-        Set<Integer> set = new HashSet<>();
+        Set<Integer> set = new HashSet<>();//for O(1) lookup
 
         for (int num : nums) {
             set.add(num);
@@ -70,6 +68,26 @@ public class LongestConsecutiveSequence {
         }
 
         return longestSubseq;
+    }
+
+    public int longestConsecutive2(int[] nums) {
+        int ans = 0;
+        Set<Integer> seen = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+
+        for (int num : seen) {
+            // `num` is the start of a sequence.
+            if (seen.contains(num - 1))
+                continue;
+
+            int length = 1;
+            while (seen.contains(++num)){
+                ++length;
+            }
+
+            ans = Math.max(ans, length);
+        }
+
+        return ans;
     }
 
     // -------------- RECURSIVE --------------------

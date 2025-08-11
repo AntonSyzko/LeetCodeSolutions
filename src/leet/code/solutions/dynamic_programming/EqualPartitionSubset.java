@@ -57,7 +57,9 @@ public class EqualPartitionSubset {
         Map<String, Boolean> DP = new HashMap<>();
 
 
-        return checkHalfSum(nums, 0,aggregatedSum/2, DP);
+        int halfSum = aggregatedSum / 2;
+        int index = 0;
+        return checkHalfSum(nums, index,halfSum, DP);
         //return checkHalfSum2(nums, 0, 0, aggregatedSum/2, DP);
     }
 
@@ -74,22 +76,24 @@ Space Complexity: O(n * sum)
         The recursion stack can go as deep as n
      */
     private static boolean checkHalfSum(int[] nums, int index, int halfSum, Map<String, Boolean> DP ) {
-        String currentState = index + "" + halfSum;
 
-        if(DP.containsKey(currentState)) {
-            return DP.get(currentState);
-        }
         if(halfSum < 0 || index >= nums.length){
             return false;
         }
 
+        String currentStateMemoKey = index + "|" + halfSum;
+
+        if(DP.containsKey(currentStateMemoKey)) {
+            return DP.get(currentStateMemoKey);
+        }
+
         if(halfSum == 0) return true;
 
-        boolean with = checkHalfSum(nums, index+1, halfSum - nums[index], DP);
-        boolean without = checkHalfSum(nums, index+1, halfSum, DP);
+        boolean with = checkHalfSum(nums, index + 1, halfSum - nums[index], DP);
+        boolean without = checkHalfSum(nums, index + 1, halfSum, DP);
 
         boolean currentPartition = with || without;
-        DP.put(currentState, currentPartition);
+        DP.put(currentStateMemoKey, currentPartition);
 
         return currentPartition;
     }
@@ -103,11 +107,15 @@ Space Complexity: O(n * sum)
         if(sum > halfSum || index >= nums.length){
             return false;
         }
+
         if(sum == halfSum){
             return true;
         }
 
-        boolean currentPartition = checkHalfSum2(nums, index+1, sum + nums[index], halfSum, DP) || checkHalfSum2(nums, index+1, sum, halfSum,DP);
+        boolean currentPartition = checkHalfSum2(nums, index+1, sum + nums[index], halfSum, DP)
+                                     ||
+                                     checkHalfSum2(nums, index+1, sum, halfSum,DP);
+
         DP.put(currentState, currentPartition);
 
         return currentPartition;

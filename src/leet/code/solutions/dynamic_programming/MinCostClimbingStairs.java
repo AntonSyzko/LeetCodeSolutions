@@ -47,7 +47,7 @@ public class MinCostClimbingStairs {
     }
 
     private static int minCostClimbingStairs(int[] cost) {
-        int[] DP = new int[cost.length +1];//one more than costs length
+        int[] DP = new int[cost.length + 1];//one more than costs length
 
         DP[cost.length] = 0;//very last stair it takes 0 steps to reach
 
@@ -55,7 +55,9 @@ public class MinCostClimbingStairs {
 
         for(int i = cost.length - 2; i >= 0; i--){//start from -2 go backwards
 
-            DP[i] = cost[i] +  Math.min(DP[i+1],DP[i+2]);//curr cost + MIN of +1 or +2 steps jump
+            DP[i] = cost[i] //curr cost PLUS
+                    +
+                    Math.min(DP[i + 1],DP[i + 2]);//MIN of +1 OR +2 steps jump
 
         }
         return Math.min(DP[0], DP[1]);

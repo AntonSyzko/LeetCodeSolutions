@@ -45,15 +45,16 @@ public class UniquePaths {
         }
 
         //recursion base
-        if (col == 1 && row == 1) {//at the VERY point of search = target
-            return 1;
+        if (col == 1 && row == 1) {//these are LAST cells of a given search , 3 and 3, end is reached, at the VERY point of search = target
+            return 1;//last row and col is 1 way
         }
 
         return uniquePathsNonDP(row - 1, col) + uniquePathsNonDP(row, col - 1);
     }
 
     private static int uniquePathsOptimized(int row, int col) {//row and col are grid params
-        return uniquePathDP_Helper(row, col, new int[row + 1][col + 1]); //DP array initially filled with zeroes
+        int[][] DP = new int[row + 1][col + 1];
+        return uniquePathDP_Helper(row, col, DP); //DP array initially filled with zeroes
     }
 
     private static int uniquePathDP_Helper(int row, int col, int[][] pathsDParray) {
@@ -71,7 +72,9 @@ public class UniquePaths {
         }
 
         //DP recursion, will fill DP array as  it goes
-        pathsDParray[row][col] = uniquePathDP_Helper(row - 1, col, pathsDParray) + uniquePathDP_Helper(row, col - 1, pathsDParray);
+        pathsDParray[row][col] = uniquePathDP_Helper(row - 1, col, pathsDParray)
+                                    +
+                                 uniquePathDP_Helper(row, col - 1, pathsDParray);
 
         return pathsDParray[row][col];//dynamicaly calculated res
     }

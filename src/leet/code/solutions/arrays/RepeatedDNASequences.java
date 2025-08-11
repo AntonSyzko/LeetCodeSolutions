@@ -27,6 +27,7 @@ Constraints:
 s[i] is either 'A', 'C', 'G', or 'T'.
  */
 public class RepeatedDNASequences {
+
     public static void main(String[] args) {
         String dna = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT";
         List<String > repeatedDNAs = findRepeatedDnaSequences(dna);
@@ -85,11 +86,10 @@ Space Complexity: O(n)
 
             String currString = s.substring(start, start + 10);
 
-            if(seenSubstrings.contains(currString)) {//repeated identified
+            if(!seenSubstrings.add(currString)) {//repeated identified
                 res.add(currString);
             }
 
-            seenSubstrings.add(currString);
             start ++;
         }
 

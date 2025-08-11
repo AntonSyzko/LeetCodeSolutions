@@ -79,6 +79,7 @@ public class FindMinimumJumpsToReachDestination {
 
         // Fill the DP array
         for (int i = 0; i < n - 1; i++) {
+
             // If current position is unreachable, skip
             if (DP[i] == Integer.MAX_VALUE) {
                 continue;

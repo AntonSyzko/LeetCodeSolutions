@@ -37,10 +37,10 @@ public class FindPeakElement {
 
             int mid = left + (right - left) / 2;
 
-            if(nums[mid] < nums[mid + 1]){
-                left = mid + 1;
-            }else{
-                right = mid;
+            if(nums[mid] < nums[mid + 1]){//curr is less than next - still not a peak
+                left = mid + 1;//look for peak from mid +1 onward
+            }else{//curr is more than next
+                right = mid;//look below mid
             }
         }
         return left;

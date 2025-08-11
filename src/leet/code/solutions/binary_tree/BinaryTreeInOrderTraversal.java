@@ -1,5 +1,9 @@
 package leet.code.solutions.binary_tree;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 public class BinaryTreeInOrderTraversal {
 
     public static void main(String[] args) {
@@ -27,8 +31,28 @@ public class BinaryTreeInOrderTraversal {
 
     }
 
+    public List<Integer> inorderTraversal(TreeNode root) {
 
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
 
+        while (root != null || !stack.isEmpty()) {//OR
+
+            while (root != null) {//all LEFT go first
+                stack.push(root);
+                root = root.left;
+            }
+
+            root = stack.pop();
+            res.add(root.val);
+
+            //then ALL RIGHT
+            root = root.right;
+
+        }
+
+        return res;
+    }
 
     private static class TreeNode {
         int val;

@@ -61,46 +61,54 @@ public class FrogJump {
      **/
     private static boolean canCross(int[] stones) {
         Map<Integer, Integer> stoneToIndex = new HashMap<>();
+
         for (int i = 0; i < stones.length; i++) {
-            stoneToIndex.put(stones[i], i);
+            stoneToIndex.put(stones[i], i);//stone to it's index
         }
 
         Map<String, Boolean> memo = new HashMap<>();
-        return dfs(stones, stoneToIndex, memo, 0, 1); // Start at index 0 with jump size 1
+        int index = 0;//to start at
+        int jumpLength = 1;//satring jump
+
+        return dfs(stones, stoneToIndex, memo, index, jumpLength); // Start at index 0 with jump size 1
     }
 
-    private  static boolean dfs(int[] stones, Map<Integer, Integer> stoneToIndex, Map<String, Boolean> memo, int currentIndex, int lastJump) {
+    private  static boolean dfs(int[] stones, Map<Integer, Integer> stoneToIndex, Map<String, Boolean> memo, int index, int lastJump) {
 
         // Base case: reached the last stone
-        if (currentIndex == stones.length - 1) {
+        if (index == stones.length - 1) {
             return true;
         }
 
-        // Memoization key
-        String key = currentIndex + "," + lastJump;
-        if (memo.containsKey(key)) {
-            return memo.get(key);
+        // Memoization memoKey
+        String memoKey = index + "," + lastJump;
+        if (memo.containsKey(memoKey)) {
+            return memo.get(memoKey);
         }
 
         // Try all three possible jump sizes: k-1, k, k+1
         for (int jump = lastJump - 1; jump <= lastJump + 1; jump++) {
+
             if (jump <= 0){
                 continue; // Can't jump backwards or stay
             }
 
-            int nextPosition = stones[currentIndex] + jump;
+            int nextPosition = stones[index] + jump;
 
             // Check if there's a stone at this position
             if (stoneToIndex.containsKey(nextPosition)) {
-                int nextIndex = stoneToIndex.get(nextPosition);
-                if (dfs(stones, stoneToIndex, memo, nextIndex, jump)) {
-                    memo.put(key, true);
+
+                int nextStoneIndex = stoneToIndex.get(nextPosition);
+
+                if (dfs(stones, stoneToIndex, memo, nextStoneIndex, jump)) {
+                    memo.put(memoKey, true);
                     return true;
                 }
             }
         }
 
-        memo.put(key, false);//false if reached here
+        memo.put(memoKey, false);//false if reached here
+
         return false;
     }
 }

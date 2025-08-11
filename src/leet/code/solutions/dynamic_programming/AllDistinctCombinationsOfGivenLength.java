@@ -6,10 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 /*
 https://www.techiedelight.com/find-distinct-combinations-given-length-2/
-
 
 Given an integer array, find all distinct combinations of a given length k.
 
@@ -25,7 +23,6 @@ The program should print all the distinct combinations, while preserving the rel
  */
 public class AllDistinctCombinationsOfGivenLength {
 
-
     public static void main(String[] args) {
         int[] nums = {2, 3, 4};
         int combinationLimit = 2;
@@ -37,27 +34,49 @@ public class AllDistinctCombinationsOfGivenLength {
         }
     }
 
-        public static Set<List<Integer>> findCombinations(int[] nums, int distinctCombinationsLimit) {
+        public static Set<List<Integer>> findCombinations(int[] nums, int k) {
             Set<List<Integer>> res = new HashSet<>();
             List<Integer> combo = new ArrayList<>();
-            findCombinations(nums, 0, distinctCombinationsLimit, combo, res);
+
+            findCombinationsDFS(nums, 0, k, combo, res);
 
             return res;
         }
 
-    public static void findCombinations(int[] nums, int start, int distinctCombinationsLimit,  List<Integer> combo, Set<List<Integer>> res) {
-        if(nums.length == 0){
+    private static void findCombinationsDFS(int[] nums, int start, int remainingLength, List<Integer> current, Set<List<Integer>> result) {
+        // Base case: combination is complete
+        if (remainingLength == 0) {
+            result.add(new ArrayList<>(current));
             return;
         }
 
-        //BASE, distinctCombinations exhausted
-        if( distinctCombinationsLimit == 0){
-            res.add(new ArrayList<>(combo));//add to res
-            return;//exits stack call -> jumps to remove last
+        // Try each element from current position onwards
+        for (int i = start; i < nums.length; i++) {
+            // Pruning: check if we have enough elements left
+            if (nums.length - i < remainingLength) {
+                break; // No point continuing, not enough elements
+            }
+
+            // Include current element
+            current.add(nums[i]);
+
+            // Recurse with next position and one less element needed
+            findCombinationsDFS(nums, i + 1, remainingLength - 1, current, result);
+
+            // Backtrack: remove the element we just added
+            current.remove(current.size() - 1);
+        }
+    }
+
+    private static void findCombinationsPickNotPick(int[] nums, int start, int remainingLength,  List<Integer> combo, Set<List<Integer>> res) {
+        // Base case: combination is complete
+        if (remainingLength == 0) {
+            res.add(new ArrayList<>(combo));
+            return;
         }
 
-        //return if no more elements are left
-        if( start == nums.length){
+        // Pruning: not enough elements left
+        if (nums.length - start < remainingLength) {
             return;
         }
 
@@ -65,14 +84,13 @@ public class AllDistinctCombinationsOfGivenLength {
         combo.add(nums[start]);
 
         //include means - retrieve from distinctCombinations ( by extracting -1 = adding to result )
-        findCombinations(nums, start + 1, distinctCombinationsLimit - 1, combo,res);
+        findCombinationsPickNotPick(nums, start + 1, remainingLength - 1, combo,res);
 
         // exclude the lastly added element from the current combination
         combo.remove(combo.size() - 1); // BACKTRACK
-       // currentRes.removeLast();//alternative
 
         // exclude the current element from the current combination and recur
         //exclude means keep it in distinctCombinations not accounting for it in res
-        findCombinations(nums, start + 1, distinctCombinationsLimit ,combo,  res);
+        findCombinationsPickNotPick(nums, start + 1, remainingLength ,combo,  res);
     }
 }

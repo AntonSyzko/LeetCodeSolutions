@@ -34,33 +34,6 @@ public class CoinChange {
         System.out.println(minCoinsNeeded);
     }
 
-    private static int coinChangeMy(int[] coins, int amount) {
-        Arrays.sort(coins);//optimization - no need to traverse more than needed later
-
-        int[]DP = new int[amount + 1];
-
-        Arrays.fill(DP,amount + 1);//pre-fill with MAX (bigger than target here )
-
-        DP[0]=0;//takes 0 coins to make 0 amount - smallest subproblem - going bottom UP
-
-        for (int subAmount = 0; subAmount <= amount; subAmount++) {//traverse all subamounts of amount
-
-            for (int eachCoin : coins){//traverse each coin in coins
-
-                if(eachCoin <= subAmount){//if to make this subAmount with current coin is possible
-
-                    //min of stored so far OR amount to make this subamount with current coin + 1 coin
-                    DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - eachCoin] + 1);
-
-                }else {
-                    //go to new sub amount , since the smallest coin was bigger than current subamount ( we are soring in line 1  )
-                    break;//MIND!!! break id array was SORTED
-                }
-            }
-        }
-        return DP[amount] > amount ?   -1 : DP[amount];
-    }
-
     //O ( M * N ) - inefficient
     private static int coinChangeRecursive(int[] coins, int amount) {
         int res = Integer.MAX_VALUE;
@@ -88,6 +61,7 @@ public class CoinChange {
 
     private static int coinChange(int[] coins, int amount) {
         Arrays.sort(coins);//optimisation
+
         int[] DP = new int[amount + 1];
         Arrays.fill(DP, amount + 1);//pre fill with smth invalid, not default zeroes
         DP[0] = 0;//to get amount of 0 - we need 0 coins
@@ -95,7 +69,7 @@ public class CoinChange {
         for (int subAmount = 0; subAmount <= amount; subAmount++) {//traverse all sum-amounts untill <= amount
             for (int coin = 0; coin < coins.length; coin++) {//traverse each coin
                 if (coins[coin] <= subAmount) {//if coin is less than very subAmount
-                    //choose current min so far, or amount - current coin =1
+                    //choose current min so far, or amount - current coin +1
                     DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - coins[coin]] + 1);
                 }else {
                     break;//optimized - no need to check further coins since they are sorted and the current one is less tha amount anyways
@@ -103,13 +77,13 @@ public class CoinChange {
                 }
             }
         }
-//if DP is more than amount - we had no way to create amount with coins w e have 
+//if DP is more than amount - we had no way to create amount with coins we have
         return DP[amount] > amount ? -1 : DP[amount];
     }
 
     private static int coinChangeNoptimization(int[] coins, int amount) {
         int[] DP = new int[amount + 1];
-        Arrays.fill(DP, amount + 1);
+        Arrays.fill(DP, amount + 1);//amount + 1 is just invalid filling to start with
 
         DP[0] = 0;//to get amount of 0 - we need 0 coins
 
@@ -122,5 +96,32 @@ public class CoinChange {
             }
         }
         return DP[amount] > amount ? -1 : DP[amount];
+    }
+
+    private static int coinChangeMy(int[] coins, int amount) {
+        Arrays.sort(coins);//optimization - no need to traverse more than needed later
+
+        int[]DP = new int[amount + 1];
+
+        Arrays.fill(DP,amount + 1);//pre-fill with MAX (bigger than target here )
+
+        DP[0]=0;//takes 0 coins to make 0 amount - smallest subproblem - going bottom UP
+
+        for (int subAmount = 0; subAmount <= amount; subAmount++) {//traverse all subamounts of amount
+
+            for (int eachCoin : coins){//traverse each coin in coins
+
+                if(eachCoin <= subAmount){//if to make this subAmount with current coin is possible
+
+                    //min of stored so far OR amount to make this subamount with current coin + 1 coin
+                    DP[subAmount] = Math.min(DP[subAmount], DP[subAmount - eachCoin] + 1);
+
+                }else {
+                    //go to new sub amount , since the smallest coin was bigger than current subamount ( we are soring in line 1  )
+                    break;//MIND!!! break id array was SORTED
+                }
+            }
+        }
+        return DP[amount] > amount ?   -1 : DP[amount];
     }
 }

@@ -36,7 +36,7 @@ public class LongestCommonSubsequence {
             return 0 ;
         }
 
-        if(firstString.charAt(firstLen - 1) == secondString.charAt(secLen - 1)){//both Strings end with same character
+        if(firstString.charAt(firstLen - 1) == secondString.charAt(secLen - 1)){//both Strings end with SAME character
 
             return  LCSSubsequenceLength(firstString, secondString, firstLen - 1, secLen - 1) + 1;//add 1 do LCS length res and continue without those last 2 same characters
 
@@ -66,8 +66,9 @@ public class LongestCommonSubsequence {
                 lookup.put(key, LCSLengthDynamic(X, Y, xLen - 1, yLen - 1, lookup) + 1);
             } else {
                 // otherwise, if the last character of `X` and `Y` don't match
-                lookup.put(key, Integer.max(LCSLengthDynamic(X, Y, xLen, yLen - 1, lookup),
-                                            LCSLengthDynamic(X, Y, xLen - 1, yLen, lookup)));
+                lookup.put(key,
+                           Integer.max(LCSLengthDynamic(X, Y, xLen, yLen - 1, lookup),
+                                       LCSLengthDynamic(X, Y, xLen - 1, yLen, lookup)));
             }
         }
 

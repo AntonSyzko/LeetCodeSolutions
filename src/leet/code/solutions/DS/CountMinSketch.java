@@ -10,28 +10,30 @@ Space Complexity: O(width × depth)
  */
 public class CountMinSketch {
 
-    private final int[][] table;
-    private final int width;  // COLS - number of buckets per hash function
-    private final int depth;  // ROWS - number of hash functions
+    private final int[][] TABLE;
+    private final int DEPTH_ROW;  // ROWS - number of hash functions
+    private final int WIDTH_COL;  // COLS - number of buckets per hash function
 
     public CountMinSketch(int width, int depth) {
-        this.width = width;
-        this.depth = depth;
-        this.table = new int[depth][width];
+        this.DEPTH_ROW = depth;
+        this.WIDTH_COL = width;
+        this.TABLE = new int[depth][width];
     }
 
     // Add element to sketch (increment count)
     public void increment(String element) {
+
         increment(element, 1);
     }
 
     // Add element with custom count
     public void increment(String element, int count) {
 
-        for (int row = 0; row < depth; row++) {//depth = No of hash functions applied
+        for (int row = 0; row < DEPTH_ROW; row++) {//depth = No of hash functions applied
+
             int hash = hash(element, row);
-            int index = Math.abs(hash) % width;
-            table[row][index] += count;
+            int index = Math.abs(hash) % WIDTH_COL;
+            TABLE[row][index] += count;//row -> hash functions call, index - the actual hash % width
         }
 
     }
@@ -41,10 +43,12 @@ public class CountMinSketch {
 
         int minCount = Integer.MAX_VALUE;
 
-        for (int row = 0; row < depth; row++) {//depth = No of hash functions applied
+        for (int row = 0; row < DEPTH_ROW; row++) {//depth = No of hash functions applied
+            
             int hash = hash(element, row);
-            int index = Math.abs(hash) % width;
-            minCount = Math.min(minCount, table[row][index]);
+            int index = Math.abs(hash) % WIDTH_COL;
+
+            minCount = Math.min(minCount, TABLE[row][index]);
         }
 
         return minCount;
@@ -60,7 +64,7 @@ public class CountMinSketch {
     public long getTotalCount() {
         long total = 0;
         // Use first row to avoid overcounting
-        for (int count : table[0]) {//value is in (depth) times rows, but we should not add em up, first one is an approximation enough for our count
+        for (int count : TABLE[0]) {//value is in (depth) times rows, but we should not add em up, first one is an approximation enough for our count
             total += count;
         }
 

@@ -12,6 +12,7 @@ public class MultiplyStrings {
 
 
     private static String multiply(String num1, String num2) {
+
         int num1Len = num1.length();
         int num2Len = num2.length();
 
@@ -29,7 +30,7 @@ public class MultiplyStrings {
               int multiply = digit1 * digit2;
               int sum = multiply + positions[ i  + j + 1];//positions[ i  + j + 1] holds tenth carry from previous iter
 
-              positions[i + j] += sum / 10;// Add to existing carry, don't overwrite
+              positions[i + j] += sum / 10;// AADDDDD += add to existing carry, DO NOT  overwrite
               positions[i + j + 1] = sum % 10;//stores tenth carry
 
           }

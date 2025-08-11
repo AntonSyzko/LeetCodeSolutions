@@ -42,7 +42,7 @@ public class JumpGame2 {
             return 0;
         }
 
-        int[] DP = new int[nums.length];
+        int[] DP = new int[nums.length];//filled with zeroes
 
         int start = 0;
         int end = nums.length;
@@ -52,7 +52,7 @@ public class JumpGame2 {
 
     private static int minJumps(int[] nums, int start, int end, int[] DP) {
         //base
-        if(start == end - 1 ){//reached end
+        if(start == end - 1 ){//reached very end
             return 0;
         }
 
@@ -66,7 +66,7 @@ public class JumpGame2 {
 
         int minJumps = Integer.MAX_VALUE;
 
-        for(int i = start + 1; i <= start + nums[start]; i++){//explore each possibility of jumps from START to START + nums[start]
+        for(int i = start + 1; i <= start + nums[start]; i++){//explore each possibility of jumps from START to (START + nums[start])
 
             int currCost = minJumps(nums, i, end, DP);
 
@@ -76,6 +76,8 @@ public class JumpGame2 {
 
         }
 
-        return (DP[start] = minJumps);
+        DP[start] = minJumps;//set memo
+
+        return DP[start] ;
     }
 }

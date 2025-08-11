@@ -42,8 +42,8 @@ word1 and word2 consist of lowercase English letters.
 public class EditDistance {
 
     public static void main(String[] args) {
-        String s1 = "monkeys";
-        String s2 = "money";
+        String s1 = "intention";
+        String s2 = "execution";
 
         int stepsTaken = minDistanceDP(s1, s2);
         System.out.println(stepsTaken);
@@ -57,8 +57,13 @@ public class EditDistance {
          O(m × n) for the memo table + O(m + n) for recursion stack
      */
     private static int minDistanceRecursiveWIthMemo(String word1, String word2) {
+
         Map<String, Integer> memo = new HashMap<>();
-        return dfs(0, 0, word1, word2, memo);
+
+        int w1Index = 0;
+        int w2Index = 0;
+
+        return dfs(w1Index, w2Index, word1, word2, memo);
     }
 
     private static int dfs(int w1Index, int w2Index, String word1, String word2, Map<String, Integer> memo) {

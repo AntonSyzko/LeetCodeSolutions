@@ -69,16 +69,18 @@ public class RottingOranges {
         int ROWS = grid.length;
         int COLS = grid[0].length;
 
-        Queue<int[]> queue = new LinkedList<>();
+        Queue<int[]> queue = new LinkedList<>();//int[] is array of two coordinates {row, col}
 
         // Count fresh oranges and add rotten oranges to queue
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
+
                 if(grid[row][col] == 1) {
                     freshOranges++;
                 }else if (grid[row][col] == 2) {
                     queue.add(new int[]{row, col});
                 }
+
             }
         }
 
@@ -116,7 +118,7 @@ public class RottingOranges {
                         freshOranges--;
                     }
                 }
-            }
+            }//for ends
 
             minutesRes++;
         }

@@ -54,8 +54,8 @@ public class PathWithMaxMinValue {
     /**
      * Solution 2: Binary Search + BFS
      *
-     * Time Complexity: O(mn * log(max_value)) where max_value is largest grid value
-     * Space Complexity: O(mn) for BFS queue and visited array
+     * Time Complexity: O(m*n * log(max_value)) where max_value is largest grid value
+     * Space Complexity: O(m*n) for BFS queue and visited array
      *
      * Key idea: Binary search on answer + BFS to check if path exists
      */
@@ -87,8 +87,8 @@ public class PathWithMaxMinValue {
      * Uses BFS to explore all reachable cells
      */
     private static boolean canReachDestination(int[][] grid, int minValue) {
-        int rows = grid.length;
-        int cols = grid[0].length;
+        int ROWS = grid.length;
+        int COLS = grid[0].length;
 
         // If starting cell doesn't meet minimum requirement, impossible
         if (grid[0][0] < minValue) {
@@ -96,22 +96,22 @@ public class PathWithMaxMinValue {
         }
 
         // BFS setup
-        Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[rows][cols];
+        Queue<int[]> queue = new LinkedList<>();//int[] is {row, col}
+        boolean[][] visited = new boolean[ROWS][COLS];
         int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
-        // Start BFS from top-left
+        // Start BFS from top-left cell
         queue.offer(new int[]{0, 0});
         visited[0][0] = true;
 
         while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int row = current[0];
-            int col = current[1];
+            int[] currentCellFromQ = queue.poll();
+            int row = currentCellFromQ[0];
+            int col = currentCellFromQ[1];
 
             // Check if we reached destination
-            if (row == rows - 1 && col == cols - 1) {
-                return true;
+            if (row == ROWS - 1 && col == COLS - 1) {
+                return true;//exit fast
             }
 
             // Explore all 4 neighbors
@@ -120,15 +120,15 @@ public class PathWithMaxMinValue {
                 int newCol = col + dir[1];
 
                 // Check if neighbor is valid, unvisited, and meets minimum requirement
-                if (isValid(newRow, newCol, rows, cols) &&
+                if (isValid(newRow, newCol, ROWS, COLS) &&
                         !visited[newRow][newCol] &&
                         grid[newRow][newCol] >= minValue) {
 
                     visited[newRow][newCol] = true;
                     queue.offer(new int[]{newRow, newCol});
                 }
-            }
-        }
+            }//for end
+        }//while end
 
         return false; // Destination not reachable
     }

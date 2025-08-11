@@ -35,7 +35,7 @@ Output: 3
 public class UniqueEmailAdressess {
     public static void main(String[] args) {
      String[] emails = {"test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"};
-      int unques = numUniqueEmails(emails);
+      int unques = numUniqueEmailsMy(emails);
         System.out.println(unques);
     }
 
@@ -89,9 +89,7 @@ public class UniqueEmailAdressess {
 
         if(emails.length == 1) return 1;
 
-        Set<String> set = new HashSet<>();
-
-        StringBuilder sb = new StringBuilder();
+        Set<String> res = new HashSet<>();
 
         for (String email : emails) {
 
@@ -99,20 +97,22 @@ public class UniqueEmailAdressess {
             String local =  parts[0];
             String domain = parts[1];
 
+            StringBuilder sb = new StringBuilder();
+
             for(char c : local.toCharArray()){
-                if(c == '.'){
+                if(c == '.'){//dots are ignored in emails
                     continue;
-                }else if (c == '+'){
+                }else if (c == '+'){//everything after + is ignored
                     break;
                 }
+
                 sb.append(c);
             }
 
             sb.append("@").append(domain);
-            set.add(sb.toString());
-            sb = new StringBuilder();
+            res.add(sb.toString());
         }
 
-        return set.size();
+        return res.size();
     }
 }

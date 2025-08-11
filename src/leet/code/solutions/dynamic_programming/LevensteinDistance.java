@@ -19,11 +19,13 @@ public class LevensteinDistance {
         String source = "kitten";
         String target = "sitting";
 
-        int distance = levensteinDist(source, source.length(), target, target.length());
+        int sourceLen = source.length();
+        int targetLen = target.length();
+
+        int distance = levensteinDist(source, sourceLen, target, targetLen);
 
         System.out.println(distance);
     }
-
 
     public static int levensteinDist(String sourceStr, int sourceLen, String targetStr, int targetLen) {
         if (sourceLen == 0) {
@@ -34,14 +36,22 @@ public class LevensteinDistance {
             return sourceLen;
         }
 
-        int lastCharacterReplacementCost = sourceStr.charAt(sourceLen - 1) == targetStr.charAt(targetLen - 1) ? 0 : 1;   //last  chars same ?
 
         //Delete the last character of source. The size of SOURCE reduces by 1, and target remains the same. This accounts for X[1…i-1], Y[1…j] as we move in on the source string, but not in the target string.
-        int deleteLastFromSource = levensteinDist(sourceStr, sourceLen - 1, targetStr, targetLen) + 1;
+        int deleteLastFromSource = levensteinDist(sourceStr, sourceLen - 1, targetStr, targetLen) + 1;//+1 is a cost
         //Insert the last character of TARGET into SOURCE. The size of TARGET reduces by 1, and X remains the same. This accounts for X[1…i], Y[1…j-1] as we move in on the target substring, but not in the source substring.
         int insertLastFromTargetIntoSource = levensteinDist(sourceStr, sourceLen, targetStr, targetLen - 1)  + 1;
+
+        int lastCharacterReplacementCost ;
+
+        if(sourceStr.charAt(sourceLen - 1) == targetStr.charAt(targetLen - 1)){//last chars of both strings are SAME ?
+            lastCharacterReplacementCost = 0;
+        }else {
+            lastCharacterReplacementCost = 1;//last chars are NOT SAME
+        }
+
         //Substitute (Replace) the current character of SOURCE by the current character of TARGET. The size of both SOURCE and TARGET reduces by 1. This accounts for X[1…i-1], Y[1…j-1] as we move in both the source and target string.
-        int substituteSourceCharByTargetChar = levensteinDist(sourceStr, sourceLen - 1, targetStr, targetLen - 1) + lastCharacterReplacementCost;
+        int substituteSourceCharByTargetChar = lastCharacterReplacementCost + levensteinDist(sourceStr, sourceLen - 1, targetStr, targetLen - 1) ;
 
         return minOfThree(deleteLastFromSource, insertLastFromTargetIntoSource, substituteSourceCharByTargetChar);
     }
@@ -95,6 +105,5 @@ public class LevensteinDistance {
 
         }
         return T[m][n];
-
     }
 }

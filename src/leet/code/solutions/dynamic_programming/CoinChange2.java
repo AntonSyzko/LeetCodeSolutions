@@ -45,8 +45,8 @@ public class CoinChange2 {
 
     //------------------ recursive --------------------
     private static int changeRecursive(int amount, int[] coins) {
-        int startingCoinIndex = 0;
-        return dfsUnboundedKnapsack(coins, startingCoinIndex, amount);
+        int index = 0;
+        return dfsUnboundedKnapsack(coins, index, amount);
     }
 
     private static int dfsUnboundedKnapsack(int[] coins, int coinIndex, int amount) {
@@ -60,10 +60,10 @@ public class CoinChange2 {
             return 0;
         }
 
-                //Unbounded knapsack
-                // Two choices for current coin:
+                //Unbounded knapsack : Two choices for current coin:
+
                 // 1. Skip current coin - move to next coin with same amount
-            int skipCoin =  dfsUnboundedKnapsack(coins, coinIndex + 1, amount);
+        int skipCoin =  dfsUnboundedKnapsack(coins, coinIndex + 1, amount);
 
                // 2. Use current coin - stay at same coin (unlimited use) with reduced amount
         int useCoin = dfsUnboundedKnapsack(coins, coinIndex , amount - coins[coinIndex]);
@@ -73,10 +73,11 @@ public class CoinChange2 {
 
     // OPTIMIZED RECURSIVE WITH MEMOIZATION
     public static int change_Memoized(int amount, int[] coins) {
-        int startingCoinIndex = 0;
+        int index = 0;
         // Memoization map: key = "coinIndex|amount", value = number of combinations
         Map<String, Integer> memo = new HashMap<>();
-        return dfsMemo(coins, startingCoinIndex, amount, memo);
+
+        return dfsMemo(coins, index, amount, memo);
     }
 
     private static int dfsMemo(int[] coins, int coinIndex, int amount, Map<String, Integer> memo) {

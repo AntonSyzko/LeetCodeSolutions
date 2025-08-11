@@ -49,12 +49,13 @@ public class DailyTemperatures {
 
         Stack<TemperatureIndexPair> stack = new Stack<>();
 
-        for (int i = temperatures.length-1; i >= 0; i--) {//iterate backwards
+        for (int i = temperatures.length - 1; i >= 0; i--) {//iterate backwards
 
+            int currTemp = temperatures[i];
             //if temperature on top of non-empty stack is LESS  or == then curr temp
             while (!stack.isEmpty() //if smth is in stack
                     &&
-                    stack.peek().temperature <= temperatures[i]) {
+                    stack.peek().temperature <= currTemp) {
 
                stack.pop();//delete it from stack ( as anyway it is lower temperature for everything later , since even current is BIGGER than it
 
@@ -71,6 +72,26 @@ public class DailyTemperatures {
         }
 
         return answers;
+    }
+
+    private static int[] dailyTemperaturesArrayPair(int[] temperatures) {
+        int len = temperatures.length;
+        int[] res = new int[len];
+        Stack<int[]> stack = new Stack<>();//int[] is a PAIR of { temperature, index it has seen at }
+
+        for(int i = len -1 ; i >= 0; i--){// <---- iterate backwards !
+            int curr = temperatures[i];
+
+            while (!stack.isEmpty() && stack.peek()[0] <= curr){
+                stack.pop();
+            }
+
+            res[i] = stack.isEmpty() ? 0 : stack.peek()[1] - i; // diff of indexes
+
+            stack.push(new int[]{curr, i});// pair of temperature : index it has seen at
+        }
+
+        return res;
     }
 
     private static int[] dailyTemperatures2(int[] temperatures) {

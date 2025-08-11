@@ -42,10 +42,11 @@ public class FindMinimumInRotatedSortedArray {
 
         int[] nums = {4,5,6,7,0,1,2,3};
 
-        int min = findMinNik(nums);
+        int min = findMin(nums);
         System.out.println(min);
     }
 
+    // O ( log n), O(1)
     private static int findMin(int[] nums) {
         if(nums.length == 0) return -1;
         if(nums.length == 1) return nums[0];

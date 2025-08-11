@@ -1,0 +1,37 @@
+Core Multithreading LeetCode Problems
+Easy to Medium:
+
+Print in Order (1114) - Use synchronization to ensure three threads print in sequence
+Print FooBar Alternately (1115) - Two threads alternating between printing "foo" and "bar"
+Print Zero Even Odd (1116) - Three threads coordinating to print numbers in a specific pattern
+Building H2O (1117) - Synchronize hydrogen and oxygen threads to form water molecules
+
+Medium to Hard:
+
+The Dining Philosophers (1226) - Classic deadlock prevention problem
+Fizz Buzz Multithreaded (1195) - Multiple threads implementing FizzBuzz with proper synchronization
+Design Bounded Blocking Queue (1188) - Implement a thread-safe bounded queue
+Traffic Light Controlled Intersection (1279) - Control car movements through an intersection
+
+Key Concepts These Problems Test
+Synchronization Mechanisms:
+
+synchronized keyword and blocks
+wait(), notify(), notifyAll()
+CountDownLatch, CyclicBarrier
+Semaphore for resource limiting
+ReentrantLock and Condition variables
+AtomicInteger and other atomic classes
+
+Common Patterns:
+
+Producer-consumer problems
+Reader-writer scenarios
+Thread coordination and ordering
+Deadlock prevention
+Resource sharing and mutual exclusion
+
+Interview Preparation Tips
+Start with the "Print in Order" problem as it introduces basic synchronization concepts, then progress through the others. Focus on understanding different synchronization approaches for each problem - many can be solved using multiple techniques (synchronized methods vs. locks vs. semaphores).
+Practice explaining your reasoning for choosing specific synchronization primitives, as interviewers often ask about trade-offs between different approaches. Also be prepared to discuss potential issues like deadlocks, race conditions, and performance implications.
+Would you like me to walk through the solution approach for any specific problem, or explain particular synchronization concepts in more detail?RetryClaude can make mistakes. Please double-check responses.Research Sonnet 4

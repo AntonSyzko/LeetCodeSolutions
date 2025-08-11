@@ -1,5 +1,10 @@
 package leet.code.solutions.dynamic_programming;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /*
 https://leetcode.com/problems/find-minimum-time-to-reach-last-room-i/description/
 
@@ -63,62 +68,88 @@ public class FindMinimumTimeToReachLastRoom {
         // Example 3
         int[][] moveTime3 = {{0, 1}, {1, 2}};
         System.out.println("Example 3: " + minTimeToReach(moveTime3)); // Expected: 3
+
+        // Test the examples
+        System.out.println(minTimeToReach(new int[][]{{0,4},{4,4}})); // Output: 6
+        System.out.println(minTimeToReach(new int[][]{{0,1},{2,3}})); // Output: 3
+        System.out.println(minTimeToReach(new int[][]{{0,0,0},{0,0,0}})); // Output: 2
     }
 
 
     public static int minTimeToReach(int[][] moveTime) {
-        if (moveTime == null || moveTime.length == 0 || moveTime[0].length == 0) {
-            return 0;
-        }
-
         int rows = moveTime.length;
         int cols = moveTime[0].length;
 
-        // Memoization array to avoid recalculating the same states
-        Integer[][] memo = new Integer[rows][cols];
+        // Can't move from start? Return -1
+        if (moveTime[0][1] > 1 && moveTime[1][0] > 1) {
+            return -1;
+        }
 
-        return minTimeRecursive(moveTime, 0, 0, rows, cols, memo, moveTime[0][0]);
+        // Memo: state -> minimum time to reach destination
+        Map<String, Integer> memo = new HashMap<>();
+
+        // Track current path to prevent cycles
+        Set<String> visiting = new HashSet<>();
+
+        int startRow = 0;
+        int startCol = 0;
+        int currentTime = 0;
+
+        return dfs(moveTime, startRow, startCol, currentTime, rows, cols, memo, visiting);
     }
 
-    private static int minTimeRecursive(int[][] moveTime, int row, int col, int rows, int cols, Integer[][] memo, int currentTime) {
-        // Base case: reached the destination
-        if (row == rows - 1 && col == cols - 1) {
+    private static int dfs(int[][] moveTime, int row, int col, int currentTime, int ROWS, int COLS, Map<String, Integer> memo, Set<String> visiting) {
+
+        // Base case: reached destination
+        if (row == ROWS - 1 && col == COLS - 1) {
             return currentTime;
         }
 
-        // If we've already computed this state, return the cached result
-        if (memo[row][col] != null) {
-            return memo[row][col];
+        // Calculate actual time we can be at this position
+        int actualTime = currentTime;
+
+        if (currentTime < moveTime[row][col]) {
+            int waitTime = moveTime[row][col] - currentTime;
+            actualTime = moveTime[row][col] + (waitTime % 2);
         }
 
-        // Define possible directions: right, down, left, up
-        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        // Create state key for this exact situation
+        String state = row + "," + col + "," + actualTime;
 
+        // Cycle detection: if we're currently exploring this state, return MAX to avoid it
+        if (visiting.contains(state)) {
+            return Integer.MAX_VALUE;
+        }
+
+        // Check memo
+        if (memo.containsKey(state)) {
+            return memo.get(state);
+        }
+
+        // Mark as currently visiting
+        visiting.add(state);
+
+        int[][] dirs = {{0,1}, {1,0}, {0,-1}, {-1,0}};
         int minTime = Integer.MAX_VALUE;
 
-        // Try all possible directions
-        for (int[] dir : directions) {
+        // Try all 4 directions
+        for (int[] dir : dirs) {
             int newRow = row + dir[0];
             int newCol = col + dir[1];
 
-            // Check if the new position is valid
-            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
-                // Calculate new time: max(current time + 1, minimum moveTime for the new room)
-                int timeAfterMove = currentTime + 1;
+            if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS) {
 
-                int timeToEnterNewRoom = Math.max(timeAfterMove, moveTime[newRow][newCol]);
+                int result = dfs(moveTime, newRow, newCol, actualTime + 1, ROWS, COLS, memo, visiting);
 
-                // Recursive call to find minimum time from new position
-                int timeFromNewPos = minTimeRecursive(moveTime, newRow, newCol, rows, cols, memo, timeToEnterNewRoom);
-
-                // Update minimum time
-                minTime = Math.min(minTime, timeFromNewPos);
+                if (result != Integer.MAX_VALUE) {
+                    minTime = Math.min(minTime, result);
+                }
             }
         }
 
-        // Cache the result
-        memo[row][col] = minTime;
-
+        // Unmark visiting and cache result
+        visiting.remove(state);
+        memo.put(state, minTime);
         return minTime;
     }
 }

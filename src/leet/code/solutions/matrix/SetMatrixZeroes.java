@@ -35,16 +35,44 @@ public class SetMatrixZeroes {
 
     public static void main(String[] args) {
         int[][] matrix = {
-                {1,1,0,0},
+                {1,1,1,1},
                 {0,1,1,0},
-                {1,0,0,1},
+                {1,1,1,1},
         };
 
-        setZeroesHashSet(matrix);
+        setZeroes(matrix);
         System.out.println(Arrays.deepToString(matrix));
     }
 
-    private static void setZeroes(int[][] matrix) {
+    private  static void setZeroes(int[][] matrix) {
+        int ROWS = matrix.length;
+        int COLS = matrix[0].length;
+
+        boolean[] zeroRows = new boolean[ROWS];
+        boolean[] zeroCols = new boolean[COLS];
+
+        //1. set array  booleans as TRUE for rows AND cols where 0 is met
+        for(int row = 0; row < ROWS; row++){
+            for(int col = 0; col < COLS; col++){
+                if(matrix[row][col] == 0){
+                    zeroRows[row] = true;
+                    zeroCols[col] = true;
+                }
+            }
+        }
+
+        //2. wherewer boolean array by row OR col is true - set cell as 0
+        for(int row = 0; row < ROWS; row++){
+            for(int col = 0; col < COLS; col++){
+                if(zeroRows[row] || zeroCols[col]){
+                    matrix[row][col] = 0;
+                }
+            }
+        }
+
+    }
+
+    private static void setZeroes2(int[][] matrix) {
         int ROWS = matrix.length;
         int COLS = matrix[0].length;
 

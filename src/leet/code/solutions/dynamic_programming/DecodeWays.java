@@ -100,16 +100,16 @@ Space Complexity:
 
         for (int i = 2; i <= str.length() ; i++) {//start from 2 as we have populated 0 and 1
 
-            int oneDigit = Integer.valueOf(str.substring(i-1, i));//substract that 1 digit
+            int oneDigit = Integer.valueOf(str.substring(i - 1, i));//substract that 1 digit
 
-            int twoDigits = Integer.valueOf(str.substring(i-2, i));//substract 2 digits
+            int twoDigits = Integer.valueOf(str.substring(i - 2, i));//substract 2 digits
 
             if(oneDigit >= 1){
-                DP[i] += DP[i -1];
+                DP[i] += DP[i - 1];// += !
             }
 
             if(twoDigits >= 10 && twoDigits <= 26){
-                DP[i] += DP[i-2];
+                DP[i] += DP[i-2];//this adds on top of line 108
             }
         }
         return DP[str.length()];

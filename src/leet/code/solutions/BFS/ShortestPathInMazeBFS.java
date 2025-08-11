@@ -5,7 +5,6 @@ import java.util.Queue;
 
 public class ShortestPathInMazeBFS {
 
-
     public static void main(String[] args) {
         int[][] maze = {
                 {1, 0, 1, 1, 1},
@@ -27,8 +26,8 @@ public class ShortestPathInMazeBFS {
             return -1;
         }
 
-        int rows = maze.length;
-        int cols = maze[0].length;
+        int ROWS = maze.length;
+        int COLS = maze[0].length;
 
         // Check if start and end are valid
         if (maze[startRow][startCol] != 1 || maze[endRow][endCol] != 1) {
@@ -43,7 +42,7 @@ public class ShortestPathInMazeBFS {
         // Directions: up, down, left, right
         int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-        boolean[][] visited = new boolean[rows][cols];
+        boolean[][] visited = new boolean[ROWS][COLS];
         visited[startRow][startCol] = true;
 
         Queue<Point> queue = new LinkedList<>();
@@ -53,20 +52,24 @@ public class ShortestPathInMazeBFS {
         while (!queue.isEmpty()) {
             Point current = queue.poll();
 
+            int currentX = current.x;
+            int currentY = current.y;
+            int currentDistanceTo = current.dist;
+
             // Explore all 4 directions
             for (int[] dir : directions) {
-                int newX = current.x + dir[0];
-                int newY = current.y + dir[1];
+                int newX = currentX + dir[0];
+                int newY = currentY + dir[1];
 
                 // Check if the new position is valid
                 if (isValid(maze, visited, newX, newY)) {
                     // Check if we reached the destination
                     if (newX == endRow && newY == endCol) {
-                        return current.dist + 1;
+                        return currentDistanceTo + 1;//exit fast
                     }
 
                     visited[newX][newY] = true;
-                    queue.offer(new Point(newX, newY, current.dist + 1));
+                    queue.offer(new Point(newX, newY, currentDistanceTo  + 1));
                 }
             }
         }

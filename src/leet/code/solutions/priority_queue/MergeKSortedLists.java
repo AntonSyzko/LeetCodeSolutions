@@ -76,8 +76,6 @@ public class MergeKSortedLists {
     private static ListNode mergeKLists(ListNode[] lists) {
         PriorityQueue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(node -> node.val));
 
-        ListNode headHolder = new ListNode(0);
-        ListNode current = headHolder;
 
         //traverse all list nodex and add to min heap
         for (ListNode node : lists) {
@@ -89,14 +87,17 @@ public class MergeKSortedLists {
 
         }
 
+        ListNode dummy = new ListNode(0);
+        ListNode head = dummy;
+
         // Build sorted list by polling from heap
         while (!minHeap.isEmpty()) {
-            ListNode nodeFromTopOfTheMinHeap = minHeap.poll();
-            current.next = new ListNode(nodeFromTopOfTheMinHeap.val);
-            current = current.next;
+            ListNode fromPQ = minHeap.poll();
+            head.next = fromPQ;
+            head = head.next;
         }
 
-        return headHolder.next;
+        return dummy.next;
     }
 
     private static ListNode mergeKLists2(ListNode[] lists) {

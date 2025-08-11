@@ -67,8 +67,8 @@ public class RobHouse2 {
 
         for (int i = 2; i < nums.length; i++) {
 
-            int robThisAndTwoBack = nums[i] + DP[i-2];
-            int skipThisAndRobOneBack = DP[i-1];
+            int robThisAndTwoBack = nums[i] + DP[i-2];//rob current house + next next -2
+            int skipThisAndRobOneBack = DP[i-1];//do not rob this - move to next -1
 
             DP[i] = Math.max( robThisAndTwoBack, skipThisAndRobOneBack);
 

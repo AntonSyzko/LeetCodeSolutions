@@ -69,9 +69,9 @@ public class EqualSubsetPartitionProblem {
         int len = values.length;
 
         //cause if sum of any combination of elements == half sum of all, meaning array can be partitioned in half
-        int halfSumOfAllElements = totalSum / 2;
+        int halfSum = totalSum / 2;
 
-        return hasSubsetSumHelper(values, halfSumOfAllElements, len);
+        return hasSubsetSumHelper(values, halfSum, len);
 
     }
 
@@ -90,23 +90,19 @@ public class EqualSubsetPartitionProblem {
             return false; // no result can be obtained
         }
 
-        int lastElementIndex = len - 1;
-
         //if current element in index ( len -1 ) is itself BIGGER than our half sum
-        if(values[lastElementIndex] > halfSum){
+        if(values[len -1 ] > halfSum){
 
-            return hasSubsetSumHelper(values, halfSum, lastElementIndex);//recur without last element
+            return hasSubsetSumHelper(values, halfSum, len -1 );//recur without last element moving to next element left to it from end
 
         }
 
-
         //calling two times recursively - hence 2^n time Big O
-        boolean withCurrentElement = hasSubsetSumHelper(values, halfSum - values[lastElementIndex], lastElementIndex);
+        boolean withCurrentElement = hasSubsetSumHelper(values, halfSum - values[len -1], len - 1);
 
-        boolean withoutCurrentElement = hasSubsetSumHelper(values, halfSum, lastElementIndex);
+        boolean withoutCurrentElement = hasSubsetSumHelper(values, halfSum, len - 1);
 
         return withCurrentElement || withoutCurrentElement;
 
     }
-
     }

@@ -23,39 +23,41 @@ public class CombinationSum {
         System.out.println(res);
     }
 
-    private static  List<List<Integer>> combinationSum(int[] candidates, int target) {
+    private static  List<List<Integer>> combinationSum(int[] candidates, int targetSum) {
 
         if(candidates == null || candidates.length == 0){
             return Collections.emptyList();
         }
 
-        List<List<Integer>> resultedCombinations = new ArrayList<>();
-        List<Integer> currentCombination = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> combo = new ArrayList<>();
 
         Arrays.sort(candidates);//SOORT !!! for not to proceed with higher values than a target
 
-        combinationSum(candidates, target, 0, currentCombination, resultedCombinations);
+        int index = 0;
 
-        return resultedCombinations;
+        combinationSum(candidates, targetSum, index, combo, res);
+
+        return res;
     }
 
-    private static void combinationSum(int[] candidates, int target, int index, List<Integer> currentCombination, List<List<Integer>> resultedCombinations) {
-        if(target == 0) {//BASE
-            resultedCombinations.add(new ArrayList<>(currentCombination));
+    private static void combinationSum(int[] candidates, int targetSum, int index, List<Integer> combo, List<List<Integer>> res) {
+        if(targetSum == 0) {//BASE
+            res.add(new ArrayList<>(combo));
             return;
         }
 
         for (int i = index; i < candidates.length ; i++) {
 
-            if(target < candidates[i]){//target itself is LESS than this candidate
+            if(candidates[i] > targetSum){//target itself is LESS than this candidate
                 return;//since sorted no sense to proceed with higher values
             }
 
-            currentCombination.add(candidates[i]);
+            combo.add(candidates[i]);
 
-            combinationSum(candidates, target - candidates[i], i, currentCombination, resultedCombinations);
+            combinationSum(candidates, targetSum - candidates[i], i, combo, res);
 
-            currentCombination.remove(currentCombination.size()-1);//backtrack
+            combo.remove(combo.size()-1);//backtrack
         }
     }
 }

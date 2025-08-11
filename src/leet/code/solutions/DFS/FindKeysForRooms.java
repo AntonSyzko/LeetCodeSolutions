@@ -32,28 +32,28 @@ public class FindKeysForRooms {
     }
 
         public static boolean canVisitAllRooms(List<List<Integer>> rooms) {
-                Set<Integer> visitedRoomsBacktracking = new HashSet<>();//backtrack what has been visited
-                visitedRoomsBacktracking.add(0);//by default we visit ZERO index room from list
+                Set<Integer> visitedRooms= new HashSet<>();//backtrack what has been visited
+                visitedRooms.add(0);//by default we visit ZERO index room from list
 
-                Stack<Integer> dfsStack = new Stack<>();//DFS storage
-                dfsStack.add(0);//default 0 index room we are at
+                Stack<Integer> stack = new Stack<>();//DFS storage
+                stack.add(0);//default 0 index room we are at
 
-                while (!dfsStack.isEmpty()){ //while in DFS stack something
+                while (!stack.isEmpty()){ //while in DFS stack something
 
-                    int keyOnTopOfStack = dfsStack.pop();
+                    int keyOnTopOfStack = stack.pop();
                     List<Integer> keysFoundInCurrentRoom = rooms.get(keyOnTopOfStack);//get keys stored in the room we are currently visiting
                     //keys ARE for the other room !!!
                     for (int key : keysFoundInCurrentRoom){ //for each key check
 
-                        if(!visitedRoomsBacktracking.contains(key)) { // if NOT YET visited
-                            visitedRoomsBacktracking.add(key); //add to visit
-                            dfsStack.add(key);// add to DFS as back track where we are
+                        if(!visitedRooms.contains(key)) { // if NOT YET visited
+                            visitedRooms.add(key); //add to visit
+                            stack.add(key);// add to DFS as back track where we are
                         }
 
                     }
                 }
 
-                return visitedRoomsBacktracking.size() == rooms.size(); //if size of visited = size of all romms - we  have successfully traversed all romms
+                return visitedRooms.size() == rooms.size(); //if size of visited = size of all romms - we  have successfully traversed all romms
     }
 
         public boolean canVisitAllRoomsArray(List<List<Integer>> rooms) {

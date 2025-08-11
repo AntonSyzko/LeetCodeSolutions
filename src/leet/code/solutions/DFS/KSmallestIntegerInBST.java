@@ -32,7 +32,7 @@ public class KSmallestIntegerInBST {
         root.left = new TreeNode(1);
         root.right = new TreeNode(3);
         int k = 1;
-        int kSmallest = kthSmallest(root, k);
+        int kSmallest = kthSmallestHeap(root, k);
         System.out.println(kSmallest);
     }
 
@@ -61,8 +61,9 @@ public class KSmallestIntegerInBST {
         return -1;
     }
 
+    //BFS
     private static int kthSmallestHeap(TreeNode root, int k) {
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a,b)-> b-a);
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a,b)-> b - a);
 
         Queue<TreeNode> bfsQueue = new LinkedList<>();
         bfsQueue.add(root);

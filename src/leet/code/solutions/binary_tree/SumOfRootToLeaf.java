@@ -49,7 +49,7 @@ public class SumOfRootToLeaf {
 
     private static int findBranchSum(TreeNode node, int sum) {
         // base case: sum is 0 for an empty tree
-        if(node==null){
+        if(node == null){
             return 0;
         }
 
@@ -102,8 +102,6 @@ public class SumOfRootToLeaf {
         return sum;
     }
 
-
-
     private static class TreeNode {
 
         int val;
@@ -148,5 +146,4 @@ public class SumOfRootToLeaf {
                     '}';
         }
     }
-
     }

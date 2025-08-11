@@ -49,4 +49,30 @@ public class RotateArray {
         }
     }
 
+    private static int[] rotate(int[] nums, int k) {
+        int len = nums.length;
+        int[] res = new int[len];
+
+        int indexInRotated = 0;
+        int kCopy = k;
+
+        while( kCopy >= 0){
+            int elementFromOrigonal = nums[len - kCopy -1];
+            res[indexInRotated] = elementFromOrigonal;
+            indexInRotated++;
+            kCopy--;
+        }
+
+        int indexInOriginal = 0;
+
+        while(k > 0){
+            int elementFromOriginal = nums[indexInOriginal];
+            res[indexInRotated] = elementFromOriginal;//indexInRotated continues growing after prev while loop
+            indexInRotated++;
+            indexInOriginal++;
+            k--;
+        }
+
+        return res;
+    }
 }

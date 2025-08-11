@@ -87,7 +87,7 @@ public class PathSum {
         }
 
         if(node.left == null && node.right == null){ // both leaves - no more siblings
-            return sum == node.val;//actual equality check
+            return sum == node.val;//actual equality check / the last element is exact difference to make 0 zero sum - hence true ( it's like to our zero 1 is left - and current IS 1
         }
 
         return hasPathSumRecursive(node.left, sum - node.val) || hasPathSumRecursive(node.right,  sum - node.val);
@@ -111,6 +111,5 @@ public class PathSum {
         //has siblings - continue aggregating and checking if target hit
         return hasPathSumRecursiveHelper(node.left, ongoingSum, targetSum) || hasPathSumRecursiveHelper(node.right, ongoingSum, targetSum);
     }
-
 
 }

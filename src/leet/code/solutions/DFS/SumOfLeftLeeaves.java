@@ -16,12 +16,11 @@ public class SumOfLeftLeeaves {
     }
 
     private static int sumOfLeftLeaves(TreeNode node) {
-        if(node == null){
+        if(node == null){//BASE
             return 0;
         }
 
-        int sumOfLeft = 0;
-
+        int sumOfLeft = 0;//res holder
 
         if(node.left != null){
 
@@ -45,7 +44,6 @@ public class SumOfLeftLeeaves {
         return sumOfLeft;
 
     }
-
 
     private static int sumOfLeftLeaves2(TreeNode node) {
 

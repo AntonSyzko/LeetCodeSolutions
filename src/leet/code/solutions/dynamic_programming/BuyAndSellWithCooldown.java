@@ -50,43 +50,63 @@ public class BuyAndSellWithCooldown {
 
         Map<String, Integer> DP = new HashMap<>();
 
-        boolean buying = true;
+        boolean buyingFlag = true;
 
-        return maxProfitDFS_DP(0, buying, prices, DP);
+        int index = 0;
+
+        return maxProfitDFS_DP(index, buyingFlag, prices, DP);
     }
 
     /*
       time : O(n)
       space: O(n)
      */
-    private static int maxProfitDFS_DP(int index, boolean buying, int[] prices, Map<String ,Integer> DP) {
+    private static int maxProfitDFS_DP(int index, boolean buyingFlag, int[] prices, Map<String ,Integer> DP) {
         //BASE
         if(index >= prices.length){
             return 0;
         }
 
-        String  dp_key = index + "|" + buying;//memo key
+        String  dp_key = index + "|" + buyingFlag;//memo key
 
         if(DP.containsKey(dp_key)){//memo hit
             return DP.get(dp_key);
         }
 
-        int cooldown = maxProfitDFS_DP(index + 1, buying, prices, DP);//skip day , no action, buying stays same
+        //cooldown means NO BUY, NO SELL - nothing, flag stays same
+        int cooldown = maxProfitDFS_DP(index + 1, buyingFlag, prices, DP);//skip day , no action, buying stays same
 
-        if(buying){
-            buying = false;//reverse boolean
-            int buy = maxProfitDFS_DP(index + 1, buying, prices, DP) - prices[index];// - prices[i] -> we have spent some money
-            DP.put(dp_key, Math.max(buy, cooldown));
+        if(buyingFlag){
+
+            buyingFlag = false;//reverse boolean
+
+            int buy = maxProfitDFS_DP(index + 1, buyingFlag, prices, DP)
+                    - prices[index];// - prices[index] -> we have SPENT (-) some money
+
+            DP.put(dp_key, Math.max(buy, cooldown));//max of BUY or COOLDOWN
 
         }else{//sell
 
-            buying = true;
-            int sell = maxProfitDFS_DP(index + 2, buying, prices, DP) +  prices[index]; // +2 since after sell is cooldown mandatory , // + prices[i] -> we have gained some money by selling
-            DP.put(dp_key, Math.max(sell, cooldown));
+            buyingFlag = true;
+
+            int sell = maxProfitDFS_DP(index + 2, buyingFlag, prices, DP) // +2 since after sell is cooldown mandatory ,
+                    +  prices[index];// + prices[index] -> we have GAINED (+) some money by selling
+
+            DP.put(dp_key, Math.max(sell, cooldown));//MAX of SELL or COOLDOWN
         }
 
         return DP.get(dp_key);
     }
+
+    /*
+
+    1. - cooldown - no buy, no sell, just index +1 - move to next day
+    2. - buy - recur (with index +1) - prices[i] as we have spent some money
+    3. - sell - recur (with index + 2 )+ prices[i] as we have gained some money
+
+    res is always MAX  (cooldown and buy) or (cooldown and sell)
+
+     */
 
     // ------------ RECURSIVE -----------------------
     private static int maxProfitRecursive(int[] prices) {
@@ -106,18 +126,22 @@ public class BuyAndSellWithCooldown {
             return 0;
         }
 
-        int cooldown = maxProfitDFSRec(i+1, buying, prices);//here 'buying' is not altered, reversed... cooldown mena no action, just skip a day
+        int cooldown = maxProfitDFSRec(i + 1, buying, prices);//here 'buying' is not altered, reversed... cooldown mean no action, just skip a day
 
         if(buying){
 
             buying = false;//basically reverse boolean buying = ! buying meaning selling further since we have bought at this step
+
             int buy = maxProfitDFSRec(i + 1, buying, prices) - prices[i]; // - prices[i] -> we have spent some money
+
             return Math.max(buy, cooldown);
 
         }else{//selling
 
             buying = true;//basically reverse boolean buying = ! buying meaning buying further since we have sold at this step
+
             int sell = maxProfitDFSRec(i + 2, buying, prices) +  prices[i];//+2 cause we have to skip a day ( COOLDOWN) after selling // // + prices[i] -> we have GAINED some money  when selling
+
             return Math.max(sell, cooldown);
 
         }

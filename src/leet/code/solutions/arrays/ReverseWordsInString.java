@@ -105,6 +105,41 @@ public class ReverseWordsInString {
         return String.join(" ", words);
     }
 
+    private static String reverseWords3(String str) {
+        str = str.trim();
+
+        StringBuilder res = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+
+        int len = str.length();
+
+        int index  =  len -1;
+
+        while (index >= 0) {
+
+            if (!Character.isWhitespace(str.charAt(index))) {
+
+                sb.append(str.charAt(index--));
+
+            }else{
+
+                res.append(sb.reverse()).append(" ").toString();
+                sb.setLength(0);//reset sb
+
+                while (Character.isWhitespace(str.charAt(index))) {
+                    index--;
+                }
+
+            }
+        }
+
+        if(sb.length()>0){//leftovers after iteration ended
+            res.append( sb.reverse()).toString();
+        }
+
+        return res.toString();
+    }
+
     //---------------- follow up
 
     /**
