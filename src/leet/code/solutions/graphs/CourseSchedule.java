@@ -60,6 +60,16 @@ public class CourseSchedule {
         System.out.println(canFinish3);
     }
 
+    /*
+   Time & Space Complexity
+         Time complexity:
+
+         O(V+E)
+         Space complexity:
+
+         O(V+E)
+         Where  V is the number of courses and E is the number of prerequisites.
+  */
     private static boolean canFinish(int numCourses, int[][] prerequisites) {
 
         Map<Integer, List<Integer>> adjacencyMap = new HashMap<>();
@@ -85,16 +95,6 @@ public class CourseSchedule {
         return true;
     }
 
-    /*
-      Time & Space Complexity
-            Time complexity:
-
-            O(V+E)
-            Space complexity:
-
-            O(V+E)
-            Where  V is the number of courses and E is the number of prerequisites.
-     */
 
     private static boolean dfs(int course, Set<Integer> seen, Map<Integer, List<Integer>> adjacencyMap){
         //BASE

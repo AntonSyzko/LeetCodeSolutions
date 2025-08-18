@@ -26,12 +26,12 @@ public class RotateArray {
 
     private static void rotateReverse(int[] nums, int k) {
 
-        k =  k % nums.length;
+        k =  k % nums.length;// % module is here if K ( rotatitons) exceeds length
         int firstPartOfArrayLength = nums.length - k;
 
         reverse(nums,0, firstPartOfArrayLength - 1);//rotate first part
         reverse(nums, firstPartOfArrayLength , nums.length-1);//rotate second part
-        reverse(nums,0, nums.length-1);//rotate the entire aray
+        reverse(nums,0, nums.length-1);//rotate the ENTIRE WHOLE array
     }
 
 
@@ -48,6 +48,8 @@ public class RotateArray {
             end--;
         }
     }
+
+
 
     private static int[] rotate(int[] nums, int k) {
         int len = nums.length;

@@ -49,9 +49,17 @@ public class CourseSchedule2 {
         System.out.println(Arrays.toString(courses3));
     }
 
+    /*
+        Time & Space Complexity
+            Time complexity:
+
+                    O(V+E)
+                    Space complexity:
+
+                     O(V+E)
+            Where V is the number of courses and  E is the number of prerequisites.
+ */
     private static int[] findOrder(int numCourses, int[][] prerequisites) {
-        Set<Integer> seenCourses = new HashSet<>();
-        Set<Integer> cycleCourses = new HashSet<>();
 
         Map<Integer, List<Integer>> coursePrerequisites = new HashMap<>();
 
@@ -62,26 +70,20 @@ public class CourseSchedule2 {
         }
 
         List<Integer> result = new ArrayList<>();
+        Set<Integer> seenCourses = new HashSet<>();
+        Set<Integer> cycleCourses = new HashSet<>();
 
         for(int course = 0; course < numCourses;course++){
+
             if(!validCOurse(course, seenCourses,  cycleCourses, coursePrerequisites, result)){
-                return new int[0];
+                return new int[0];//not valid array of 1 with zero in it
             }
+
         }
 
         return result.stream().mapToInt(i -> i).toArray();
     }
 
-    /*
-    Time & Space Complexity
-        Time complexity:
-
-                O(V+E)
-                Space complexity:
-
-                 O(V+E)
-        Where V is the number of courses and  E is the number of prerequisites.
-     */
     private static boolean validCOurse(int course, Set<Integer> seenCourses, Set<Integer> cycleCourses,  Map<Integer, List<Integer>> coursePrerequisites, List<Integer> result) {
 
         if(cycleCourses.contains(course)) return false;

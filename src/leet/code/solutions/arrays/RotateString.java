@@ -4,6 +4,7 @@ public class RotateString {
 
     public static void main(String[] args) {
         String s = "abcde";
+
         String goal = "cdeab";
         System.out.println(rotateString(s, goal));
 
@@ -22,6 +23,7 @@ public class RotateString {
         if(str.contains(goal)){
             return true;
         }
+
         return false;
     }
 
@@ -35,8 +37,10 @@ public class RotateString {
         int rotation = 0;
 
         while (rotation < str.length()) {
+
             char temp = str.charAt(0);
             str = str.substring(1,str.length()) + temp;
+
             if(str.equals(goal)){
                 return true;
             }
@@ -45,5 +49,4 @@ public class RotateString {
         }
         return false;
     }
-
 }

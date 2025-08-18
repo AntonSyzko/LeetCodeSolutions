@@ -8,8 +8,6 @@ https://leetcode.com/problems/contains-duplicate-ii/
 
 Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
 
-
-
 Example 1:
 
 Input: nums = [1,2,3,1], k = 3
@@ -50,20 +48,24 @@ public class ContainsDuplicate2 {
 
     private static boolean containsNearbyDuplicateMap(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
+
         for (int i = 0; i < nums.length; i++) {
 
             int curr = nums[i];
+
             if (map.containsKey(curr) && i - map.get(curr) <= k) {
                 return true;
             }
+
             map.put(curr, i);
+
         }
 
         return false;
     }
 
 
-        // O(N) * ( O(k)
+        // O(N) *  O(k)
     //space O(1)
     private static boolean containsNearbyDuplicate(int[] nums, int k) {
 

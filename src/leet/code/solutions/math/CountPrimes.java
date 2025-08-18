@@ -31,12 +31,12 @@ public class CountPrimes {
 
         // Sieve of Eratosthenes algorithm
         // Only need to check up to sqrt(n)
-        for (int i = 2; i * i < n; i++) {
+        for (int i = 2; (i * i) < n; i++) {
             // If prime[i] is not changed, then it is a prime
             if (isPrime[i]) {
                 // Update all multiples of i greater than or equal to i²
                 // Numbers that are less than i² would have already been marked by smaller primes
-                for (int j = i * i; j < n; j += i) {
+                for (int j = (i * i); j < n; j += i) {
                     isPrime[j] = false;
                 }
             }
@@ -52,6 +52,4 @@ public class CountPrimes {
 
         return count;
     }
-
-
 }

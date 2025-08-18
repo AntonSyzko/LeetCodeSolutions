@@ -29,16 +29,11 @@ public class MinStack {
     public void push(int val) {// pushes the element val onto the stack.
       stack.push(val);
 
-      if(!minStack.isEmpty()){
+      if(minStack.isEmpty() || val <= minStack.peek()){// MIND !!! <= , since if == we need to update as well
 
-          if(val <= minStack.peek()){// MIND !!! <= , since if == we need to update as well
               minStack.push(val);
-          }
 
-      }else{
-          minStack.push(val);
       }
-
     }
 
     public void pop() {//removes the element on the top of the stack.

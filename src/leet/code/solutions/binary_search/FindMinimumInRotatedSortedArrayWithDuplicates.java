@@ -16,8 +16,37 @@ A solution that runs in O(n) time is trivial, can you write an algorithm that ru
 public class FindMinimumInRotatedSortedArrayWithDuplicates {
 
     public static void main(String[] args) {
+        int[] nums = {3,3,1,3,3,3};
 
+        int mmin = findMin(nums);
+
+        System.out.println(mmin);
     }
+
+    private static int findMin(int[] nums) {
+        int left = 0, right = nums.length - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if(nums[mid] < nums[right]) {
+
+               right = mid;
+
+            }else if ( nums[mid] > nums[right] ) {
+
+                left = mid + 1;
+
+            }else{
+
+               right--;
+
+            }
+        }
+
+        return nums[left];
+    }
+
 
     /*
             Worst-case Time Complexity: O(n)
@@ -25,7 +54,7 @@ public class FindMinimumInRotatedSortedArrayWithDuplicates {
         Example worst case: [1, 1, 1, 1, 1, 1]
    */
 
-    public int findMin(int[] nums) {
+    private static int findMin2(int[] nums) {
         int left = 0;
         int right = nums.length - 1;
 

@@ -46,7 +46,7 @@ public class IsSubsequence {
 
         int indexInS = 0;//index in S , will be increasing each time we see same char in pattern
 
-        for (int i = 0; i < pattern.length(); i++) {
+        for (int i = 0; i < pattern.length(); i++) {//index of t just grows in loop
 
             if(s.charAt(indexInS) == pattern.charAt(i)) {
                 indexInS++;

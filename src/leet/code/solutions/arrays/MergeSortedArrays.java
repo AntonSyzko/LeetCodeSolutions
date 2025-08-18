@@ -47,14 +47,16 @@ public class MergeSortedArrays {
     public static void main(String[] args) {
         int[] nums1 = new int[]{1, 3, 0, 0};//seros are to fill , they are unset sort of
         int[] nums2 = new int[]{2, 4};
-        System.out.println(Arrays.toString(nums1));
+
         mergeBook(nums1, 2, nums2, 2);
         System.out.println(Arrays.toString(nums1));
 
 
-//        nums1 = new int[]{1, 2, 3, 0, 0, 0};
-//        nums2 = new int[]{2, 5, 6};
-//        merge(nums1, 3, nums2, 3);
+        nums1 = new int[]{1, 2, 3, 0, 0, 0};
+        nums2 = new int[]{2, 5, 6};
+        mergeBook(nums1, 3, nums2, 3);
+        System.out.println(Arrays.toString(nums1));
+
 //
 //        nums1 = new int[]{4, 5, 6, 0, 0, 0};
 //        nums2 = new int[]{1, 2, 3};

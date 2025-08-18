@@ -27,9 +27,10 @@ Constraints:
 
  */
 public class PalindromeNumber {
+
     public static void main(String[] args) {
-        int toCheck = 121;
-        System.out.println(isPalindromeUsingHalf(toCheck));
+        int toCheck = 12321;
+        System.out.println(isPalindrome2(toCheck));
     }
 
     public static boolean isPalindromeUsingHalf(int x) {
@@ -42,6 +43,7 @@ public class PalindromeNumber {
         }
 
         int reversed = 0;
+
 
         while (x > reversed) {//will stop at half
             int popTenthReminder = x % 10;
@@ -60,7 +62,7 @@ public class PalindromeNumber {
 
 
     public static boolean isPalindrome2(int x) {
-        if (x < 0) {
+        if (x < 0) {//negative not palindrome
             return false;
         }
 

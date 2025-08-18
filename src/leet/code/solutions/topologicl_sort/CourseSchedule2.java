@@ -58,6 +58,7 @@ public class CourseSchedule2 {
 
         // Step 2: Find all courses with no prerequisites (in-degree = 0) and add them to Q
         Queue<Integer> queue = new LinkedList<>();
+
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);

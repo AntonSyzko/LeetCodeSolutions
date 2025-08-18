@@ -77,10 +77,10 @@ public class BinaryTreeMaxPathSum {
 
         MAX_SUM = Math.max(MAX_SUM, priceNewPAth);//update max as we go
 
-        int nodeLeftVal = node.left == null ? 0 : node.left.val;
-        int nodeRightVal = node.right == null ? 0 : node.right.val;
 
-        return node.val + Math.max(nodeLeftVal, nodeRightVal); //as we continue adding to  current node value whatever BIGGEST value LEFT or RIGHT gain can offer
+
+        return Math.max(Math.max(leftGain, rightGain) + node.val, //as we continue adding to  current node value whatever BIGGEST value LEFT or RIGHT gain can offer
+                0); // we choose between MAX path or ZERO - cause NEGATIVE values do not ADD value but substract and there's no point to carry em up
     }
 
     private static class TreeNode {

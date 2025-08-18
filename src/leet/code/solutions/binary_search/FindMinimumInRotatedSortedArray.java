@@ -46,7 +46,8 @@ public class FindMinimumInRotatedSortedArray {
         System.out.println(min);
     }
 
-    // O ( log n), O(1)
+    // O ( log n)
+    // O(1)
     private static int findMin(int[] nums) {
         if(nums.length == 0) return -1;
         if(nums.length == 1) return nums[0];
@@ -64,6 +65,7 @@ public class FindMinimumInRotatedSortedArray {
                 left = mid + 1;//search right part
             }
         }
+
         return nums[left];
     }
 

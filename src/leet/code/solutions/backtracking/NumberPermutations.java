@@ -36,24 +36,24 @@ public class NumberPermutations {
 
     private  static List<List<Integer>> permute(int[] nums) {
        List<List<Integer>> result = new ArrayList<>();
+       List<Integer> combo = new ArrayList<>();
 
        boolean[] visited = new boolean[nums.length];
 
-        doPermutationBacktracking(nums, result, new ArrayList<>(),  visited);
+        doPermutationBacktracking(nums, result,  combo,  visited);
 
        return result;
     }
 
     /*
-       Time and Space Complexity Analysis
-                    Time Complexity
+          Time Complexity O(n × n!)
 
                     We generate all possible permutations of the input array.
                     For an array of length n, there are n! (n factorial) permutations.
                     For each permutation, we do O(n) work to build it.
                     Therefore, the time complexity is O(n × n!).
 
-                    Space Complexity
+          Space Complexity O(n × n!)
 
                     Recursion stack: O(n) in the worst case, where n is the length of the input array.
                     visited array: O(n) space.
@@ -62,9 +62,9 @@ public class NumberPermutations {
 
 Overall space complexity: O(n × n!)
      */
-    private static void doPermutationBacktracking(int[] nums, List<List<Integer>> result, ArrayList<Integer> ongoingPermutation, boolean[] visited) {
-        if(ongoingPermutation.size() == nums.length) {//each permutation is anyway size of all numbers and not more
-            result.add(new ArrayList<>(ongoingPermutation));
+    private static void doPermutationBacktracking(int[] nums, List<List<Integer>> res, List<Integer> combo, boolean[] visited) {
+        if(combo.size() == nums.length) {//each permutation is anyway size of all numbers and not more
+            res.add(new ArrayList<>(combo));
             return;//from recursion stack
         }
 
@@ -75,23 +75,19 @@ Overall space complexity: O(n × n!)
             }
 
 
-                ongoingPermutation.add(nums[number]);//add to ongoing result
+                combo.add(nums[number]);//add to ongoing result
 
                 visited[number] = true;//mark as visited
 
-                doPermutationBacktracking(nums, result, ongoingPermutation, visited); //recur for the rest of numbers which are not visited
+                doPermutationBacktracking(nums, res, combo, visited); //recur for the rest of numbers which are not visited
 
-                ongoingPermutation.remove(ongoingPermutation.size()-1);//BACKTRACK remove last
+                combo.remove(combo.size()-1);//BACKTRACK remove last
                // ongoingPermutation.removeLast();//alternative
 
                 visited[number] = false; // BACKTRACK
 
         }
     }
-
-
-
-
 
     public List<List<Integer>> permuteRecursive(int[] nums) {
         if (nums.length == 0) {

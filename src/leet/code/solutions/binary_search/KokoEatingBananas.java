@@ -45,7 +45,6 @@ public class KokoEatingBananas {
         System.out.println(minSpeedToEatAllBananas);
     }
 
-
     private static int minEatingSpeed(int[] piles, int h) {
         int left = 1; // min is 1 banana per hour
         int right = Arrays.stream(piles).max().getAsInt();//max is the biggest pile per hour
