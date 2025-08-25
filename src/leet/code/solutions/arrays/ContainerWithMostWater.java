@@ -25,12 +25,12 @@ n == height.length
  */
 public class ContainerWithMostWater {
     public static void main(String[] args) {
-//        int[] container = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-//        int maxArea = maxArea(container);
-//        System.out.println(maxArea);
+        int[] container = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+        int maxArea = maxAreaMy(container);
+        System.out.println(maxArea);
 
          int [] container2 = {1,4,2,3};
-         int maxArea = maxArea(container2);
+          maxArea = maxAreaMy(container2);
         System.out.println(maxArea);
     }
 
@@ -62,6 +62,33 @@ public class ContainerWithMostWater {
                 rightPointer--;
             }
         }
+        return maxArea;
+    }
+
+    //time O(n)
+    //space O(1)
+    private static int maxAreaMy(int[] height) {//tow pointers
+        int maxArea = 0;
+
+        int left = 0;
+        int right = height.length - 1;
+
+        while (left < right) {
+            int heightAtLeft = height[left];
+            int heightAtRight = height[right];
+
+            int currWidth = right - left;
+
+            int currArea = Math.min(heightAtLeft, heightAtRight) * currWidth;
+            maxArea = Math.max(maxArea, currArea);
+
+            if(heightAtLeft < heightAtRight){
+                left++;
+            }else{
+                right--;
+            }
+        }
+
         return maxArea;
     }
 }

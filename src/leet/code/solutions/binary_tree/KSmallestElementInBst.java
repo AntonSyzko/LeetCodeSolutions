@@ -1,8 +1,7 @@
 
 package leet.code.solutions.binary_tree;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /*
 https://leetcode.com/problems/kth-smallest-element-in-a-bst/
@@ -43,27 +42,27 @@ public class KSmallestElementInBst {
 
     }
 
-/*
-        idea is that for BST in-order traversal always yields ASC sorted results ( 1,2,33,666 .... etc )
-        so if values are 1,2,3 and k = 2 - smallest element is ust at 2 position
- */
+    /*
+            idea is that for BST in-order traversal always yields ASC sorted results ( 1,2,33,666 .... etc )
+            so if values are 1,2,3 and k = 2 - smallest element is ust at 2 position
+     */
     private static int kthSmallest(TreeNode root, int k) {
 
         List<Integer> inOrderList = new ArrayList<>();
 
-         inOrder(root, inOrderList);
+        inOrder(root, inOrderList);
 
-         if(k > inOrderList.size()){//K exceeds list size
-             return -1;
-         }
-        
-        return inOrderList.get(k-1) ;//we are (1-indexed)
+        if (k > inOrderList.size()) {//K exceeds list size
+            return -1;
+        }
+
+        return inOrderList.get(k - 1);//we are (1-indexed)
 
     }
-    
-    
+
+
     private static void inOrder(TreeNode root, List<Integer> inOrderList) {
-        if(root==null) {//base
+        if (root == null) {//base
             return;
         }
 
@@ -77,12 +76,13 @@ public class KSmallestElementInBst {
     }
 
     private static int kthSmallest_lessMemory(TreeNode root, int k) {
-        int[] inOrderRes =new int[2];//first cell is position in in orer traversal , like at what step are we in in order, second is res
+        int[] inOrderRes = new int[2];//first cell is position in in orer traversal , like at what step are we in in order, second is res
         inOrderWithLessSpace(root, inOrderRes, k);
         return inOrderRes[1];
     }
+
     private static void inOrderWithLessSpace(TreeNode root, int[] inOrderRes, int k) {
-        if(root==null) {
+        if (root == null) {
             return;
         }
 
@@ -90,7 +90,7 @@ public class KSmallestElementInBst {
 
         inOrderRes[0]++;//we are increasing as we go through BST in order where from left to right nums are increasing
 
-        if(inOrderRes[0] == k){
+        if (inOrderRes[0] == k) {
             inOrderRes[1] = root.val;
             return;
         }
@@ -99,7 +99,7 @@ public class KSmallestElementInBst {
     }
 
 
-        private static class TreeNode {
+    private static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -125,5 +125,50 @@ public class KSmallestElementInBst {
                     ", right=" + right +
                     '}';
         }
+    }
+
+    private static int ans = -1;
+    private static int level = 0;
+
+    private static int kthSmallestInOrderTraverse(TreeNode root, int k) {
+
+        inOrderRec(root, k);
+
+        return ans;
+    }
+
+    private static void inOrderRec(TreeNode root, int k) {
+        if (root == null) {
+            return;
+        }
+
+        inOrderRec(root.left, k);//left goes first
+
+        if (++level == k) {
+            ans = root.val;
+            return;
+        }
+
+        inOrderRec(root.right, k);
+    }
+
+    public int kthSmallestStack(TreeNode root, int k) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+
+        for (int i = 0; i < k - 1; ++i) {
+            root = stack.pop();
+            root = root.right;
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+        }
+
+        return stack.peek().val;
     }
 }

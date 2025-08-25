@@ -18,7 +18,7 @@ public class PalindromeList {
         //Finds the second half of L.
         while (fastPointer != null && fastPointer.next != null) {
             fastPointer = fastPointer.next.next;
-            slowPointer = slowPointer.next;
+            slowPointer = slowPointer.next;//stops at MID
         }
 
         //NOTE ! cannot reuse fist pointer - it is finished over by the time we found mid point ( second half )

@@ -24,7 +24,7 @@ public class DutchFlag {
     public static void threeWayPartition(int[] array){
         int start = 0;
         int end = array.length - 1;
-        int mid = 0;
+        int mid = 0;//mid starts at 0
 
         int PIVOT = 1;
 
@@ -39,6 +39,8 @@ public class DutchFlag {
             }else if (array[mid] > PIVOT){ // current element is 2
 
                 swap(array,mid, end);
+
+                // no mid moves !!!
                 end--;
 
             }else{ // current element is 1
@@ -83,5 +85,6 @@ public class DutchFlag {
        while(twoCount-- > 0){
            array[index++] = 2;
        }
+
     }
 }

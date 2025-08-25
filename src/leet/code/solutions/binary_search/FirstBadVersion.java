@@ -35,7 +35,8 @@ Submissions
 public class FirstBadVersion {
 
     public static void main(String[] args) {
-
+        int firstBAd = firstBadVersion(6);
+        System.out.println(firstBAd);
     }
 
     public static int firstBadVersion(int n) {
@@ -47,7 +48,9 @@ public class FirstBadVersion {
             int mid = left + (right - left) / 2;
 
             if (isBadVersion(mid)) {//still bad at mid
+
                 right = mid;//reduce right to mid
+
             } else {//not bad - but we have to continue checking to find LAST bad version
                 left = mid + 1;
             }

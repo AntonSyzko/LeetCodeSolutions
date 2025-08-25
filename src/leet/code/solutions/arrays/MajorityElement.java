@@ -41,6 +41,7 @@ public class MajorityElement {
         int count = 0;
 
         for(int num : nums){
+
             if(count == 0){
                 maj = num;
             }
@@ -55,7 +56,8 @@ public class MajorityElement {
         return maj;
     }
 
-        public static int majorityElement(int[] nums) {
+
+public static int majorityElement(int[] nums) {
         if (nums.length == 1) {
             return nums[0];
         }

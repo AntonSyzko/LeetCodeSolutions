@@ -36,7 +36,7 @@ public class MoveZeros {
         System.out.println(Arrays.toString(nums));
     }
 
-        public static void moveZeroes(int[] nums) {
+    public static void moveZeroes(int[] nums) {
         int nonZeroIndex = 0;//new nonZeroIndex to insert to
 
         for (int i = 0; i < nums.length; i++) {
@@ -66,6 +66,22 @@ public class MoveZeros {
         while (indexOfFirstNonZeroElementMet < nums.length) {
             nums[indexOfFirstNonZeroElementMet] = 0;
             indexOfFirstNonZeroElementMet++;
+        }
+    }
+
+    private static void moveZerosSwap(int[] nums){
+
+        int i = 0;//goes as zero index
+
+        for (int j = 0 ; j < nums.length; j++){
+
+            if (nums[j] != 0){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                i++;//stays at zero element
+            }
+
         }
     }
 }

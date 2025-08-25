@@ -22,12 +22,14 @@ public class TwoSum3DS {
 
     // Adds the input number to the data structure.
     public void add(int number) {
+
         counts.put(number, counts.getOrDefault(number, 0) + 1);
     }
 
     public boolean find(int targetSum) {
 
         for (Map.Entry<Integer,Integer> entry : counts.entrySet()){
+
             int key = entry.getKey();
             int keyOccurrenceCount = entry.getValue();
 
