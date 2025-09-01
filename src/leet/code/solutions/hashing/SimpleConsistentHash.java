@@ -3,6 +3,7 @@ package leet.code.solutions.hashing;
 import java.util.*;
 
 public class SimpleConsistentHash<T> {
+
     private final int numberOfReplicas;
     private final SortedMap<Integer, T> circle = new TreeMap<>();
 

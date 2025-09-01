@@ -1,0 +1,15 @@
+I have a system design task. Scenario is : online bank ( aka Revolut, Monzo) . We have to stransfer 100 GBP from account1 to account2. User accounts are stored in SQL database, rest of the tools are free to choose.
+We have to account for:
+1.check if account1 has enough money
+Caveats that will be asked:
+1. what if accounts will end up on different database shards
+Think in terms of linearisability of the solution.
+
+if providing examples use PostgresSQL, use Java.
+provide step by step reasoning and explanation for solutions like:
+1. Optimistic locking
+2. pessimistick locking
+3. 2 phase commit
+4. saga
+
+add more if known

@@ -3,6 +3,36 @@ package leet.code.solutions.blind75;
 import java.util.Arrays;
 
 /*
+300
+
+https://leetcode.com/problems/longest-increasing-subsequence/
+
+Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+
+
+Example 1:
+
+Input: nums = [10,9,2,5,3,7,101,18]
+Output: 4
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+Example 2:
+
+Input: nums = [0,1,0,3,2,3]
+Output: 4
+Example 3:
+
+Input: nums = [7,7,7,7,7,7,7]
+Output: 1
+
+
+Constraints:
+
+1 <= nums.length <= 2500
+-104 <= nums[i] <= 104
+
+
+Follow up: Can you come up with an algorithm that runs in O(n log(n)) time complexity?
 
 [10,9,2,5,3,7,101,18]
 
@@ -24,14 +54,14 @@ public class LongestIncreasingSubsequence {
         int[] LIS = new int[nums.length];//DP
         Arrays.fill(LIS, 1);//initialise with 1 as 1 is default length of subsequence of 1 element and is our base
 
-        for (int i = 1; i < nums.length; i++) {//start from 1 !!!!!!!!!!!
-            for (int j = 0; j < i; j++) {//traverse all
+        for (int outer = 1; outer < nums.length; outer++) {//start from 1 !!!!!!!!!!!
+            for (int inner = 0; inner < outer; inner++) {//traverse all
 
-                if (nums[i] > nums[j]) {//if current is bigger than prev
+                if (nums[outer] > nums[inner]) {//if current is bigger than prev
                     //pick max of DP of curr OR any prev +1
-                    LIS[i] = Math.max(LIS[i], LIS[j] + 1);//recurrence relation
+                    LIS[outer] = Math.max(LIS[outer], LIS[inner] + 1);//recurrence relation
 
-                    maxLCSLengthRes = Math.max(maxLCSLengthRes, LIS[i]);//update res
+                    maxLCSLengthRes = Math.max(maxLCSLengthRes, LIS[outer]);//update res
 
                 }
             }
@@ -79,3 +109,4 @@ public class LongestIncreasingSubsequence {
         return size;
     }
 }
+//#medium

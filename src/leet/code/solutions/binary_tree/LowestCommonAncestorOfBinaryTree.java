@@ -34,7 +34,6 @@ public class LowestCommonAncestorOfBinaryTree {
         System.out.println(lowestCommonAncestor.val);
     }
 
-
     private static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // Base case 1: If root is null, return null
         if (root == null) {
@@ -65,8 +64,6 @@ public class LowestCommonAncestorOfBinaryTree {
         return rightLCA;
     }
 
-    
-    
     private static class TreeNode {
         int val;
         TreeNode left;

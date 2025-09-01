@@ -101,7 +101,7 @@ public class GraphValidTree {
 
         for(Integer adjacentNode : adjacentNodes.get(node)) {//iterate over ALL nodes adjacent to current
 
-            if(adjacentNode == parentNode) {//we just ignore parent
+            if(adjacentNode == parentNode) {//we just ignore parent if same as current
                 continue;
             }
 
@@ -135,16 +135,21 @@ public class GraphValidTree {
         visit.add(0);
 
         while (!q.isEmpty()) {
+
             int[] pair = q.poll();
+
             int currNode = pair[0];
             int parent = pair[1];
+
             for (int adjNeighbor : adj.get(currNode)) {
                 if (adjNeighbor == parent) {
                     continue;
                 }
+
                 if (visit.contains(adjNeighbor)) {//cycle
                     return false;
                 }
+
                 visit.add(adjNeighbor);//no cycle all good, store in visited
 
                 q.offer(new int[]{adjNeighbor, currNode});//currNode became parent to adjacentNeighbors

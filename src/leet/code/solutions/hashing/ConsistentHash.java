@@ -7,15 +7,17 @@ import java.util.*;
 
 @FunctionalInterface
 interface HashFunction {
+
     int hash(Object key);
+
 }
 
 class MD5HashFunction implements HashFunction {
-    private MessageDigest md;
+    private final  MessageDigest md;
 
     public MD5HashFunction() {
         try {
-            md = MessageDigest.getInstance("MD5");
+            md = MessageDigest.getInstance("MD5");//SHA256 etc ...
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("MD5 not available", e);
         }
@@ -23,7 +25,9 @@ class MD5HashFunction implements HashFunction {
 
     @Override
     public int hash(Object key) {
+
         md.reset();
+
         byte[] bytes = md.digest(key.toString().getBytes());
 
         return ByteBuffer.wrap(bytes).getInt();
@@ -35,9 +39,9 @@ class MD5HashFunction implements HashFunction {
 
 public class ConsistentHash<T> {
 
-    private final HashFunction hashFunction;
+    private final HashFunction hashFunction;//interface
     private final int numberOfReplicas;
-    private final SortedMap<Integer, T> circle ;
+    private final SortedMap<Integer, T> circle ;//the very ring
 
     public ConsistentHash(HashFunction hashFunction, int numberOfReplicas, Collection<T> nodes) {
         this.hashFunction = hashFunction;
@@ -71,8 +75,11 @@ public class ConsistentHash<T> {
         int hash = hashFunction.hash(key);
 
         if (!circle.containsKey(hash)) {  // No node exactly at this position
+
             SortedMap<Integer, T> tailMap = circle.tailMap(hash);  // Find next nodes clockwise
+
             hash = tailMap.isEmpty() ? circle.firstKey() : tailMap.firstKey();
+
         }
 
         return circle.get(hash);

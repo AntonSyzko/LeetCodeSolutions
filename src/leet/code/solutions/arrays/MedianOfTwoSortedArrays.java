@@ -1,5 +1,34 @@
 package leet.code.solutions.arrays;
 
+/*
+4
+
+https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+
+Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+
+The overall run time complexity should be O(log (m+n)).
+
+Example 1:
+
+Input: nums1 = [1,3], nums2 = [2]
+Output: 2.00000
+Explanation: merged array = [1,2,3] and median is 2.
+Example 2:
+
+Input: nums1 = [1,2], nums2 = [3,4]
+Output: 2.50000
+Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
+
+Constraints:
+
+nums1.length == m
+nums2.length == n
+0 <= m <= 1000
+0 <= n <= 1000
+1 <= m + n <= 2000
+-106 <= nums1[i], nums2[i] <= 106
+ */
 public class MedianOfTwoSortedArrays {
 
     public static void main(String[] args) {
@@ -68,6 +97,47 @@ public class MedianOfTwoSortedArrays {
 
         throw new IllegalArgumentException("Input arrays are not sorted");
     }
+
+    //O(n) solution
+    private static double findMedianSortedArraysO_N(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        int m = nums2.length;
+
+        int [] merged = new int[n + m];
+
+        int i = 0;
+        int j = 0;
+        int mergedIndex = 0;
+
+        //merge
+        while ( i < n && j < m) {//AND
+            if(nums1[i] < nums2[j]) {
+                merged[mergedIndex++] = nums1[i++];
+            }else{
+                merged[mergedIndex++] = nums2[j++];
+            }
+        }
+
+        //left overs
+        while (i < n) {
+            merged[mergedIndex++] = nums1[i++];
+        }
+        while (j < m) {
+            merged[mergedIndex++] = nums2[j++];
+        }
+
+        int totalElements = n + m;
+
+        if(totalElements % 2 == 0) {//even size
+
+            return (merged[(totalElements / 2)] + merged[(totalElements / 2) -1] )/ 2.00;//(middle element + one before ) / 2.00
+
+        }else{//odd size
+
+            return merged[(totalElements / 2)];//just the very middle element of ODD size array is a median
+
+        }
+    }
 }
 
 /**
@@ -98,3 +168,5 @@ Median = (2 + 3) / 2 = 2.5 ✓
 
 
  **/
+
+//#hard

@@ -42,14 +42,14 @@ public class ShortestWordDistance3 {
 
         int shortestRes = Integer.MAX_VALUE;
 
-        Map<String, List<Integer>> map = new HashMap<>();
+        Map<String, List<Integer>> wordToIndex = new HashMap<>();
 
         for(int i =0; i < words.length; i++){
-            map.computeIfAbsent(words[i], k -> new ArrayList<>()).add(i);//word : index
+            wordToIndex.computeIfAbsent(words[i], k -> new ArrayList<>()).add(i);//word : index
         }
 
-        List<Integer> w1Indexes = map.get(word1);
-        List<Integer> w2Indexes = map.get(word2);
+        List<Integer> w1Indexes = wordToIndex.get(word1);
+        List<Integer> w2Indexes = wordToIndex.get(word2);
 
         int w1Index = 0;
         int w2Index = 0;
@@ -111,5 +111,25 @@ public class ShortestWordDistance3 {
         }
 
         return minDistance;
+    }
+
+    private   static int shortestWordDistance2(String[] words, String word1, String word2) {
+        final boolean isSame = word1.equals(word2);
+        int ans = Integer.MAX_VALUE;
+        int index1 = words.length;  // If word1 == word2, index1 is the newest index.
+        int index2 = -words.length; // If word1 == word2, index2 is the previous index.
+
+        for (int i = 0; i < words.length; ++i) {
+            if (words[i].equals(word1)) {
+                if (isSame)
+                    index2 = index1;
+                index1 = i;
+            } else if (words[i].equals(word2)) {
+                index2 = i;
+            }
+            ans = Math.min(ans, Math.abs(index1 - index2));
+        }
+
+        return ans;
     }
 }

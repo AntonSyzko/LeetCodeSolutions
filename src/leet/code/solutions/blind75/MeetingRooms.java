@@ -1,6 +1,7 @@
 package leet.code.solutions.blind75;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /*
 https://leetcode.ca/all/252.html
@@ -47,6 +48,24 @@ public class MeetingRooms {
             }
 
         }
+        return true;
+    }
+
+    // time O( N log N ) - for sorting
+    //space O(1)
+    private static boolean canAttendMeetingsEndTimeSorting(int[][] meetingTimes) {
+
+        Arrays.sort(meetingTimes, Comparator.comparingInt(o -> o[1]));//SOOORT !!! by end time
+
+        for (int i = 1; i < meetingTimes.length; i++) {
+            int [] prevMeeting = meetingTimes[i - 1];
+            int [] currMeeting = meetingTimes[i];
+
+            if(currMeeting[0] < prevMeeting[1]){
+                return false;
+            }
+        }
+
         return true;
     }
 }

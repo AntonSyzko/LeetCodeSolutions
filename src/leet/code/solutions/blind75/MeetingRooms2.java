@@ -1,11 +1,7 @@
 package leet.code.solutions.blind75;
 
-import leet.code.solutions.sandbox.Sandbox1;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /*
 https://neetcode.io/problems/meeting-schedule-ii
@@ -154,9 +150,30 @@ public class MeetingRooms2 {
         return minHeap.size();//number of overlapping intervals left in HEAP - is the number of days needed
     }
 
+    //time O( n log N)
+    //space O(n)
+    private static int minMeetingRoomsHeap2(List<Interval> intervals) {
+
+        List<Interval> sorted = new ArrayList<>(intervals);
+        sorted.sort((a, b) -> a.start - b.start);//sort by start time
+
+        Queue<Interval> minHipByEndTime = new PriorityQueue<>((a,b) -> a.end - b.end);//min hip stores entire Interval
+
+        for (Interval interval : sorted) {
+
+            if(!minHipByEndTime.isEmpty() && minHipByEndTime.peek().end <= interval.start){
+                minHipByEndTime.poll();
+            }
+
+            minHipByEndTime.offer(interval);
+        }
+
+        return minHipByEndTime.size();
+    }
 
 
-    private static int minIntervalRoomsRequired(Interval[] intervals) {
+
+        private static int minIntervalRoomsRequired(Interval[] intervals) {
 
         if(intervals == null || intervals.length==0) return 0;
 
@@ -187,8 +204,6 @@ public class MeetingRooms2 {
 
 
     }
-
-
 
     private static class Interval {
       public int start, end;

@@ -1,7 +1,5 @@
 package leet.code.solutions.binary_tree;
 
-import leet.code.solutions.sandbox.Sandbox1;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
